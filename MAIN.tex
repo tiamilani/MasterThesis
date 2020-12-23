@@ -1,0 +1,87 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Template per Elaborato di Laurea
+% DISI - Dipartimento di Ingegneria e Scienza dell’Informazione
+%
+% update 2015-09-10
+%
+% Per la generazione corretta del 
+% pdflatex nome_file.tex
+% bibtex nome_file.aux
+% pdflatex nome_file.tex
+% pdflatex nome_file.tex
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% formato FRONTE RETRO
+\documentclass[epsfig,a4paper,11pt,titlepage,twoside,openany]{book}
+\usepackage{import}
+\usepackage{preamble}
+
+\begin{document}
+
+  % nessuna numerazione
+  \pagenumbering{gobble} 
+  \input{chapters/pagina_iniziale}
+
+  \clearpage
+ 
+  \input{chapters/ringraziamenti}
+  \clearpage
+  \pagestyle{plain} % nessuna intestazione e pie pagina con numero al centro
+
+  % inizio numerazione pagine in numeri arabi
+  \mainmatter
+
+  % indice
+  \tableofcontents
+  \clearpage
+  
+  % gruppo per definizone di successione capitoli senza interruzione di pagina
+  \begingroup
+    % redefinizione del formato del titolo del capitolo
+    % da formato
+    %   Capitolo X
+    %   Titolo capitolo
+    % a formato
+    %   X   Titolo capitolo
+    
+    \titleformat{\chapter}
+      {\normalfont\Huge\bfseries}{\thechapter}{1em}{}
+      
+    \titlespacing*{\chapter}{0pt}{0.59in}{0.02in}
+    \titlespacing*{\section}{0pt}{0.20in}{0.02in}
+    \titlespacing*{\subsection}{0pt}{0.10in}{0.02in}
+    
+    % sommario
+    \input{chapters/summary}
+    \ac{MRAI}
+    \input{chapters/introduction}
+    \input{chapters/BGPart}
+    \input{chapters/DES}
+    \input{chapters/BGPasFSM}
+    \input{chapters/BGPMRAI}
+    \input{chapters/BGPRFD}
+    \input{chapters/conclusion}
+    
+  \endgroup
+
+
+  % bibliografia in formato bibtex
+  %
+  % aggiunta del capitolo nell'indice
+  \addcontentsline{toc}{chapter}{References}
+  % stile con ordinamento alfabetico in funzione degli autori
+  \bibliographystyle{IEEEtran}
+  \bibliography{references}
+
+  \titleformat{\chapter}
+      {\normalfont\Huge\bfseries}{Appendix \thechapter}{1em}{}
+  % sezione Allegati - opzionale
+  \appendix
+  \input{chapters/appendix}
+  \printacronyms[name=Abbreviations]
+  \addcontentsline{toc}{chapter}{Abbreviations}
+
+\end{document}
