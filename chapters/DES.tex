@@ -37,7 +37,7 @@ between nodes \num{2} and \num{5} is controlled by the policy |2, 2, 2| that def
 a servicer-provider policy.
 Policies are encoded using the convention described in \cite{daggitt2018rate}.
 
-\lstname{Code}
+\lstcaptionname{Code}
 \begin{lstlisting}[language=graphml, caption=Graph example, label=lst:graph_example]
  <node id="0">
       <data key="d0">10.0.0.0/24</data>
@@ -59,7 +59,7 @@ There are two possible evolution of the environment:
     the destination accordingly with the distributions defined in the environment;
     \item \textbf{\textit{Signaling evolution}}: Is possible to define a precise
     signal that should be executed by the nodes that contains a destination, for 
-    example, the signal "AWA" defines that there will be an announce followed by 
+    example, the signal \q{AWA} defines that there will be an announce followed by 
     a withdraw and the an other announce.
 \end{itemize}
 
@@ -85,3 +85,55 @@ whole network.
     \item Fabrikant Graphs
 \end{itemize}
 
+Thanks to the environment codification in a \textit{json} file is possible to
+define experiments with a high grade of freedom.
+Is possible to define multiple delays as probability functions vectors that
+will provide multiple runs possibility. For example, if we have \num{5} different
+possible seeds and \num{3} different delays, the total number of runs combinations
+is \num{15}, as showed in Code \ref{lst:environment_example}.
+is possible to run one of the possible combination of parameters through the identifier
+of the single run.
+
+\lstcaptionname{Code}
+\begin{lstlisting}[language=json, caption=Environment example, label=lst:environment_example]
+"simulation" : {                                                              
+    // seed(s) to initialize RNG                                      
+    "seed" : [0, 1, 2, 3, 4], 
+    ....
+    // Multiple withdraw distributions
+    "withdraw_dist": [{"distribution": "unif", "min": 5, "max": 10, "int": 0.1},
+                      {"distribution": "unif", "min": 8, "max": 10, "int": 0.1},
+                      {"distribution": "unif", "min": 2, "max": 3, "int": 0.1}],       
+    ....
+}
+\end{lstlisting}
+
+In the environment is possible to define also the processing time, this time is used
+inside each \ac{BGP} node to emulate the processing of information or the evaluation
+of a packet.
+Though the \textit{delay} parameter is possible to define the default delay on the edges,
+is important to remember that the links are FIFO so there is no reordering
+of messages in the same link, there is also no messages lost.
+That because it was out of the scope of this thesis to study the evolution
+of the protocol with packet loss, but it could be a future work.
+
+\subsection{Clique environment}
+\label{subsec:clique_env}
+
+One of the special environment that I used it's composed by a clique graph
+graph of different dimensions, an example of clique graph is given in
+\Cref{fig:clique_graph}
+
+\begin{figure}[h]                                                               
+    \begin{center}                                                              
+        \input{images/tikzpictures/clique_graph}
+    \end{center}                                                                
+    \caption{Clique graph example}                                
+    \label{fig:clique_graph}
+\end{figure}
+
+\subsection{Fabrikant environment}
+\label{subsec:fabrikant_env}
+
+\subsection{Internet-like environment}
+\label{subsec:internet_like_env}
