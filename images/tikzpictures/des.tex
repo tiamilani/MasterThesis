@@ -1,0 +1,9 @@
+\begin{tikzpicture}[scale=0.2, every node/.style={draw=black,circle,inner sep=0pt}]
+    \node [minimum size=2cm] (graph) at (0,0) {graph}; 
+    \node [minimum size=2cm] (env) at (14,0) {env};                                    
+    \node [rectangle, draw, minimum width=1.5cm,minimum height=1.5cm] (des) at (31,0) {DES};
+    \node [minimum size=2cm] (output) at (48,0) {output};                                    
+    \draw [thick, ->] (graph) to (env);                                  
+    \draw [thick, ->] (env) -- (des);                                 
+    \draw [thick, ->] (des) -- (output);                                 
+\end{tikzpicture}                                                       

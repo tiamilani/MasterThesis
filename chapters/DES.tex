@@ -1,11 +1,80 @@
-\chapter{DES}
+\chapter{Discrete Event Simulator}
 \label{cha:des}
 
+Experiments on \ac{BGP} are not applicable on the Internet, for this
+reason different studies shows their results using a simulate environment
+\cite{griffin2001experimental} \fxfatal{Insert other citations}.
+The majority of the studies uses small graphs, and each node 
+of the graph simulate the behaviour of a \ac{BGP} speaker.
+Each node represent also a single \ac{AS} and the \ac{BGP} speaker is it's own
+exterior router, for simplicity reduced to one speaker that handles all the
+connections.
+ 
+For this reason I decided to use and expand a \ac{DES} that permits to have
+different grades of freedom, respecting on the other side all the properties
+required for a reliable simulator environment.
+I decided to use the \textit{Simpy}\footnote{\href{https://simpy.readthedocs.io/en/latest/index.html}{Simpy website}}
+package to make the environment evolve. I decided for this package for the
+extensive documentation and because it has been already used for different
+studies, demonstrating its adaptability \cite{matloff2008introduction,dagkakis2013manpy}.
+
+I developed the \ac{DES} as a highly modular environment.
+\begin{figure}[h]                                                               
+    \begin{center}                                                              
+        \input{images/tikzpictures/des}
+    \end{center}                                                                
+    \caption{Discrete event simulator structure}                                
+    \label{fig:des_structure}                                                   
+\end{figure}
+In \Cref{fig:des_structure} is possible to see the basic idea of the simulator.
+The first component needed is a graph, represented by a \textit{graphml} file, this file is 
+descriptor of the network. it defines also all topological information and all the
+properties of each single node.
+\fxfatal{Look for a Cref implementation of this}
+In Code \ref{lst:graph_example} is possible to see an example of a \textit{graphml} file,
+it describes that node \num{0} contains a single destination and that the edge
+between nodes \num{2} and \num{5} is controlled by the policy |2, 2, 2| that defines
+a servicer-provider policy.
+Policies are encoded using the convention described in \cite{daggitt2018rate}.
+
+\lstname{Code}
+\begin{lstlisting}[language=graphml, caption=Graph example, label=lst:graph_example]
+ <node id="0">
+      <data key="d0">10.0.0.0/24</data>
+ </node>
+ <edge source="2" target="5">                                                  
+     <data key="d2">2, 2, 2</data>                                             
+ </edge> 
+\end{lstlisting}
+
+The graph is then embedded in the environment file, this file is in \textit{json}
+format and it describes how the environment is characterized, it gives the
+initial values for the \ac{RNG} so that each experiment is replicable and
+other properties, like where the output should be saved, and, most importantly
+how the experiment should be conducted.
+There are two possible evolution of the environment:
 \begin{itemize}
-    \item Why a DES?
-    \item How is structured the DES?
+    \item \textbf{\textit{Continuous evolution}}: In this category all the nodes
+    that contains at least a destination will continuously share and retrieve
+    the destination accordingly with the distributions defined in the environment;
+    \item \textbf{\textit{Signaling evolution}}: Is possible to define a precise
+    signal that should be executed by the nodes that contains a destination, for 
+    example, the signal "AWA" defines that there will be an announce followed by 
+    a withdraw and the an other announce.
 \end{itemize}
 
+The \ac{DES} take as input this \textit{json} file where all the information
+are described, it creates an object for each node in the graph file, with
+each own characteristics.
+After the initialization all the nodes that contains a destination will schedule
+the first advertisement of it to their neighbour.
+The simulation run will terminate only if there are no more events scheduled or
+if the maximum simulation time is reached.
+
+The \ac{DES} will then produce a \textit{CSV} output, with all the events that 
+can be analyzed to see the evolution of a specific node or to evaluate the
+whole network.
+ 
 \section{DES Environments}
 \label{sec:des_environment}
 
