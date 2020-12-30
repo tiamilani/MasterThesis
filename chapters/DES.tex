@@ -137,10 +137,10 @@ This topology is used to enforce the path exploration problem.
 Another interesting chase to test the path exploration problem is the one
 presented in \cite{fabrikant2011there}.
 In that study Fabrikant et al. presents how particular \ac{MRAI} setting could 
-make the network converge with an exponential bechaviour because of the path
+make the network converge with an exponential behaviour because of the path
 exploration problem.
 I used the basic example of their study to investigate how the choose of \ac{MRAI}
-is foundamental for the network convergence.
+is fundamental for the network convergence.
 An example of the network used is presented 
 in \Cref{fig:fabrikant_graph}.
 
@@ -153,10 +153,10 @@ in \Cref{fig:fabrikant_graph}.
 \end{figure}
 
 The path exploration problem is caused by the delay on the node \num{0}-\num{2}
-edge. The node 2 will receive the destination through node 1, after a small ammount
+edge. The node 2 will receive the destination through node 1, after a small amount
 of time the network will converge to the best path (without using the backup links).
 But, after a while, node \num{2} will receive the network also through node \num{0}
-and it will prefer this new path, provoking then the riconfiguration of all
+and it will prefer this new path, provoking then the reconfiguration of all
 the other nodes that will use the backup links for a while, announcing their 
 new path.
 A wrong configuration of \ac{MRAI} can provoke the entire exploration of the 
@@ -168,33 +168,33 @@ possibility set.
 The last noteworthy environment is the one whose purpose is to simulate Internet
 behaviour.
 This has been possible thanks to the study by Elmokashfi et al. \cite{elmokashfi2010scalability}
-and the internet like graph generator present in Networkx\footnote{\href{https://networkx.org/documentation/stable/reference/generated/networkx.generators.internet_as_graphs.random_internet_as_graph.html#networkx.generators.internet_as_graphs.random_internet_as_graph}{Networkx internet as graph generator}}
+and the internet like graph generator present in Networkx \footnote{\href{https://networkx.org/documentation/stable/reference/generated/networkx.generators.internet_as_graphs.random_internet_as_graph.html\#networkx.generators.internet_as_graphs.random_internet_as_graph}{Networkx internet as graph generator}}
 (a python library famous for graph and network studies).
 An example with a small set of nodes is presented in \Cref{fig:internet_graphs}
 
-\begin{figure}[h]
+\begin{figure}[ht]
      \centering
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.37\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_graph/graph-100-colored.pdf}
 		 \caption{Internet like graph with an \q{explosive} layout}
          \label{fig:internet_graph_explosive}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.37\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_graph/graph_dot.pdf}
 		 \caption{Internet like graph with a \q{hierarchical} layout}
          \label{fig:internet_graph_hierarchical}
      \end{subfigure}
-        \caption{Internet like graph colored to show the hierarchicaly structure,
-4 tipes of nodes, T (tier 1 mesh), M, CP, C (Customers, purple one)}
+        \caption{Internet like graph colored to show the hierarchically structure,
+4 types of nodes, T (tier 1 mesh), M, CP, C (Customers, purple one)}
         \label{fig:internet_graphs}
 \end{figure}
 
 The different nodes are colored accordingly with the node type represented.
-The tier one nodes that generate the centrali clique are colored in red, and
+The tier one nodes that generate the central clique are colored in red, and
 is possible to notice in \Cref{fig:internet_graph_hierarchical} that them are
 in the highest levels of the networks.
 This environment has been used to study the behaviour of the network with 
-topologies resempbling the real internet.
+topologies resembling the real internet.
