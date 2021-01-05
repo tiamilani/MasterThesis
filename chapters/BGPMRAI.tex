@@ -1,57 +1,519 @@
 \chapter{BGP MRAI dependance}
 \label{cha:bgp_mrai_experiments}
 
-\begin{itemize}
-    \item Why BGP depends on MRAI?
-    \item Why MRAI prevents messages explosions
-    \item Previous works
-\end{itemize}
+\ac{MRAI} is one of the parameters that mostly has caused divergences in the 
+scientific community.
+And, after the introduction in the protocol since the version 4 \cite{rfc4271}
+\fxfatal{Check this sentence}, is one of the more studied for the possibility
+to improve the protocol or generate exponential convergence behaviour in small
+network \cite{fabrikant2011there}.
+
+The protocol strictly depends on this parameter, because as we saw in \Cref{cha:bgp_fsm},
+the incorrect use of it can lead to tremenodous consequences, even worst of not
+having it at all.
+In other cases, with a particular setting of it is possible to improve the network
+perforcances.
+Recent studies about centrality metrics on routing protocols introduce, through 
+the distributed computation of the metric, to a 
+timer trade off improvement \cite{MaLo18_ToN,GhiMa18_infocom}.
+This kind of approach has been also applied on \ac{BGP} with positive results on
+network failures \cite{milani2019BGP,milani2020improving}.
+
+All those study points out how we can set \ac{MRAI} to improve network
+performances, but what about how \ac{MRAI} reacts on different problems?
+Is it possible that \ac{MRAI} reacts differently based on where the signal
+occurs?
+In fact, our hypothesis is that is not enough just look to the \ac{MRAI} setting
+because also other factors can be relevant.
+For example, a change near the central clique of $T$ nodes could provoke a large
+storm of messages because \ac{MRAI} doesn't affect in time the spreading of information.
+While, a change in the periphery could be cushioned without it reaching the center
+of the network.
 
 \section{Clique graph}
 \label{sec:bgp_mrai_clique}
 
-\begin{itemize}
-    \item clique experiments
-    \item messages vs convergence time
-\end{itemize}
+The clique topology is one of the worst case scenario as specified in Labovitz et al.
+\cite{labovitz2000delayed}
+I used two approaches in this Environment, the first one keeps the \ac{IW} active
+the second one avoid the use of this property.
+To emphasize the effects of this parameter with the effects also of different 
+\ac{MRAI} settings.
+
+The Environment properties are listed in \Cref{tbl:clique_properties}
+
+\begin{table}[h]
+	\input{tables/clique_properties}
+	\caption{Clique environment properties}
+	\label{tbl:clique_properties}
+\end{table}
+
+As described in \Cref{tbl:clique_properties}, for each \ac{MRAI} value has been
+executed \num{10} different runs of the environment.
+The clique graph used in this experiments is composed by \num{15} nodes.
+The \ac{MRAI} strategy used is the \textit{fixed}, so every link will have the
+same \ac{MRAI} value.
+The results are presented in \Cref{fig:clique_evolution}
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/clique/messagesVStime/pareto-clique-constant_mrai_evolution.pdf}
+		 \caption{Network perforcances \textbf{with} \textbf{\ac{IW}}}
+         \label{fig:clique_evolution_IW}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/clique/messagesVStime/pareto-clique-noIW-constant_mrai_evolution.pdf}
+		 \caption{Network perforcances \textbf{withouth} \textbf{\ac{IW}}}
+         \label{fig:clique_evolution_noIW}
+     \end{subfigure}
+		\caption{Evolution of the network performances on the clique graph of \num{15}
+			nodes using a fixed \ac{MRAI} from \num{0} to \num{60} seconds. \fxfatal{
+			use the same interval in the y-axis?}}
+        \label{fig:clique_evolution}
+\end{figure}
+
+Is possible to notice in \Cref{fig:clique_evolution} both the effect of \ac{MRAI}
+and \ac{IW}.
+Those plots represent the network performances in terms of convergence time and
+number of messages transmitted to reach the convergence after the transmission 
+of the signal \q{AW}.
+The convergence time is represented by the average time from all the nodes in the 
+network.
+Each point in the plots is the average of the \num{10} runs with the \textit{fixed}
+\ac{MRAI} value on the $x$ axis.
+The left $y$ axis should be used with the convergence time, the green line, while
+the second $y$ axis represent the number of messages transmitted, the red line.
+
+The effets of the first one are present in both the plots but in two different
+moments.
+In \Cref{fig:clique_evolution_IW} \ac{MRAI} affects both the convergence time and
+the number of messages around \SI{20}{\second} up to \SI{30}{\second}.
+After the threshold of \SI{30}{\second} the effects of \ac{MRAI} are counterproductive,
+the convergence time is negatively affected because the nodes starts to wait more
+time withouth obatining more useful information.
+This can be see also in the number of messages that reaches a constant value.
+
+In \Cref{fig:clique_evolution_noIW} we can see the same effect but with a higher
+\ac{MRAI} value.
+The number of transmitted messages reaches the constant value with an \ac{MRAI}
+value around \SI{30}{\second}.
+The effects of \ac{IW} can be saw also in the number of messages and the convergence
+time with a low \ac{MRAI}, is possible to reach even \num{12000} messages while
+with \ac{IW} the maximum value is around \num{6500} messages.
+
 
 \section{Internet like graph}
 \label{sec:bgp_mrai_internet_like}
 
-\begin{itemize}
-    \item Environment state
-    \item what is an internet like graph
-    \item cite elmokashfi
-    \item messages vs time
-\end{itemize}
+The internet like environment is more complex than the clique one, but it permits
+to have a more close vision of what can really happen on the Internet.
+During my studies I used different topologies with \num{1000} nodes ressembling 
+the Elmokashfi properties \cite{elmokashfi2010scalability} already 
+described in \Cref{subsec:internet_like_env}.
 
-\section{Pareto Efficiency Front}
-\label{sec:bgp_mrai_pareto_front}
-
-\begin{itemize}
-    \item There is space for improvements?
-\end{itemize}
+Using this graph I will look for possible correlation between \ac{MRAI} and other
+factor that can influence the network.
+First of all \ac{MRAI} has a dependence on how it is setted, I'm going to compare
+different \ac{MRAI} strategies that can be used on an Internet like graph.
+Another influence factor could be the signal used as input, or even the position 
+of the node that provoke the cahnge.
 
 \section{Strategy dependence}
 \label{sec:bgp_mrai_strategy_dependance}
 
+Like I mentioned before, the network perfomances depends on the \ac{MRAI} strategies
+choosen.
+For this reason the first point of my study is to point out this differences.
+In order to do that, the first study that I would like to present is the one
+that study how the standard protcol evolves on an Internet environment.
+
+The property of the environment chosen are described in \Cref{tbl:internet_like_properties}
+
+\begin{table}[h]
+	\input{tables/internet_like_properties}
+	\caption{Internet like environment properties}
+	\label{tbl:internet_like_properties}
+\end{table}
+
+The graph is an \textit{Internet like} graph with \num{1000} nodes.
+The node that will execute the signal has been chosen randomly betwen 
+all the nodes of type \q{C}.
+This graph will be the same for all the experiments in this section.
+
+For each \ac{MRAI} strategy, that I'm going to present, has been executed \num{61}
+experiments, one for each possible value of \ac{MRAI}, for each experiments
+thanks to the environment variable has been executed \num{10} runs.
+In total for each \ac{MRAI} strategy has been run \num{610} different runs
+
+As \ac{MRAI} strategies I decided to use the following two:
 \begin{itemize}
-    \item Describe the convergence time dependance on MRAI
-    \item Describe previous works on this track
-    \item show the differences between different strategies
+	\item \textbf{\textit{Fixed}}; Every link will have the same
+		\ac{MRAI} value;
+	\item \textbf{\textit{DPC}}; This strategy assign a different 
+		\ac{MRAI} value to each link depending on the centrality of the node \cite{milani2020improving}
 \end{itemize}
+
+The centrality metric used is called \ac{DPC} and thanks to the fact that has been
+already demonstrated that is possible to calculate it in a distributed way \cite{milani2019BGP} I will
+assume that is precalculated and that every node knows it's own centrality to
+set the timers.
+
+To permit a comparison between thise two different strategies a constraint on the
+\ac{MRAI} assignment has been introduced, the $mean$ of all the timers in the network
+must be equal between the two strategies.
+For the \textit{Fixed} strategy this is constraint intrisically respected.
+For the \textit{DPC} strategy the timers are multiplied by a factor $k$ that
+permits to keep the average equal.
+
+The results of the first strategy are showed in \Cref{fig:internet_like_1000_constant_evolution}.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/constantMRAI/internet_like-constant_mrai_evolution.pdf}
+		 \caption{Network perforcances, messages VS convergence time with different
+			\ac{MRAI} values}
+         \label{fig:internet_like_1000_constant_evolution_evolution}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/constantMRAI/internet_like-constant.pdf}
+		 \caption{Pareto front of Messages VS Convergence time}
+         \label{fig:internet_like_1000_constant_evolution_paretoFront}
+     \end{subfigure}
+		\caption{Evolution of the network performances on the \textbf{Internet Like} graph 
+			of \num{1000} nodes using a fixed \ac{MRAI} from \num{0} to \num{60} seconds.}
+        \label{fig:internet_like_1000_constant_evolution}
+\end{figure}
+
+As is possible to see in \Cref{fig:internet_like_1000_constant_evolution_evolution}
+without \ac{MRAI} we would have a low convergence time, dictated mostly by 
+network delays and processing time. With, on the other hand an enormous ammount
+of messages.
+Slightly increasing the \ac{MRAI} value, the number of messages will fell down
+reaching a constant value around \num{8000}, while the convergence time
+continuously grows linearly, as it happend for the clique graph in \Cref{fig:clique_evolution}.
+This continious linear grow is dictated by the fact that nodes keep meaningfull
+information for more time before sharing them with their neighbourhood.
+\Cref{fig:internet_like_1000_constant_evolution_paretoFront} represent the pareto
+front of those experiments.
+The pareto frontier is the set of values that are pareto efficent, this concept
+has been already used in engineering to define the set of best outcomes from
+the tradeoff of two different parameters \cite{goodarzi2014introduction}.
+We can clearly see that the majority of the points is concentrated to the left
+of the chart, this means that few \ac{MRAI} values would give as result
+a high number of messages and a small convergence time.
+While, multiple \ac{MRAI} values would concentrate around the same value of 
+messages transmitted.
+This can confirm the fact that \ac{MRAI} would not influence messages
+after a certain threshold but only the convergence time.
+
+The results of the same environment withouth \ac{IW} are showed in 
+\Cref{fig:internet_like_1000_constant_evolution_noIW}.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/constantMRAI/internet_like-constant-noIW_mrai_evolution.pdf}
+		 \caption{Network perforcances, messages VS convergence time with different
+			\ac{MRAI} values}
+         \label{fig:internt_like_1000_constant_noIW_evolution_evolution}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/constantMRAI/internet_like-constant-noIW.pdf}
+		 \caption{Pareto front of Messages VS Convergence time}
+         \label{fig:internt_like_1000_constant_noIW_evolution_paretoFront}
+     \end{subfigure}
+		\caption{Evolution of the network performances on the \textbf{Internet Like} graph 
+			of \num{1000} nodes using a fixed \ac{MRAI} from \num{0} to \num{60} seconds.
+			\textbf{Withouth \ac{IW}}}
+        \label{fig:internet_like_1000_constant_evolution_noIW}
+\end{figure}
+
+Also in this case, comparing \Cref{fig:internet_like_1000_constant_evolution_noIW,fig:internet_like_1000_constant_evolution},
+is possible to notice that \ac{IW}
+helps to reduce the number of messages and the convergence time without impacting
+the network performances trend.
+
+The second strategy, the one dependant on the \ac{DPC}, produced the results
+in \Cref{fig:internet_like_1000_dpc_evolution}
+As mentioned before, all the timers are adjusted to respect the same mean as in 
+the \textit{fixed} \ac{MRAI} experiments.
+For this reason points with the same \ac{MRAI} valure are comparable one another.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/dpc/internet_like-DPC_mrai_evolution.pdf}
+		 \caption{Network perforcances, messages VS convergence time with different
+			\ac{MRAI} values}
+         \label{fig:internt_like_1000_DPC_evolution_evolution}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/dpc/internet_like-DPC.pdf}
+		 \caption{Pareto front of Messages VS Convergence time}
+         \label{fig:internt_like_1000_DPC_evolution_paretoFront}
+     \end{subfigure}
+		\caption{Evolution of the network performances on the \textbf{Internet Like} graph 
+			of \num{1000} nodes using a \textit{DPC} \ac{MRAI} strategy
+			with an $MRAI_{mean}$ from \num{0} to \num{60} seconds.}
+        \label{fig:internet_like_1000_dpc_evolution}
+\end{figure}
+
+\fxfatal{Combersome, reading again it's not very clear what I'm explaining}
+This second strategy leads to the performances showed in \Cref{fig:internet_like_1000_dpc_evolution},
+is possible to notice that the number of messages transmitted fell down
+very quickly and it reaches the convergence value around an \ac{MRAI} value of
+\num{10}.
+But, it is also noticeable that there are a lot more spikes in this trend, that
+deviate more from the constant value around \num{9000} messages.
+Also the convergence time is affected by this behaviour.
+
+\fxfatal{Consider introducing a figure to show both trend in the same plot}
+Comparing \Cref{fig:internet_like_1000_dpc_evolution,fig:internet_like_1000_constant_evolution}.
+
+is possible to notice that the two strategies leads to a different trend.
+Both are equal at the begininngin with \ac{MRAI} equal \num{0} but after a while
+both the number of transmitted messages and the convergence time diverge.
+The number of messages with the \ac{DPC} strategy variates more and it converge
+around \num{9000} messages, while the \textit{fixed} strategy reaches \num{8000}
+messages.
+And the convergence time with the second strategy grows more quickly.
+This is caused by the central clique of tier one nodes that have a high \ac{MRAI}
+value.
+The high \ac{MRAI} value is caused by the fact that all the leafs has \num{0.0}
+as centrality that cause an \ac{MRAI} value of \num{0} and to respect 
+the $MRAI_{mean}$ value the central nodes needs a huge \ac{MRAI}.
+For example, with an $MRAI_{mean}$ of \SI{30}{\second} the node \num{1} (that is
+one of the central clique nodes) has an \ac{MRAI} value of \num{79.35} for all its
+neighbours.
+
+
+The standard value of \ac{MRAI} is \SI{30}{\second} as described in
+\cite{rfc4271} so I compared those strategies performances in a boxplot in 
+\Cref{fig:boxplot_internet_like_1000}.
+I decided to run \num{100} different runs for each strategy with the $MRAI_{mean}$
+fixed to \SI{30}{\second}.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/comparison/comparison_messages_boxplot.pdf}
+		 \caption{Network perforcances, messages necessary to reach convergence
+			with different \ac{MRAI} strategies}
+         \label{fig:boxplot_internet_like_1000_messages}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/comparison/comparison_time_boxplot.pdf}
+		 \caption{Network perforcances, time required to reach convergence
+			with different \ac{MRAI} strategies}
+         \label{fig:boxplot_internet_like_1000_time}
+     \end{subfigure}
+	 \caption{Network perfomances comparison with different \ac{MRAI} strategies,
+		Graph internet like with \num{1000} nodes, \ac{MRAI} value 
+		\SI{30}{\second}, number of runs for each strategy \num{100}}
+        \label{fig:boxplot_internet_like_1000}
+\end{figure}
+
+In \Cref{fig:boxplot_internet_like_1000} we can compare those two strategies,
+the first figure, \Cref{fig:boxplot_internet_like_1000_messages} represent 
+the number of messages trasmitted by the \num{100} runs, we can see that
+the two strategies, withouth \ac{IW}, are really close one another.
+While in the time required for convergence, \Cref{fig:boxplot_internet_like_1000_time}
+there are some huge difference between the two strategies, is not negligeable 
+that with the \ac{DPC} strategy the time required is almost the double of the
+standard time.
+
+In cocnlusion we can say that the \ac{MRAI} strategy is one of the factor that 
+can influence the Network perfomances. 
+
+\fxfatal{Maybe I can introduce more strategies to expand this section}
+
+\section{Pareto Efficiency Front}
+\label{sec:bgp_mrai_pareto_front}
+
+The strategies exposed in \Cref{sec:bgp_mrai_strategy_dependance} are just few
+of the possibilities that are available.
+For this reason I would like to explore the set of possibilities looking 
+for \ac{MRAI} configuration randomly generated.
+
+I would then study the space of possiblities that are generated through the 
+pareto efficiency plot and compare the results with the pareto efficency
+graphs.
+To permit this comparison I would set \ac{MRAI} randomly but like for
+the \ac{DPC} strategy respecting the average required.
+
+\fxfatal{Insert table with the value of \ac{MRAI} used and the ranges, and
+		 the number of total experiments executed}
+
+\fxfatal{Insert the resulting plot}
 
 \section{Signal dependance}
 \label{sec:bgp_mrai_signal_dependance}
 
-\begin{itemize}
-    \item There is a dependance on the signal and on the effects
-    of MRAI?
-    \item Show the difference between different signals
-\end{itemize}
+I would like to analyze how much the signal can impact the convergence performances
+with the two different strategies of \Cref{sec:bgp_mrai_strategy_dependance}.
+
+For this reason I used the same environment described before and execute the
+experiments with different input signals from the same node, \q{AWA}, \q{AWAW}
+and \q{AWAWA}.
+
+In those experiments plays a role also the \q{\textit{readvertisement distribution}}
+for the second and third \q{A}, it has been setted to a uniform distribution
+between \SI{1}{\second} and \SI{60}{\second}, like the \q{\textit{withdraw distribution}}.
+
+For those experiments I didn't evaluat the case with \ac{IW} deactivated.
+\fxfatal{Explain why}
+
+\fxfatal{all the plots has an \ac{MRAI} setep of \SI{10}{\second} to give a 
+hint on the trend, redo the plots with a step of \SI{1}{\second}}
+
+In \Cref{fig:internt_like_1000_evolution_AWA} is possible to see the evolution
+for the signal \q{AWA}.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/signals/AWA/constant/internet_like-constant_AWA_mrai_evolution.pdf}
+		 \caption{Network perforcances, \textit{fixed} \ac{MRAI} strategy}
+         \label{fig:internet_like_1000_fixed_AWA}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/signals/AWA/dpc/internet_like-DPC_AWA_mrai_evolution.pdf}
+		 \caption{Network perforcances, \ac{DPC} \ac{MRAI} strategy}
+         \label{fig:internet_like_1000_dpc_AWA}
+     \end{subfigure}
+	 \caption{Network perfomances comparison with different \ac{MRAI} strategies,
+		Graph internet like with \num{1000} nodes, signal \q{AWA}}
+        \label{fig:internt_like_1000_evolution_AWA}
+\end{figure}
+
+Is possible to notice in \Cref{fig:internt_like_1000_evolution_AWA} a huge difference
+in respect of the plots in \Cref{fig:internet_like_1000_constant_evolution,fig:internet_like_1000_dpc_evolution}.
+The \ac{DPC} strategy was abele to outcome the standard \textit{fixed} strategy
+over multiple prospective.
+Analyzing \Cref{fig:internet_like_1000_dpc_AWA} is possible to notice that
+the red curve, the one that refers to the number of messages transmitted has
+a very fast fell, with an \ac{MRAI} timer \textit{mean} of \SI{30}{\second}
+the number of messages is less than $1/4$ in respect of an \ac{MRAI} \texit{mean}
+of \SI{0}{\second}.
+The convergence time courve has a compleatly different trend in respect of the
+previous experiments.
+We can notice some steps trend.
+This is caused by the fact that now the timer is able to effectively act on the signal.
+\ac{MRAI} doesn't affect the first message, in this case the first \q{A} of the
+signal, but it can affect the next two messages.
+Infact some nodes are able to cache both the \q{WA} part of the signal and
+compleatly avoid to send anything at all, because them have already transmitted
+the first \q{A}.
+The compleate compression of the signal \q{AWA} is \q{A}.
+The other evolutions, for the \q{AWAW} and \q{AWAWA} signals are showed in 
+\Cref{fig:internt_like_1000_evolution_AWAW,fig:internt_like_1000_evolution_AWAWA}
+
+Like before, comparing the standard \SI{30}{\second} fixed \ac{MRAI} I executed
+\num{100} differnet runs for each strategy and each different signal, the results
+are exposed in \Cref{fig:boxplot_internet_like_1000_time_allSignals}.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/comparison/comparison_allSignals_messages_boxplot.pdf}
+		 \caption{Network perforcances, messages necessary to reach convergence
+			with different \ac{MRAI} strategies}
+         \label{fig:boxplot_internet_like_1000_messages_allSignals}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/internet_like/1000/comparison/comparison_allSignals_time_boxplot.pdf}
+		 \caption{Network perforcances, time required to reach convergence
+			with different \ac{MRAI} strategies}
+         \label{fig:boxplot_internet_like_1000_time_allSignals}
+     \end{subfigure}
+	 \caption{Network perfomances comparison with different \ac{MRAI} strategies,
+		Graph internet like with \num{1000} nodes, \ac{MRAI} value 
+		\SI{30}{\second}, number of runs for each strategy \num{100}, signal \q{allSignals}}
+        \label{fig:boxplot_internet_like_1000_allSignals}
+\end{figure}
+
+Is possible to notice in \Cref{fig:boxplot_internet_like_1000_allSignals} that
+both the strategies has different performances in respect of the signal 
+produced by the single node source.
+In particular performances are better when the signal ends up with an \q{A}.
+That's because, after the first \q{A}, giving the \ac{MRAI} timer long enough, 
+a node is able to compress a sequence that ends with an other \q{A} to the
+empty set and don't send anything more.
+While if the sequence ends up with an \q{W} it has to, at least, send an other
+message to notify the withdraw.
+And withdraws are not affected by \ac{MRAI} like specified in a IETF draft of
+\num{2012} named \q{Revisions to the BGP 'Minimum Route Advertisement Interval'}.
+
+Other than that is possible to notice that the \ac{DPC} techniques has better
+restults in terms of messages transmitted, while it could have an higher 
+convergence time.
+This is caused like before by the high \ac{MRAI} values used by the most
+central nodes.
+
+In conclusion there is a correlation between \ac{MRAI} and the sequence of messages
+transmitted by the source node.
+In particular more the timer is able to compress sequence more the performances
+are good.
+
+\fxfatal{consider moving figures from the appendix to the chapter}
 
 \section{Position dependance}
 \label{sec:position_dependance}
+
+The last factor of influence for \ac{MRAI} that I would like to study is how much
+the position of the signal source can influence the convergence.
+The main ipothesis is that a node closer to the central clique, that generates
+a signal would provoke a message storm bigger in respect of a node on the perimeter
+of the network.
+This is true only if \ac{MRAI} is large enough to block the storm near the source
+of it exporting only the correct information at the end of it.
+
+\subsection{Different signal sources}
+\label{subsec:different_destinations}
+
+As first try I have decided to try \num{10} different destination chosen randomly
+on the same graph, this graph is an Internet like topology with \num{1000} nodes.
+After that I run the same environment with all the different destination.
+I also used different \ac{MRAI} strategies, repeating the experiments for all of
+them.
+With this results is possible to analyze how different signal sources provoke 
+different network performances and also study how different \ac{MRAI} strategies
+adapt with different nodes that provoke messages storms.
+
+\subsection{Hierarchical influence}
+\label{subsec:hierarchical_influence}
+
+What about the position in the hierarchy?
+Internet is very strong hierarchical graph, \Cref{fig:internet_graph_hierarchical}
+is an example with a small set of nodes but its possible to define different levels
+of the graph.
+If we take the central clique as the rout of the graph then all the nodes will
+be at a certain distance (in terms of hops) from it.
+
+Nodes that are on the same hierarchical level reacts on the same way? 
 
 \begin{itemize}
     \item And how much is influent the position?

@@ -1,11 +1,36 @@
 \chapter{RFD and MRAI correlation}
 \label{cha:bgp_rfd}
 
-\begin{itemize}
-    \item Expose more deeply what is RFD
-    \item Expose previous studies about RFD
-    \item Today RFD? Outdated
-\end{itemize}
+%\begin{itemize}
+%    \item Expose more deeply what is RFD
+%    \item Expose previous studies about RFD
+%    \item Today RFD? Outdated
+%\end{itemize}
+
+\ac{RFD} is another parametr of \ac{BGP} used to avoid messages storms.
+It is used to avoid flapping routes to continously make the network unstable.
+When a network flaps a certain value is increased and when it overpass a threshold
+then the route is suppressed and not advertised anymore until it goes back
+below the threshold (ora after a certian time).
+
+\ac{RFD}, other than \ac{MRAI}, is one of the most studied parameters of \ac{BGP}
+because of its influence in the convergence time \cite{mao2002route,pelsser2011route}.
+\ac{RFD} received different updates from its first implementation, but recent 
+studies showed that most of the providers still use outdated parameters  \cite{gray2020bgp}.
+
+The use of deprecated values can lead to a to havy restrictive suppression
+of small routes delaying the correct spreading of information.
+Some cases of suppression are caused by faulty interfaces that haviliy flaps hundreds of times, 
+while other times is just an update of the node configuration that
+cause the route to flaps a couple of times and still be suppressed.
+
+In the following chapters I am going to show how legacy \ac{RFD} can affect 
+small flapss and how would the new versione of \ac{RFD} reacted to it.
+Finally, I would look forward to understand the correlation between \ac{RFD}
+and \ac{MRAI}.
+When a suppressed route is shared again it could provoke messages storm that
+triggers different \ac{MRAI} session, or the opposite case, a low \ac{MRAI} that
+cause the grow of the figure of merit that suppress a route.
 
 \section{RFD on toy topologies}
 \label{sec:bgp_rfd_toy}
