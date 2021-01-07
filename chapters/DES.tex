@@ -4,10 +4,10 @@
 Experiments on \ac{BGP} are not applicable on the Internet, for this
 reason different studies show their results using a simulate environment
 \cite{griffin2001experimental} \fxfatal{Insert other citations}.
-The majority of the studies uses small graphs, and each node 
+The majority of the studies uses small graphs and each node 
 of the graph simulate the behaviour of a \ac{BGP} speaker.
 Each node represent also a single \ac{AS} and the \ac{BGP} speaker is it's own
-exterior router, for simplicity reduced to one speaker that handles all the
+exterior router, for simplicity, reduced to one speaker that handles all the
 connections.
  
 For this reason, I decided to use and expand a \ac{DES} that permits to have
@@ -53,21 +53,21 @@ format and it describes how the environment is characterized, it gives the
 initial values for the \ac{RNG} so that each experiment is replicable and
 other properties, like where the output should be saved, and, most importantly
 how the experiment should be conducted.
-There are two possible evolution of the environment:
+There is two possible evolution of the environment:
 \begin{itemize}
     \item \textbf{\textit{Continuous evolution}}: In this category all the nodes
     that contains at least a destination will continuously share and retrieve
     the destination accordingly with the distributions defined in the environment;
     \item \textbf{\textit{Signaling evolution}}: Is possible to define a precise
-    signal that should be executed by the nodes that contains a destination, for 
+    signal that should be executed by the nodes that contain a destination, for 
     example, the signal \q{AWA} defines that there will be an announce followed by 
-    a withdraw and the an other announce.
+    a withdraw and another announce.
 \end{itemize}
 
 The \ac{DES} take as input this \textit{json} file where all the information
 are described, it creates an object for each node in the graph file, with
 each own characteristics.
-After the initialization all the nodes that contains a destination will schedule
+After the initialization, all the nodes that contain a destination will schedule
 the first advertisement of it to their neighbour.
 The simulation run will terminate only if there are no more events scheduled or
 if the maximum simulation time is reached.
@@ -85,7 +85,7 @@ Is possible to define multiple delays as probability functions vectors that
 will provide multiple runs possibility. For example, if we have \num{5} different
 possible seeds and \num{3} different delays, the total number of runs combinations
 is \num{15}, as showed in Code \ref{lst:environment_example}.
-is possible to run one of the possible combination of parameters through the identifier
+is possible to run one of the possible combinations of parameters through the identifier
 of the single run.
 
 \lstcaptionname{Code}
@@ -137,10 +137,10 @@ This topology is used to enforce the path exploration problem.
 
 Another interesting chase to test the path exploration problem is the one
 presented in \cite{fabrikant2011there}.
-In that study Fabrikant et al. presents how particular \ac{MRAI} setting could 
+In that study, Fabrikant et al. presents how particular \ac{MRAI} setting could 
 make the network converge with an exponential behaviour because of the path
 exploration problem.
-I used the basic example of their study to investigate how the choose of \ac{MRAI}
+I used the basic example of their study to investigate how the choice of \ac{MRAI}
 is fundamental for the network convergence.
 An example of the network used is presented 
 in \Cref{fig:fabrikant_graph}.
@@ -157,7 +157,7 @@ The path exploration problem is caused by the delay on the node \num{0}-\num{2}
 edge. The node 2 will receive the destination through node 1, after a small amount
 of time the network will converge to the best path (without using the backup links).
 But, after a while, node \num{2} will receive the network also through node \num{0}
-and it will prefer this new path, provoking then the reconfiguration of all
+and it will prefer this new path, provoking than the reconfiguration of all
 the other nodes that will use the backup links for a while, announcing their 
 new path.
 A wrong configuration of \ac{MRAI} can provoke the entire exploration of the 
@@ -194,7 +194,7 @@ An example with a small set of nodes is presented in \Cref{fig:internet_graphs}
 \end{figure}
 
 The different nodes are colored accordingly with the node type represented.
-The tier one nodes that generate the central clique are colored in red, and
+The tier one nodes that generate the central clique are colored in red and
 is possible to notice in \Cref{fig:internet_graph_hierarchical} that them are
 in the highest levels of the networks.
 This environment has been used to study the behaviour of the network with 
