@@ -2,7 +2,7 @@
 \label{cha:des}
 
 Experiments on \ac{BGP} are not applicable on the Internet, for this
-reason different studies shows their results using a simulate environment
+reason different studies show their results using a simulate environment
 \cite{griffin2001experimental} \fxfatal{Insert other citations}.
 The majority of the studies uses small graphs, and each node 
 of the graph simulate the behaviour of a \ac{BGP} speaker.
@@ -10,7 +10,7 @@ Each node represent also a single \ac{AS} and the \ac{BGP} speaker is it's own
 exterior router, for simplicity reduced to one speaker that handles all the
 connections.
  
-For this reason I decided to use and expand a \ac{DES} that permits to have
+For this reason, I decided to use and expand a \ac{DES} that permits to have
 different grades of freedom, respecting on the other side all the properties
 required for a reliable simulator environment.
 I decided to use the \textit{Simpy}\footnote{\href{https://simpy.readthedocs.io/en/latest/index.html}{Simpy website}}
@@ -26,10 +26,11 @@ I developed the \ac{DES} as a highly modular environment.
     \caption{Discrete event simulator structure}                                
     \label{fig:des_structure}                                                   
 \end{figure}
+
 In \Cref{fig:des_structure} is possible to see the basic idea of the simulator.
-The first component needed is a graph, represented by a \textit{graphml} file, this file is 
-descriptor of the network. it defines also all topological information and all the
-properties of each single node.
+The first component needed is a graph, represented by a \textit{graphml} file, 
+this file is the descriptor of the network. 
+it defines also all topological information and all the properties of every single node.
 \fxfatal{Look for a Cref implementation of this}
 In Code \ref{lst:graph_example} is possible to see an example of a \textit{graphml} file,
 it describes that node \num{0} contains a single destination and that the edge
