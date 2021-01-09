@@ -13,14 +13,29 @@ not for \ac{BGP}.
 
 The main idea behind the \ac{BGP} \ac{FSM} is to represent the knowledge as
 states and different set of messages as transitions.
-The knowledge is represented by the actual routes that the node knows to reach
-a single destination.
-Transitions encode the messages that a node has received to change state,
+The knowledge is represented by the actual routes that the node knows on how 
+to reach a single destination.
+Transitions encode the messages that a node has received to trigger the state change,
 on the edges are also inserted the response messages that the node will transmit.
+We can see an example of this transitions in \Cref{fig:fsm_example}
 
-\fxfatal{Insert image and table for an example}
+\begin{figure}[h]                                                               
+    \begin{center}                                                              
+        \input{images/tikzpictures/FSM_example}
+    \end{center}                                                                
+	\caption{Example of the \ac{BGP} \ac{FSM} state transition}
+    \label{fig:fsm_example}                                                   
+\end{figure}
 
-In \ac{BGP} messages transmit information about routes, there could be the advertisement
+In \Cref{fig:fsm_example} there are two states, both represent the knowledge of
+the node, the first one represent the \ac{RIB} with just the route \num{1}, in
+the second state the \ac{RIB} will contains both the routes \num{1} and \num{3}.
+This transition si caused by the reception of the advertisement of the route 
+\num{3} and will couse the transmission of an other advertisement.
+The opposite transition is caused by the reception of the withdraw of the route
+\num{4} with the consequent withdraw of the route \num{4}.
+
+In \ac{BGP} messages transfer information about routes, there could be the advertisement
 or the withdraw of the route.
 
 Thanks to \ac{MRAI} the evaluation of multiple messages could be delayed and
@@ -28,12 +43,12 @@ provoke then the compression of them.
 For this reason on the edges is possible to see multiple messages, for example 
 \q{A1W1A1}, that will be compressed in \q{A1} and then evaluated.
 
-The concept for a \ac{BGP} \ac{FSM} has been \q{taken} from \cite{griffinFSM}.
+The concept for a \ac{BGP} \ac{FSM} has been expanded from \cite{griffinFSM}.
 
-\begin{itemize}
-    \item BGP as an FSM main idea
-    \item signalling transmutation
-\end{itemize}
+%\begin{itemize}
+%    \item BGP as an FSM main idea
+%    \item signalling transmutation
+%\end{itemize}
 
 \section{BGP FSM experiments}
 \label{sec:bgp_fsm_experiments}
