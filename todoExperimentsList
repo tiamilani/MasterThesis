@@ -1,10 +1,24 @@
-[~] End random experiments
+[V] End random experiments
 [] Run different signal sources and plot them
 [] Run different hierarchical level experiments with the signal AWAWAWAW
 [V] Move RFD clique experiments
-[] Update RFD clique experiments plot comments (use the fixme)
-[] Plot again the boxplot in the appendix
-[] Run again experiments RFD internet like
-	- Mice
-	- Elephants
-	- Multi MRAI
+[V] Update RFD clique experiments plot comments (use the fixme)
+[] Plot again the boxplots in the appendix
+[V] Run again experiments RFD internet like
+	V Mice
+	V Elephants
+	V Multi MRAI
+[V] Plot Mice boxplots
+[V] Plot Elephants boxplots
+[V] Move RFD internet like plots to main folder
+	V Mice
+	V Elephants
+[V] Comments again the plots in RFD internet like
+	V Mice
+	V Elephants
+[] Move topologies to the previous chapter from DES
+[~] BGP state of the ART
+	V talk about the two type of noise
+[] Introduction
+[] Summary
+[V] Title

@@ -1,10 +1,42 @@
 \chapter{Introduction}
 \label{cha:introduction}
 
-\begin{itemize}
-    \item How is internet built
-    \item the protocol that controls internet
-\end{itemize}
+%\begin{itemize}
+%    \item How is internet built
+%    \item the protocol that controls internet
+%\end{itemize}
+
+\fxfatal{Expand the concepts}
+
+What we call Internet is a single network that interconnects more than \num{60000}
+\ac{AS} that shares their knowledge in order to spread the subnets reachability.
+An \ac{AS} is a single entity that holds and controls some \textit{IP} prefixes
+used by one or more operators.
+Every \ac{AS} is responsible for its own interconnectivity policies that controls
+the information obtained by the outside and the one from the inside.
+
+The propagation of the knowledge between different \ac{AS} is controlled by 
+\ac{BGP}. 
+Is possible to configure the policies inside \ac{BGP} in order to apply different
+choices to respect the constraints imposed by contract between the \ac{AS}es.
+
+\ac{BGP} is growth a lot from its first release, it now include multiple optional
+parameters that are actually more mandatory than optional.
+It is the only protocol activelly used on the Internet for the spreading 
+of \textit{IPv4} and \textit{IPv6} networks.
+
+Multiple of its parameters play a central role in it, and the correct setting
+of them could influence the performances of, not only the single \ac{AS} but
+the entire network.
+For this reason the research is still active to find new technologies and
+trade-off between, for example, convergence time and messages transmitted.
+
+But there are almost no studies on the correlation of those parameters.
+Even if the effects of some of them trigger other parameters.
+
+%Those commercial contracts will limits the \ac{AS} possibilities, for example
+%is possible that a constraints could be that an \ac{AS} wouldn't pass through
+%an other precise \ac{AS}
 
 \section{Internet nowadays}
 \label{sec:internet_today}
@@ -13,12 +45,22 @@
     \item Use today studies to show how internet is today
 \end{itemize}
 
+\fxfatal{Maybe use some apnic data}
+
 \section{Correlation between variables and convergence}
 \label{sec:bgp_correlations}
 
-\begin{itemize}
-    \item Expose the hypothesis of the correlation
-\end{itemize}
+%\begin{itemize}
+%    \item Expose the hypothesis of the correlation
+%\end{itemize}
+
+\ac{BGP} is an intrisically noisy protocol, those noises could be due to different
+factors.
+Could be \ac{BGP} itself to produce noisy situations
+There are some parameters of \ac{BGP} that point to intercept and limit noisy 
+situations.
+The first one is \ac{MRAI}, which is a timer with the goal to compress multiple
+messages, in order that a single \ac{AS} can produce less messages.
 
 Forget about the possibility to converge in seconds or even sub-seconds
 when we talk about internet routing convergence there are a lot of factors
@@ -29,9 +71,18 @@ spread a new routing information to all the nodes.
 
 One of the most effective timers is \ac{MRAI} and it has been already
 proven \fxfatal{Insert citation} that whith 
+
 \section{Goal of this thesis}
 \label{sec:thesis_goal}
 
-\begin{itemize}
-    \item Why is important understand this correlation?
-\end{itemize}
+%\begin{itemize}
+%    \item Why is important understand this correlation?
+%\end{itemize}
+
+Is important to study the correlation between those parameters because Internet
+is not built on just one of them.
+Tuning one parameter is important to understand the effects on the others, and
+viceversa.
+
+This thesis has the goal to gives a useful help to the understanding of this
+protocol interoperation on a more global scale.
