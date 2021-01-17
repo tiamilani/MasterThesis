@@ -1,9 +1,11 @@
 [V] End random experiments
-[] Run different signal sources and plot them
-[] Run different hierarchical level experiments with the signal AWAWAWAW
+[V] Run different signal sources and plot them
+[] Move plots to the mrai signals section
+[V] Run different hierarchical level experiments with the signal AWAWAWAW
+[] Move plots to the mrai level section
 [V] Move RFD clique experiments
 [V] Update RFD clique experiments plot comments (use the fixme)
-[] Plot again the boxplots in the appendix
+[?] Plot again the boxplots in the appendix
 [V] Run again experiments RFD internet like
 	V Mice
 	V Elephants

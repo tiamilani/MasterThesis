@@ -553,7 +553,82 @@ With this results is possible to analyze how different signal sources provoke
 different network performances and also study how different \ac{MRAI} strategies
 adapt to different nodes that provoke messages storms.
 
-The 
+The environemnt used by those experiments is the one described in 
+\Cref{tbl:source_properties}.
+
+\begin{table}[h]
+	\input{tables/different_destinations_properties}
+	\caption{Different signal sources environment properties}
+	\label{tbl:source_properties}
+\end{table}
+
+Like mentioned in \Cref{tbl:source_properties} I decided to use an other 
+\ac{MRAI} strategy and look forward for it performances.
+That strategy is the reverse of the one base on the \ac{DPC}.
+I will use a higher \ac{MRAI} for the first part of the graph and a smaller 
+one in the propagation part of the graph.
+
+In total I have executed \num{700} runs for each \ac{MRAI} strategy with the 
+\num{10} different signal sources.
+The resulting network evolution with different \ac{MRAI} values is showed in 
+\Cref{fig:different_destinations}.
+Each point of \Cref{fig:different_destinations_all} represents the average 
+of the \num{10} runs executed for the specific destination with that \ac{MRAI}
+configuration.
+On \Cref{fig:different_destinations_mean} is presented the average result
+obtained from all the \num{10} different destinations for a specific \ac{MRAI}
+strategy.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/position/different_destinations-1000_all.pdf}
+		 \caption{Network performance evolution of all the \num{10} different signal sources 
+			with the different \ac{MRAI} strategies}
+         \label{fig:different_destinations_all}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/position/different_destinations-1000_mean.pdf}
+		 \caption{Average of the network performances of \num{10} different 
+			signal sources chosen with different \ac{MRAI} strategies}
+         \label{fig:different_destinations_mean}
+     \end{subfigure}
+	 \caption{Network performances given \num{10} different signal sources chosen
+		randomly on an Internet like graph of \num{1000} nodes, with different
+		\ac{MRAI} strategies used, fixed, \ac{DPC}, Reverse \ac{DPC}, and 
+		different \ac{MRAI} mean values}
+	 \label{fig:different_destinations}
+\end{figure}
+
+\Cref{fig:different_destinations} shows how, changing the soruce of the signal,
+also changes the network performances with multiple \ac{MRAI} values.
+Notice that the second y-axis, the one that represents the number of packets
+transmitted, is in log scale.
+We can use the plot in \Cref{fig:different_destinations_all} to see the 
+differences between one destination and the others, while \Cref{fig:different_destinations_mean}
+expose the differences between different strategies.
+We can see in \Cref{fig:different_destinations_all} that all the \num{10} destinations
+causes a similar behaviour with the fixed strategy and the reverse \ac{DPC}, both
+in terms of messages transmitted and also convergence time.
+In both techniques the difference between the \num{10} destinations in terms of
+convergece time is few tens of seconds, with a linear growth.
+Thanks to \Cref{fig:different_destinations_mean} is possible to see that the
+number of messages reaches a convergence value around between \num{5000} and
+\num{6000}.
+The \ac{DPC} strategy seems to bee more volatile with the growth of \ac{MRAI}
+both in terms of messages and also convergence time.
+We can clearly see from multiple green spikes in \Cref{fig:different_destinations_all}
+that the position of the source is highly affective using this strategy.
+
+\fxfatal{Consider using a table to show the average and the std var of conv time
+and messages}
+
+We can conclude that the position of the source can influence the behaviour
+of \ac{MRAI}, its most influente when the strategy used relies on topological
+information, like the \ac{DPC} strategy.
 
 \subsection{Hierarchical influence}
 \label{subsec:hierarchical_influence}
@@ -587,9 +662,194 @@ the center of the network, it could be a good way also to test strategies
 which goal is to enforce those points, for this reason I chose those two
 strategies.
 
-The reverse of the \ac{DPC} strategy is simply to opposite of it, it is going to
-set a higher \ac{MRAI} value for those nodes that are in the first part of the 
-propagation graph.
+The results in \Cref{fig:different_levels} shows the different evolution of
+the random source for each different level, from the first to the fourth.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/hierarchy/different_levels-1000_hier_1_all.pdf}
+		 \caption{Network performances evolution of all the \num{3} different signal sources 
+			with the different \ac{MRAI} strategies at the hierarchical level \num{1}}
+         \label{fig:different_levels_1}
+     \end{subfigure}
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/hierarchy/different_levels-1000_hier_2_all.pdf}
+		 \caption{Network performances evolution of all the \num{3} different signal sources 
+			with the different \ac{MRAI} strategies at the hierarchical level \num{2}}
+         \label{fig:different_levels_2}
+     \end{subfigure}
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/hierarchy/different_levels-1000_hier_3_all.pdf}
+		 \caption{Network performances evolution of all the \num{3} different signal sources 
+			with the different \ac{MRAI} strategies at the hierarchical level \num{3}}
+         \label{fig:different_levels_3}
+     \end{subfigure}
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/hierarchy/different_levels-1000_hier_4_all.pdf}
+		 \caption{Network performances evolution of all the \num{3} different signal sources 
+			with the different \ac{MRAI} strategies at the hierarchical level \num{4}}
+         \label{fig:different_levels_4}
+     \end{subfigure}
+     \hfill
+	 \caption{Network performances given \num{3} different signal sources chosen
+		randomly for each level of the Internet like graph, number of nodes 
+		\num{1000}, number of levels \num{4}, different \ac{MRAI} strategies
+		\ac{DPC} and reverse \ac{DPC} \fxfatal{figures don't have the same
+		y-axis}}
+	 \label{fig:different_levels}
+\end{figure}
+
+In \Cref{fig:different_levels} is possible to see the evolution of the network
+with different source nodes from different levels and how \ac{MRAI} influence
+the network performances.
+Starting from the first level in \Cref{fig:different_levels_1}, where the source
+node was directly connected with a node of the central clique we can see different
+important things.
+First of all, the varaince that the three different sources has is very small, 
+both in terms of messages transmitted and also convergence time.
+Both the techniques, \ac{DPC} and the reverse of it, in terms of messages
+transmitted starts from a value around \num{25000} whit \ac{MRAI} equal to 
+\SI{0}{\second} and both reaches a value under \num{10000} units.
+In terms of convergence time the reverse strategy grows linearly as expected
+while the \ac{DPC} technique is able to gain a strong reduction thanks to
+the efficient messages compression.
+Going to the second and third level, respectively in 
+\Cref{fig:different_levels_2,fig:different_levels_3} when can see thtat there
+is an increase of the varaince between the single source trends, both in terms
+of messages and also convergence time.
+Also, the number of messages transmitted slowly increases, at the beginning the 
+number of messages reaches \num{60000} units converging around \num{10000}.
+In \Cref{fig:different_levels_3} we can see the worst case scenario, not in 
+terms of varaiance between the sources, but in this case we have the worst
+performances.
+The convergence time grows even over \SI{1000}{\second} for the \ac{DPC} strategy.
+While the number of messages transmitted with \ac{MRAI} equal to \SI{0}{\second}
+touches \num{60000} reaching a convergence value slightly over \num{10000}.
+
+We can clearly see the influence that the position of the source nodes has to
+a hierarchical graph like Internet.
+The performances with \ac{MRAI} at \SI{0}{\second} are only atribuible to the
+strategic position of the source node.
+
+An other hypothesis is that there is a difference in the single nodes based
+on the position in the topology.
+Nodes that are more central, if the signal comes from closer nodes could
+react with a more explosive \textit{Path exploration} behaviour.
+If the signal comes from the periphery of the network, the other side of
+it could require more time to converge in respect of a signal that starts 
+near the center.
+
+To prove those hypotesis I decided to use the data from this set of experiments
+with \ac{MRAI} value equal to \SI{30}{\second}.
+I calculated for each node the average performances, based on the level, convergence
+time, number of messages necessary to reach the convergence state and \ac{DPC}
+centrality value (that is dependant on the position of the source).
+I have then grouped nodes that are at the same distance from the source, to 
+calculate the distance I used the distance in terms of hops in the \textit{Best
+Path}.
+I then calculated the average performances of each group.
+The results are showed in \Cref{fig:different_levels_comparison}.
+
+\begin{figure}[h]
+     \centering
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/hierarchy/dpc_all_levels_comparison_centVSmsg.pdf}
+		 \caption{\ac{MRAI} strategy \ac{DPC}, number of messages necessary on
+			average to reach convergence, levels comparison}
+         \label{fig:different_levels_comparison_dpc_msg}
+     \end{subfigure}
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/hierarchy/reverse_dpc_all_levels_comparison_centVSmsg.pdf}
+		 \caption{\ac{MRAI} strategy reverse \ac{DPC}, number of messages necessary on
+			average to reach convergence, levels comparison}
+         \label{fig:different_levels_comparison_reverse_dpc_msg}
+     \end{subfigure}
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/hierarchy/dpc_all_levels_comparison_centVStime.pdf}
+		 \caption{\ac{MRAI} strategy \ac{DPC}, convergece time levels comparison}
+         \label{fig:different_levels_comparison_dpc_time}
+     \end{subfigure}
+     \begin{subfigure}[b]{0.45\textwidth}
+         \centering
+         \includegraphics[width=\textwidth]{images/hierarchy/reverse_dpc_all_levels_comparison_centVStime.pdf}
+		 \caption{\ac{MRAI} strategy reverse \ac{DPC}, convergece time levels comparison}
+         \label{fig:different_levels_comparison_reverse_dpc_time}
+     \end{subfigure}
+     \hfill
+	 \caption{Internet like topology of \num{1000} nodes grouped by the distance
+	 from the signal source, different level comparison with \ac{MRAI} strategy
+	 \ac{DPC} and reverse \ac{DPC}, \ac{MRAI} value equal to \SI{30}{\second}
+	 \fxfatal{Maybe could be more interesting to see how \ac{DPC} vs \texit{Fixed}
+	 goes}, \fxfatal{I think this is the wrong way to show the AVG centrality, it
+	 depends on the position of the source, for the same level i cant AVG it}}
+	 \label{fig:different_levels_comparison}
+\end{figure}
+
+In \Cref{fig:different_levels_comparison} is possible to see an anlysis of the
+average nodes performanes grouped by the distance from the source of the signal.
+Those performances are taken from the case where \ac{MRAI} is equal to
+\SI{0}{\second}.
+On the left side, is possible to see the performances of the nodes that uses the
+\ac{DPC} \ac{MRAI} strategy, respectively 
+\Cref{fig:different_levels_comparison_dpc_msg,fig:different_levels_comparison_dpc_time}
+while on the other side, \Cref{fig:different_levels_comparison_reverse_dpc_msg,fig:different_levels_comparison_reverse_dpc_time},
+are showed the performances in case of a reverse \ac{DPC} strategy.
+
+In all the figures in \Cref{fig:different_levels_comparison} the blue line
+represent the average normalized centrality of the different nodes groups at the different
+levels. \fxfatal{Correct group in the plots with level}.
+Is poissible to see that in the case that the nodes are in the first or the
+second level the nodes with the highest average centrality are the nearest ones.
+While if the node is far away from the central clique the nodes with the 
+higher average centrality are in the second or third group.
+The values for those groups are low because of the high number of nodes
+in that groups, most of them having a small centrality value.
+The centrality refers to the first y-axis on the left.
+
+The two plots in \Cref{fig:different_levels_comparison_dpc_msg,fig:different_levels_comparison_reverse_dpc_msg},
+respectively the \ac{DPC} case and the reverse \ac{DPC},
+show the average number of messages required by each group of nodes to reach
+the convergence state.
+The main difference between them is in the number of messages experienced by
+the nodes near the source.
+In the \ac{DPC} case the value remains stable around \num{10} messages, while,
+with the reverce strategy this number explodes up to \num{40} messages because
+of the \textit{Path exploration} problem provoked by the central clique.
+
+Is possible to notice that some of lines endup at the $6^{th}$ group instead
+of the $7^{th}$, thats because for the level \num{1} and \num{2} there are
+no best paths to the destination that goes over the \num{6} hops.
+The same bahaviour is expected also for the convergence time performances.
+
+Those ones are presented in \Cref{fig:different_levels_comparison_dpc_time,fig:different_levels_comparison_reverse_dpc_time}.
+Is easily noticeable that with the \ac{DPC} strategy after the 
+more central groups there is a sparation between the lines, but the trends 
+are the same.
+The convergence time slowly increases in farest nodes, thanks to the particular
+\ac{MRAI} strategy that permits to wait enough to receive all the information
+necessary.
+This is also the reason for the small varaiance in therms of messages transmitted.
+With the reverse \ac{DPC} strategy, on the other hand, is possible to have a 
+more stable trend in the convergence time that linearly grows.
+This linear trend is caused by the fact that nodes could endup to send more
+\ac{ADV} in order to correct a non best route.
+This is one of the consequences of the \textit{Path Exploration} problem in
+the central nodes.
+
+Is then possible to conclude that the position of the node can highly impact 
+the \ac{MRAI} behaviour, signals from the periphery of the network can more
+easily cause \ac{ADV} storms if \ac{MRAI} is not large enough to catch them.
+Other thant that, the position can influence the performanes by itself, but
+\ac{MRAI} can help to reduce the number of messages paying a higher convergence
+time.
 
 %\begin{itemize}
 %    \item And how much is influencing the position?

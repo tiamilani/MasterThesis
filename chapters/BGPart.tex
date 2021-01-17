@@ -44,13 +44,23 @@ There are three different possible type of relations that can be created by two
 \end{itemize}
 
 During this thesis I will only consider the first two relationships \ac{c2p} and
-\ac{p2p}, the schema in \fxfatal{Insert figure} shows how the traffic is affected
+\ac{p2p}, the schema in \Cref{fig:AS_flow} shows how the traffic is affected
 based on the type of the link crossed.
 
-As showed by the flows with a different color in \fxfatal{insert figure} a single
+\begin{figure}[h]
+    \centering
+    \includegraphics[scale=0.75]{images/BGP/ASKnowledgeDistribution.pdf}
+	\caption{Distribution schema for the \acp{AS}, the row colors distinguish
+	different flows, $AS\_X$ is customer of the srevicer set, peer with the
+	peers set and servicer for the customers set}
+    \label{fig:AS_flow}
+\end{figure}
+
+
+As showed by the flows with a different color in \Cref{fig:AS_flow} a single
 \ac{AS} will share information considering the receiving link.
 If something cames from one of its customers it will share the knowledge with
-every other link that it has (always respecting the output policies).
+every other link that it has, even other customers (always respecting the output policies).
 If a route has come from its provider or a peer then it will be only shared with 
 its own customers.
 Those policies are dictated by convenience, an \ac{AS} has all the advantages when
@@ -295,11 +305,11 @@ as shoed by Fabrikant et al. \cite{fabrikant2011there}.
 Is clear that \ac{MRAI} affect the network performances, but what affects \ac{MRAI}
 and, by consequences, the performances?
 Obviously the choice itself of a different \ac{MRAI} strategy, as showed for 
-example in \cite{milani2019BGP} where the centality was used to obtain better
+example in \cite{milani2019BGP} where the centality has been used to obtain better
 results in case of network faults.
 But, giving the fact that the main function of \ac{MRAI} is to compress the 
 input messages also the sequence of messages recept could be meaningful.
-Giving that \ac{MRAI} is a link-based parmeters also the number of links that
+Giving that \ac{MRAI} is a link-based parmeter also the number of links that
 a node has could influence it, and by consequences the position in the topology.
 A well connected node will be more likely to receive multiple paths and messages
 than one with only one link.
@@ -397,10 +407,14 @@ Few years later the pubblication of the article from Pelsser et al. \cite{pelsse
 RIPE and IETF shares that says that now \ac{RFD} should be used with the updated
 parameters \cite{bush2013ripe,rfc7196}.
 Unfurtunatly, the study from Gray et al. \cite{gray2020bgp} in \num{2020} shows
-that the majority of the \ac{AS} uses \ac{RFD} with
-outdated parameters from the \ac{RFC} {2439}.
+that the majority of the \ac{AS} uses \ac{RFD} with outdated parameters 
+from the \ac{RFC} {2439}.
 
-\fxfatal{Add an end}
+\ac{RFD} can impact the network convergence time, and this behaviour is 
+mostly impacted by the threshold and the decay function applied to it.
+A more permissive threshold could be helpful in situations where the flaps are
+caused by a transitorial behaviour.
+I will study and analyze the impact of the threshold in \Cref{cha:bgp_rfd}.
 
 %\begin{itemize}
 %    \item What is RFD?
