@@ -431,7 +431,7 @@ The particularity of the \textit{Mice} experiments is in the signal, we have
 a low number of flaps interleaved by a long timer.
 I have then used a signal with \num{5} flaps, \q{AWAWAWAWAWA} with a delay
 of \SI{300}{\second} (\SI{5}{\minute}) between each message.
-The results are presented in \Cref{fig:1000_RFD_MRAI30_mice}.
+The results are presented in \Cref{fig:1000_RFD_MRAI30_mice_bis}.
 I have executed \num{50} runs for each \ac{RFD} strategy.
 
 \begin{figure}[h]
@@ -440,32 +440,32 @@ I have executed \num{50} runs for each \ac{RFD} strategy.
          \centering
          \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000MRAI30_rfd_comparison_time_boxplot.pdf}
          \caption{Convergence time respect to the RFD strategy}
-         \label{fig:1000_RFD_MRAI30_mice_time}
+         \label{fig:1000_RFD_MRAI30_mice_time_bis}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.325\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000MRAI30_rfd_comparison_messages_boxplot.pdf}
          \caption{Number of messages respect to the RFD strategy}
-         \label{fig:1000_RFD_MRAI30_mice_messages}
+         \label{fig:1000_RFD_MRAI30_mice_messages_bis}
      \end{subfigure}
      \hfill
      \begin{subfigure}[b]{0.325\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000MRAI30_rfd_comparison_suppressions_boxplot.pdf}
          \caption{Number of suppressions respect to the RFD strategy}
-         \label{fig:1000_RFD_MRAI30_mice_suppressions}
+         \label{fig:1000_RFD_MRAI30_mice_suppressions_bis}
      \end{subfigure}
 		\caption{Internet like topology 1000 nodes, MRAI=30s, random destination, 
 		5 flaps, \SI{300}{\second} message delay, Network performances,
 		\num{50} runs per strategy.}
-        \label{fig:1000_RFD_MRAI30_mice}
+        \label{fig:1000_RFD_MRAI30_mice_bis}
 \end{figure}
 
-From \Cref{fig:1000_RFD_MRAI30_mice_suppressions} we can see that there is a
+From \Cref{fig:1000_RFD_MRAI30_mice_suppressions_bis} we can see that there is a
 big difference in terms of suppressions.
 The standard strategy produces on average almost \num{1500} suppressions and the effects
-of those suppressions can be seen in \Cref{fig:1000_RFD_MRAI30_mice_time,fig:1000_RFD_MRAI30_mice_messages}
+of those suppressions can be seen in \Cref{fig:1000_RFD_MRAI30_mice_time_bis,fig:1000_RFD_MRAI30_mice_messages_bis}
 because, on average, it presents a convergence time higher than \SI{6000}{\second} 
 but with a number of total messages transmitted around \num{16000} with a very 
 low varaiance.
