@@ -9,68 +9,87 @@
 \fxfatal{Expand the concepts}
 
 What we call Internet is a single network that interconnects more than \num{60000}
-\ac{AS} that shares their knowledge in order to spread the subnets reachability.
+\acp{AS} that share their knowledge in order to spread the subnets reachability.
 An \ac{AS} is a single entity that holds and controls some \textit{IP} prefixes
 used by one or more operators.
 Every \ac{AS} is responsible for its own interconnectivity policies that controls
-the information obtained by the outside and the one from the inside.
+the spread of information obtained by the outside and the one from the inside.
 
-The propagation of the knowledge between different \ac{AS} is controlled by 
-\ac{BGP}. 
-Is possible to configure the policies inside \ac{BGP} in order to apply different
-choices to respect the constraints imposed by contract between the \ac{AS}es.
-
-\ac{BGP} is growth a lot from its first release, it now include multiple optional
-parameters that are actually more mandatory than optional.
-It is the only protocol activelly used on the Internet for the spreading 
-of \textit{IPv4} and \textit{IPv6} networks.
+\ac{BGP} is the only protocol used on the Internet that controlls the propagation 
+of the knowledge between different \acp{AS}
+\ac{BGP} has been released in \num{1989} and is in use on the internet since 
+\num{1994}.
+Since that year \ac{BGP} is growth a lot, it reaches its last version, number
+fourth, in \num{2006} \cite{rfc4271}.
+Up to now \ac{BGP} is composed by tens of \acp{RFC}, there are a lot of possibilities,
+from policies to attributes used to tag messages and give more information than
+just the path to reach the destination.
 
 Multiple of its parameters play a central role in it, and the correct setting
 of them could influence the performances of, not only the single \ac{AS} but
 the entire network.
 For this reason the research is still active to find new technologies and
-trade-off between, for example, convergence time and messages transmitted.
+trade-off between, convergence time and messages transmitted.
 
-But there are almost no studies on the correlation of those parameters.
-Even if the effects of some of them trigger other parameters.
+In this thesis, more precisely in \Cref{cha:bgp_art}, I'm going to introduce
+two of them, \ac{MRAI}, used to compress multiple input messages into one 
+output message and the \ac{RFD} parameter, that is used penalize unstable paths
+suppressing routes.
+Those two parameters goal is to control two different type of noise that 
+\ac{BGP} creates/controls.
 
-%Those commercial contracts will limits the \ac{AS} possibilities, for example
-%is possible that a constraints could be that an \ac{AS} wouldn't pass through
-%an other precise \ac{AS}
+The existence of tose two parameter has been studied separatly many different
+times, \cite{fabrikant2011there,daggitt2018rate,qiu2005optimal,gray2020bgp}.
+But, there are almost no studies on the correlation of those parameters.
+Even if the effects of one interact with the other.
 
 \section{Internet nowadays}
 \label{sec:internet_today}
 
-\begin{itemize}
-    \item Use today studies to show how internet is today
-\end{itemize}
+Internet, as a network, is constantly growing, in terms of \acp{AS}, prefixes
+and messages transmitted.
+Increasing also the load on the \ac{BGP} nodes and by consequence the load
+of the network in general.
+There are always more smaller prefixes announced, the number of $/24$ prefixes
+distributed in the last year has constantly growth.
+Data obtained from the annual report of the \ac{AS} 131072 that register data
+since \num{2007} from two APNIC \ac{BGP} speakers point, one located in Japan
+and the other in Austrelia \footnote{\href{https://blog.apnic.net/2021/01/05/bgp-in-2020-the-bgp-table/}{source APNIC data}}.
 
-\fxfatal{Maybe use some apnic data}
+This growth of the Internet is not negligible because of one, between the may, 
+problem that it has due to the \ac{BGP} protocol.
+\ac{BGP} suffers of the \textit{Path Exploration} problem, a node can enter in 
+a transitory state where it continuosly shares non optimal paths while it
+doesn't reach the stable state.
+Even few tens of nodes can generate thousends of messages due to this problem 
+\cite{deshpande2004impact}.
 
 \section{Correlation between variables and convergence}
 \label{sec:bgp_correlations}
 
-%\begin{itemize}
-%    \item Expose the hypothesis of the correlation
-%\end{itemize}
+The two parameters that will be studied in this thesis are \ac{MRAI} and \ac{RFD}
+and how the interaction between them works.
+Our first hypotesis is that, indeed, there is an interaction.
+This hypotesis is substained by the fact that both parameters operates to 
+control the noise of \ac{BGP}, with different parameters and different behaviour,
+but, if a node want to transmit a message it must respect \ac{MRAI} and the input
+could be caused by the \ac{RFD} that suppress/reintroduce a route. 
+On the opposite case a to small \ac{MRAI} value could permit different message
+storms that would trigger the \ac{RFD} suppression systems.
 
-\ac{BGP} is an intrisically noisy protocol, those noises could be due to different
-factors.
-Could be \ac{BGP} itself to produce noisy situations
-There are some parameters of \ac{BGP} that point to intercept and limit noisy 
-situations.
-The first one is \ac{MRAI}, which is a timer with the goal to compress multiple
-messages, in order that a single \ac{AS} can produce less messages.
+One of the goal of reducing the value of \ac{MRAI} is to reach a faster convergence
+paying the cost of more messages.
+Unfurtunatly, looking only to \ac{MRAI} is not possible to get reliable results
+for general purposes, in-fact, like showed in \Cref{cha:bgp_rfd}, is possible 
+to obtain the opposite result due to the fact that to solve \ac{RFD} suppressions
+is required a longer time.
 
-Forget about the possibility to converge in seconds or even sub-seconds
-when we talk about internet routing convergence there are a lot of factors
-that influence it.
-The convergence time is mostly affected by some timers that rules the Internet.
-It could require up to different minutes to achieve a complete convergence, 
-spread a new routing information to all the nodes.
+On the opposite case if we tune in the wrong way \ac{RFD} we would endup to
+be too much permissive, leaving to handle all the noise to \ac{MRAI} that could
+be not affective if the sorms are sufficently delayed in time.
 
-One of the most effective timers is \ac{MRAI} and it has been already
-proven \fxfatal{Insert citation} that whith 
+For those reasons is important to study this two parameters togheter, because
+there could be a strong co-dependance.
 
 \section{Goal of this thesis}
 \label{sec:thesis_goal}
@@ -79,10 +98,22 @@ proven \fxfatal{Insert citation} that whith
 %    \item Why is important understand this correlation?
 %\end{itemize}
 
-Is important to study the correlation between those parameters because Internet
-is not built on just one of them.
-Tuning one parameter is important to understand the effects on the others, and
-viceversa.
+The goal of this thesis is to prove that the noise detectors of the \ac{BGP} 
+protocol are correlated, studing this correlation through simulative experiments
+and from that give useful hints on how those two parameters interact one another.
+In order to build the basis for future experiments that can study more deeply 
+and maybe in a more formal way the phenomen.
+Is also mandotory for this thesis to develop the platform where those experiments
+would be executed and make that platform publically available
+\footnote{\href{https://github.com/tiamilani/BGPFSM}{GitHub repository}}.
 
-This thesis has the goal to gives a useful help to the understanding of this
-protocol interoperation on a more global scale.
+In \Cref{cha:bgp_art} are going to be presented the protocol and more deeply
+the two parameters studied, while in \Cref{cha:des} I'm going to present
+the structure of the platform that will be used in \Cref{cha:bgp_fsm,cha:bgp_mrai_experiments,cha:bgp_rfd} 
+to perform the experiments about the \textit{Path Exploration} problem and then
+how \ac{MRAI} and \ac{RFD} can impact th performances, conclusions to follow
+in \Cref{cha:conclusion}.
+
+The \ac{BGP} community has not yet reached a common agreement on what values 
+to use for this reason I will evaluate different possible techniques that can 
+be applied to both the parameters and comment the network performances obtained.

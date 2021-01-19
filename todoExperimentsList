@@ -1,8 +1,8 @@
 [V] End random experiments
 [V] Run different signal sources and plot them
-[] Move plots to the mrai signals section
+[V] Move plots to the mrai signals section
 [V] Run different hierarchical level experiments with the signal AWAWAWAW
-[] Move plots to the mrai level section
+[V] Move plots to the mrai level section
 [V] Move RFD clique experiments
 [V] Update RFD clique experiments plot comments (use the fixme)
 [?] Plot again the boxplots in the appendix
@@ -18,7 +18,8 @@
 [V] Comments again the plots in RFD internet like
 	V Mice
 	V Elephants
-[] Move topologies to the previous chapter from DES
+[~] Move topologies to the previous chapter from DES
+[] Update the environments section of the DES chapter
 [~] BGP state of the ART
 	V talk about the two type of noise
 [] Introduction
