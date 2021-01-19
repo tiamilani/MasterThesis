@@ -114,23 +114,20 @@ of the protocol with packet loss, but it could be a future work.
 \subsection{Clique environment}
 \label{subsec:clique_env}
 
-One of the special environment that I used it's composed by a clique graph
-graph of different dimensions, an example of clique graph is given in
-\Cref{fig:clique_graph}.
-
-\begin{figure}[h]                                                               
-    \begin{center}                                                              
-        \input{images/tikzpictures/clique_graph}
-    \end{center}                                                                
-    \caption{Clique graph example}                                
-    \label{fig:clique_graph}
-\end{figure}
+One of the special environment that I used in my experiments uses clique 
+graphs of different dimensions, an example of clique graph is given in
+\Cref{fig:clique_topology}.
 
 The only node that shares a destination is the node \q{\textit{d}}, the node
 \num{0} will then spread the knowledge to the whole network, and the node 
 \q{\textit{x}} will act as a black hole for all the possible paths
 that the node \num{5} will share.
-This topology is used to enforce the path exploration problem.
+
+This topology is used to enforce the \textit{Path exploration} problem, it also
+gives the possibility to study how \ac{BGP} parameters can influence the messages
+distribution in stresfull cases like the clique one.
+I'm going also to study how the variation of those parameters from the standard
+ones can impact the performances in this environment of high load.
 
 \subsection{Fabrikant environment}
 \label{subsec:fabrikant_env}
@@ -138,64 +135,49 @@ This topology is used to enforce the path exploration problem.
 Another interesting chase to test the path exploration problem is the one
 presented in \cite{fabrikant2011there}.
 In that study, Fabrikant et al. presents how particular \ac{MRAI} setting could 
-make the network converge with an exponential behaviour because of the path
-exploration problem.
+make the network converge with an exponential behaviour because of the 
+continuous decision change in terms of best paths from the nodes. 
 I used the basic example of their study to investigate how the choice of \ac{MRAI}
 is fundamental for the network convergence.
-An example of the network used is presented 
-in \Cref{fig:fabrikant_graph}.
+An example of the network used is presented in \Cref{fig:fabrikant_topology}.
 
-\begin{figure}[h]                                                               
-    \begin{center}                                                              
-        \input{images/tikzpictures/fabrikant_graph}
-    \end{center}                                                                
-    \caption{Fabrikant chain graph example}                                
-    \label{fig:fabrikant_graph}
-\end{figure}
-
-The path exploration problem is caused by the delay on the node \num{0}-\num{2}
-edge. The node 2 will receive the destination through node 1, after a small amount
+The path exploration problem is caused by the delay on the \num{0}-\num{2}
+edge. The node \num{2} will receive the destination through node \num{1}, after a small amount
 of time the network will converge to the best path (without using the backup links).
 But, after a while, node \num{2} will receive the network also through node \num{0}
-and it will prefer this new path, provoking than the reconfiguration of all
+and it will prefer this new path, provoking then the reconfiguration of all
 the other nodes that will use the backup links for a while, announcing their 
-new path.
+new paths.
 A wrong configuration of \ac{MRAI} can provoke the entire exploration of the 
 possibility set.
+
+This environment is also used to show how a \ac{BGP} \ac{FSM} would explode
+in terms of possible states and edges producing an enourmous ammount of possible
+output signals from the same input.
 
 \subsection{Internet-like environment}
 \label{subsec:internet_like_env}
 
-The last noteworthy environment is the one whose purpose is to simulate Internet
+The last noteworthy environment is the one which purpose is to simulate the Internet
 behaviour.
 This has been possible thanks to the study by Elmokashfi et al. \cite{elmokashfi2010scalability}
 and the internet like graph generator present in Networkx \footnote{\href{https://networkx.org/documentation/stable/reference/generated/networkx.generators.internet_as_graphs.random_internet_as_graph.html\#networkx.generators.internet_as_graphs.random_internet_as_graph}{Networkx internet as graph generator}}
-(a python library famous for graph and network studies).
-An example with a small set of nodes is presented in \Cref{fig:internet_graphs}
-
-\begin{figure}[ht]
-     \centering
-     \begin{subfigure}[b]{0.37\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/internet_graph/graph-100-colored.pdf}
-		 \caption{Internet like graph with an \q{explosive} layout}
-         \label{fig:internet_graph_explosive}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.37\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/internet_graph/graph_dot.pdf}
-		 \caption{Internet like graph with a \q{hierarchical} layout}
-         \label{fig:internet_graph_hierarchical}
-     \end{subfigure}
-        \caption{Internet like graph colored to show the hierarchically structure,
-4 types of nodes, T (tier 1 mesh), M, CP, C (Customers, purple one)}
-        \label{fig:internet_graphs}
-\end{figure}
+(a Python library famous for graph and network studies).
+An example with a small set of nodes is presented in \Cref{fig:internet_like_topology}.
 
 The different nodes are colored accordingly with the node type represented.
 The tier one nodes that generate the central clique are colored in red and
-is possible to notice in \Cref{fig:internet_graph_hierarchical} that them are
+is possible to notice in \Cref{fig:internet_topology_hierarchical} that them are
 in the highest levels of the networks.
 This environment has been used to study the behaviour of the network with 
 topologies resembling the real internet.
+
+In the next studies I generally refers to this kind of topology with the 
+terms \q{Internet-like}, and the dimension is never less than \num{1000} nodes,
+otherwise is not possible to ensure all the Internet topological properties.
+
+The goal of the experiments that uses those kind of topologies is to study
+the general network performances in terms of average convergence time and 
+number of messages transmitted.
+This would help to see and study behaviour that are more tipical in the actual
+Internet.
