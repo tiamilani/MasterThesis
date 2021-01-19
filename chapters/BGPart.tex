@@ -4,11 +4,11 @@
 \ac{BGP} is the protocol used to control the information spreading on the Internet.
 It is at the version \num{4} published in \num{2006} with the \ac{RFC} \num{4271}
 \cite{rfc4271}.
-\ac{BGP} is a \ac{PV} protocol, it distinguish itself from the \ac{DV} and \ac{LS}
+\ac{BGP} is a \ac{PV} protocol, it distinguishes itself from the \ac{DV} and \ac{LS}
 protocols with the major difference that it shares other than the knowledge of
 a path also the path itself to reach the destination.
 
-\ac{BGP} has two major sub-cateogies with a difference in the flow of information
+\ac{BGP} has two major sub-categories with a difference in the flow of information
 direction:
 \begin{itemize}
 	\item \textbf{\textit{\ac{eBGP}}}, we talk about \ac{eBGP} when the
@@ -20,22 +20,22 @@ direction:
 \end{itemize}
 
 My main interest in this thesis is for the \ac{eBGP} part of the protocol, for
-now on I will refer to it talink in general of \ac{BGP} without further distinguish
+now on I will refer to it talking in general of \ac{BGP} without further distinguishing
 from the internal protocol.
 
 When there is an interconnection between two \acp{AS} that creates a \ac{BGP}
-link, I will talk about peering refering to thi connection, and those \ac{BGP} 
+link, I will talk about peering referring to the connection, and those \ac{BGP} 
 speakers interconnected will be the peers.
 Each \ac{BGP} connection is based on a direct \ac{TCP} connection.
-On this links every \ac{AS} can configure its own policies that would be used
+On these links, every \ac{AS} can configure its own policies that would be used
 to evaluate routes at the reception or at the output \fxfatal{Find a better word}.
 There are three different possible type of relations that can be created by two
 \ac{BGP} speaker, accordingly to the \ac{CAIDA}:
 
 \begin{itemize}
-	\item \textbf{\textit{\ac{c2p}}} This relationship higlights the fact that
-		lower \ac{AS} pays a hiher level \ac{AS} to get connectivity and access
-		to the Ineternet;
+	\item \textbf{\textit{\ac{c2p}}} This relationship highlights the fact that
+		lower \ac{AS} pays a higher level \ac{AS} to get connectivity and access
+		to the Internet;
 	\item \textbf{\textit{\ac{p2p}}} This relationship is used to share the knowledge
 		between two \acp{AS} of their customer providers without paying a higher
 		level \ac{AS};
@@ -43,32 +43,32 @@ There are three different possible type of relations that can be created by two
 		between \acp{AS} under the same \ac{ISP}.
 \end{itemize}
 
-During this thesis I will only consider the first two relationships \ac{c2p} and
+During this thesis, I will only consider the first two relationships \ac{c2p} and
 \ac{p2p}, the schema in \Cref{fig:AS_flow} shows how the traffic is affected
 based on the type of the link crossed.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[scale=0.75]{images/BGP/ASKnowledgeDistribution.pdf}
-	\caption{Distribution schema for the \acp{AS}, the row colors distinguish
-	different flows, $AS\_X$ is customer of the srevicer set, peer with the
+	\caption{Distribution schema for the \acp{AS}, the row colours distinguish
+	different flows, $AS\_X$ is a customer of the servicer set, a peer with the
 	peers set and servicer for the customers set}
     \label{fig:AS_flow}
 \end{figure}
 
 
-As showed by the flows with a different color in \Cref{fig:AS_flow} a single
+As shown by the flows with a different color in \Cref{fig:AS_flow} a single
 \ac{AS} will share information considering the receiving link.
-If something cames from one of its customers it will share the knowledge with
+If something comes from one of its customers it will share the knowledge with
 every other link that it has, even other customers (always respecting the output policies).
 If a route has come from its provider or a peer then it will be only shared with 
 its own customers.
 Those policies are dictated by convenience, an \ac{AS} has all the advantages when
 other \acp{AS} decide to use it to reach a specific destination.
 
-This behaviour can be modeled with a variant of the \ac{SSP} algebra described
+This behaviour can be modelled with a variant of the \ac{SSP} algebra described
 in \cite{daggitt2018rate}.
-This is the same algebra that will be used in \Cref{cha:des} to describe link
+This is the same algebra that will be used in \Cref{cha:des} to describe the links
 relationships.
 
 %\begin{itemize}
@@ -80,10 +80,10 @@ relationships.
 \section{BGP}
 \label{sec:bgp_intro}
 
-Once a \ac{BGP} node has estabilished a connection with an other peer it will
+Once a \ac{BGP} node has established a connection with another peer it will
 start to exchange routes with that neighbour, always respecting the policies.
 
-Every \ac{BGP} nodes has a \ac{RIB} as data structure to keep the information
+Every \ac{BGP} nodes have a \ac{RIB} as data structure to keep the information
 about the received routes, the alternative routes and what should be exported.
 The \ac{RIB} is divided into \num{3} sections.
 \begin{itemize}
@@ -97,19 +97,19 @@ The \ac{RIB} is divided into \num{3} sections.
 \end{itemize}
 
 One of the most important part of \ac{BGP} is its decision process, that would
-be applyed to discern between the routes in the \textit{ADJ-RIB\_in} in order
+be applied to discern between the routes in the \textit{ADJ-RIB\_in} in order
 to update the \textit{LOC-RIB} and, if necessary also the \textit{ADJ-RIB\_out}.
 The decision process is composed by three parts:
 \begin{itemize}
 	\item[1] Calculation of the preference: This function is called every time
-		there are new rechability information that needs to be evaluated, it 
+		there are new reachability information that needs to be evaluated, it 
 		will assign/update the preference value at every route in the 
-		\textit{ADJ-RIB\_in} using policy filters preconfigured. If a route
-		doesn't respect the policy filters it will be then marked as ineligeble,
+		\textit{ADJ-RIB\_in} using policy filters pre-configured. If a route
+		doesn't respect the policy filters it will be then marked as ineligible,
 		otherwise a \textit{PREF\_VALUE} will be calculated and assigned to the
 		route.
 	\item[2] Route selection: This function is called at the end of the first
-		phase, it collects all the eligeble routes and evaluate them removing
+		phase, it collects all the eligible routes and evaluate them removing
 		routes that would create loops or that creates conflicting situations.
 		The evaluated routes are then ordered by the \textit{PREF\_VALUE} and
 		then the best route will be then installed in the \textit{LOC-RIB}.
@@ -142,35 +142,35 @@ transmitting:
 		a destination anymore.
 \end{itemize}
 Inside those packets there are different attributes that permit to transfer 
-information about the route (advertised or withdrawd).
+information about the route (advertised or withdrawed).
 There is an attribute that describe the address that the route represents,
 another one that contains the path that will be used to reach the 
 destination, the next hop used, etc.
 During the year multiple new \ac{RFC} have introduced, modified, updated, removed
-attributes that can be found inside an advertisemente message.
-Not all the attributes are mandatory for \ac{BGP} nodes, infact for a node
+attributes that can be found inside an advertisement message.
+Not all the attributes are mandatory for \ac{BGP} nodes, in fact, for a node
 is possible to receive a route with attribute that it is not able to interpret
 but (if configured to do so) it will share the route with also the unknown 
 attributes.
 
 Is important to remember that all those information are useful for the policy
 filter that every node can have, for example some nodes would automatically discard
-any route that contains a specifi \ac{AS} in the received path.
+any route that contains a specific \ac{AS} in the received path.
 
 The \textit{Update-send} process is responsible for the distribution of the 
 messages that are stored in the \textit{ADJ-RIB\_out}.
 It should execute again some checks on the \ac{RIB}, removing unfeasible routes
-and remving routes that has already been advertised to the pear.
-It also has to respect a temportal constraint, introduced in \cite{rfc4271}, 
+and removing routes that has already been advertised to the pear.
+It also has to respect a temporal constraint, introduced in \cite{rfc4271}, 
 a \ac{BGP} speaker can't send to the same neighbour routes for the same destination
 more often than the \ac{MRAI} value.
-\ac{MRAI} act as a timer which goal is to avoid continous update storm caused
+\ac{MRAI} act as a timer which goal is to avoid continuous update storm caused
 by decision changes in some peers in the network.
 
 Another property that can be found in \ac{BGP} nodes that affects the messages
 transmitted is the \ac{IW}.
-This property permits to reduce the number of messages tha are distributed.
-Without this option when a \ac{BGP} node discover a new besth path to reach
+This property permits to reduce the number of messages that are distributed.
+Without this option when a \ac{BGP} node discover a new best path to reach
 a destination should send a withdraw followed by an update to its neighbourhood.
 Thanks to this option is sufficient to send just the update, the other nodes 
 will learn that the best path is changed simply looking to the previous 
@@ -202,30 +202,30 @@ noise caused by external sources.
 Those two type of noises are triggered by different causes but are substantially
 not discernible one another.
 
-The first one is caused by the protocol itself when it tryies to convergence 
+The first one is caused by the protocol itself when it tryes to convergence 
 on new knowledge.
 The sharing of new routes can cause new \ac{ADV} that can then trigger the
 \textit{Path Exploration} problem.
-This is a noise caused by the protocol itself that acts as eco chamber for 
-new best paths that changes untill the best possible path is taken in consideration.
+This is a noise caused by the protocol itself that acts as eco-chamber for 
+new best paths that changes until the best possible path is taken in consideration.
 
-One \ac{BGP} parameter tries to limit this noise acting as a message chache with
+One \ac{BGP} parameter tries to limit this noise acting as a message cache with
 a compression system.
 This parameter is \ac{MRAI} and it permits to avoid sending a message for every
 new one received using a timer.
 Only the best decision after that time will be shared.
 
 The second type of noise is caused by a source outside the protocol.
-A missconfiguration, a faulty interface can cause the send of not necessary messages.
-For example the withdraw and the advertisement of a route at continous intervarl.
+A miss-configuration, a faulty interface can cause the send of not necessary messages.
+For example the withdraw and the advertisement of a route at continuous interval.
 This type of behaviour will cause continuous storms of messages and the triggering
 of the first noise type.
 
 \ac{BGP} introduce a parameter with the \ac{RFC} \num{2439} \cite{rfc2439} that
 is called \ac{RFD} to overcome this behaviour.
-This paramter increases a value every time a flap or a route change are detected,
+This parameter increases a value every time a flap or a route change are detected,
 when this value passes a predefined threshold the route will be suppressed.
-This value will alway decay using an exponential decay function, even if it 
+This value will always decay using an exponential decay function, even if it 
 doesn't overpass the threshold.
 Once the route has been suppressed the \ac{BGP} speaker must wait enough time
 that the value goes below an other threshold before sharing it again.
@@ -246,7 +246,7 @@ will experience the path exploration problem.
 \label{sec:bgp_mrai}
 
 \ac{MRAI} is one of the parameters that mostly affect the convergence of \ac{BGP}
-A high value of it could unnecesarly delay the transmission of messages, but
+A high value of it could unnecessarily delay the transmission of messages, but
 in the opposite case a value too small can provoke a lot of messages, one for
 every decision change of the node.
 There are a lot of studies about it, and it has already been showed that
@@ -254,7 +254,7 @@ the number of messages and the convergence of time can depend on it \cite{griffi
 It has been also already proven by Fabrikant, Rexford et al. \cite{fabrikant2011there} 
 that an incorrect configuration of it could lead to tremendous consequences.
 
-\ac{MRAI} has been introduced in the \num{4}th version of \ac{BGP} \cite{rfc4271} and
+\ac{MRAI} has been introduced in the \num{4}Th version of \ac{BGP} \cite{rfc4271} and
 it is nowadays a mandatory argument for every \ac{BGP} node, otherwise the load
 in terms of messages to process and decision changes would be incalculable.
 Its main purpose, as anticipated in \Cref{sec:bgp_noise} is to prevent, or
@@ -266,13 +266,13 @@ The timer is peer-based, for each interconnection an \ac{AS} could have a differ
 \ac{MRAI}, but it acts for every destination in parallel, this means that there 
 is a different timer for each destination that a node would share for every 
 \ac{BGP} relations that it has.
-The idea behind it is taht in this time the \ac{BGP} node will be able
+The idea behind it is that in this time the \ac{BGP} node will be able
 to receive other possible routes, evaluate them and send a decision on the 
 best route considering multiple alternatives.
 It has the property to compress the input messages sequence in order to have
 an output message sequence with a smaller number of \ac{ADV}.
 
-The use of \ac{MRAI} is as follow every time the route selection proces change
+The use of \ac{MRAI} is as follow every time the route selection process change
 a route in the \textit{OUT} \ac{RIB} of a neighbour:
 \begin{itemize}
 	\item If there isn't an active \ac{MRAI} timer for the destination change
@@ -285,31 +285,31 @@ a route in the \textit{OUT} \ac{RIB} of a neighbour:
 
 The second passage permits to the route selection process to be executed multiple
 times before the actual transmission of the decision.
-Thats because \ac{MRAI} limits only the transmission and not the decsion process.
+That because \ac{MRAI} limits only the transmission and not the decision process.
 The condition to the last passage is due to the fact that the compression some
-times could lead to the unnecessity to actually send a message.
+times could lead to the not necessity to actually send a message.
 
 The default value defined in the \ac{RFC} \num{4271} for \ac{MRAI} is equal to
 \SI{30}{\second}.
 But, \ac{MRAI} is a really controversial parameter, it has received multiple
-revesions and studies.
+revisions and studies.
 In \num{2008} there has been a proposal to reset it default value to \SI{5}{\second}
 \cite{jakma2008revised} thanks to different studies that takes in consideration
 the dimension of the topology and the latency \cite{qiu2005optimal}.
 In \num{2010} a proposal \ac{RFC} of \textit{IETF} \cite{jakma2010revisions} 
 says that the default would be left to the arbitrary choice of the operators and
-that withdraw message could compleatly avoid it.
+that withdraw message could completely avoid it.
 But this freedom would damage the convergence and the number of messages distributed
-as shoed by Fabrikant et al. \cite{fabrikant2011there}.
+as should by Fabrikant et al. \cite{fabrikant2011there}.
 
 Is clear that \ac{MRAI} affect the network performances, but what affects \ac{MRAI}
 and, by consequences, the performances?
 Obviously the choice itself of a different \ac{MRAI} strategy, as showed for 
-example in \cite{milani2019BGP} where the centality has been used to obtain better
+example in \cite{milani2019BGP} where the centrality has been used to obtain better
 results in case of network faults.
 But, giving the fact that the main function of \ac{MRAI} is to compress the 
 input messages also the sequence of messages recept could be meaningful.
-Giving that \ac{MRAI} is a link-based parmeter also the number of links that
+Giving that \ac{MRAI} is a link-based parameter also the number of links that
 a node has could influence it, and by consequences the position in the topology.
 A well connected node will be more likely to receive multiple paths and messages
 than one with only one link.
@@ -327,13 +327,13 @@ than one with only one link.
 \ac{RFD} is a parameter introduced in \ac{BGP} to overcome the problems caused
 by the exterior sources of noise.
 Its main function is to avoid fluctuating routes to overload \ac{BGP} nodes 
-with continous message storms.
+with continuous message storms.
 It has been introduced with the \ac{RFC} \num{2439} in \num{1998} \cite{rfc2439}.
-Also \ac{RFD} is a controversial parameter, it has been studied and revaluated
+Also \ac{RFD} is a controversial parameter, it has been studied and evaluated again
 different times, but recent studies showed that the majority of the operators 
 still use deprecated values from \num{2001} \cite{gray2020bgp}.
-Furthermore, other studies shows that the majority of the \ac{ADV} that thravels
-through the Internet are genereated by a restricted set of \ac{AS} but \ac{RFD}
+Furthermore, other studies shows that the majority of the \ac{ADV} that travels
+through the Internet are generated by a restricted set of \ac{AS} but \ac{RFD}
 seems to be to restrictive and affect the majority of the \acp{AS} traffic
 \cite{pelsser2011route}.
 
@@ -348,7 +348,7 @@ the announcement of a route, a path change is also considered a flap, even
 if thanks to \ac{IW} is limited to just one \ac{ADV}.
 
 There are other parameters that are part of this \ac{BGP} component, the more 
-importants are presented in \Cref{tbl:rfd_defaults}.
+important are presented in \Cref{tbl:rfd_defaults}.
 
 \begin{table}[ht]
 	\input{tables/rfd_defaults}
@@ -357,14 +357,14 @@ importants are presented in \Cref{tbl:rfd_defaults}.
 \end{table}
 
 Other than the name of the parameters in \Cref{tbl:rfd_defaults} is showed also
-the default value decide by cisco.
+the default value decide by Cisco.
 The \ac{RFC} \num{2439} \cite{rfc2439} gives some guidelines on how to set those
 values but actual choice is left to the discretion of implementors.
 The first three parameters, \textit{Withdraw, re-advertisement, attribute change}
 represent the penalty applied to the \textit{figure of merit} when the omonim event
 happen.
 The \textit{suppression threshold} represent the level at which the \ac{BGP} node will
-suppress the route and don't advertise it untill the figure of merit goes
+suppress the route and don't advertise it until the figure of merit goes
 below the \textit{reuse threshold}.
 The decay of the \textit{figure of merit} follows a quadratic decay function
 which rate is calculated using the \textit{Half-life} parameter.
@@ -385,8 +385,8 @@ This image has been taken from \cite{gray2020bgp}.
     \label{fig:figure_of_merit}
 \end{figure}
 
-\Cref{fig:figure_of_merit} shows an hipotetic evolution of the \ac{RFD} filter,
-it doesn't relay on the default value of the cisco implementation.
+\Cref{fig:figure_of_merit} shows an hypnotic evolution of the \ac{RFD} filter,
+it doesn't relay on the default value of the Cisco implementation.
 Is possible to see in the lower part of the plot the messages received by the
 \ac{BGP} speaker, yellow one represent withdraws while the green are announcements.
 Is possible to see that the penalty value grows at each flaps and as soon it reaches
@@ -397,16 +397,16 @@ route again.
 Is possible to see that \ac{RFD} doesn't make any difference on its own on what
 is causing the flaps, it simply reacts to the actual situation of the network.
 Is not even possible to determine where is located the flap, if is the source
-that is flapping havily for some reasons or an \ac{AS} in the middle of the
+that is flapping heavily for some reasons or an \ac{AS} in the middle of the
 path that is malfunctioning.
 
 \ac{RFD} has a troubled history, maybe even more than \ac{MRAI}.
-In \num{2006}, thanks to the pubblication of \cite{mao2002route}, RIPE-378
-\cite{smith2006ripe} recomends to disable it.
-Few years later the pubblication of the article from Pelsser et al. \cite{pelsser2011route}
+In \num{2006}, thanks to the publication of \cite{mao2002route}, RIPE-378
+\cite{smith2006ripe} recommends to disable it.
+Few years later the publication of the article from Pelsser et al. \cite{pelsser2011route}
 RIPE and IETF shares that says that now \ac{RFD} should be used with the updated
 parameters \cite{bush2013ripe,rfc7196}.
-Unfurtunatly, the study from Gray et al. \cite{gray2020bgp} in \num{2020} shows
+Unfortunately, the study from Gray et al. \cite{gray2020bgp} in \num{2020} shows
 that the majority of the \ac{AS} uses \ac{RFD} with outdated parameters 
 from the \ac{RFC} {2439}.
 
@@ -452,10 +452,10 @@ possible to assume that this also represent the geographical graph.
 In fact, one \ac{AS} can have multiple connections with an other \ac{AS}
 that are distributed along different geographical points.
 Is also possible to have a connection through a tunnel that will permit to have
-a connection that phisically pass over other devices.
+a connection that physically pass over other devices.
 Is possible to see an example of this distinction in \Cref{fig:astopology_vs_internet}
 
-\begin{figure}[h]
+\begin{figure}[ht]
      \centering
      \begin{subfigure}[b]{0.45\textwidth}
          \centering
@@ -476,11 +476,11 @@ Is possible to see an example of this distinction in \Cref{fig:astopology_vs_int
 \end{figure}
 
 In this thesis I will consider only the first case, all my topologies are composed by
-the connections between the \acp{AS} without considering the actual phisical layer
+the connections between the \acp{AS} without considering the actual physical layer
 where this interconnections resides.
 
 I will then use three different topologies to show particular situations or 
-bahaviour of the network with certain events.
+behaviour of the network with certain events.
 \begin{itemize}
 	\item \textbf{\textit{Clique topology}}, This topology represent the higher
 		level of the internet, in fact, all the Tier one nodes are interconnected
@@ -509,7 +509,7 @@ This topology will be used for the same purpose in this thesis, an example
 of it is showed in \Cref{fig:fabrikant_topology}.
 \fxfatal{Expand?}
 
-\begin{figure}[h]
+\begin{figure}[ht]
      \centering
      \begin{subfigure}[b]{0.45\textwidth}
          \centering
