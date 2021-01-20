@@ -8,7 +8,7 @@ The majority of the studies uses small graphs and each node
 of the graph simulate the behaviour of a \ac{BGP} speaker.
 Each node represent also a single \ac{AS} and the \ac{BGP} speaker is it's own
 exterior router, for simplicity, reduced to one speaker that handles all the
-connections.
+connections. 
  
 For this reason, I decided to use and expand a \ac{DES} that permits to have
 different grades of freedom, respecting on the other side all the properties
@@ -48,8 +48,8 @@ Policies are encoded using the convention described in \cite{daggitt2018rate}.
  </edge> 
 \end{lstlisting}
 
-The graph is then embedded in the environment file, this file is in \textit{json}
-format and it describes how the environment is characterized, it gives the
+The graph is then embedded in the environment file, this file is in \textit{JSON}
+format and it describes how the environment is characterized, it gives the 
 initial values for the \ac{RNG} so that each experiment is replicable and
 other properties, like where the output should be saved, and, most importantly
 how the experiment should be conducted.
@@ -64,7 +64,7 @@ There is two possible evolution of the environment:
     a withdraw and another announce.
 \end{itemize}
 
-The \ac{DES} take as input this \textit{json} file where all the information
+The \ac{DES} take as input this \textit{JSON} file where all the information
 are described, it creates an object for each node in the graph file, with
 each own characteristics.
 After the initialization, all the nodes that contain a destination will schedule
@@ -79,12 +79,12 @@ whole network.
 \section{DES Environments}
 \label{sec:des_environment}
 
-Thanks to the environment codification in a \textit{json} file is possible to
-define experiments with a high grade of freedom.
+Thanks to the environment codification in a \textit{JSON} file is possible to
+define experiments with a high grade of freedom. 
 Is possible to define multiple delays as probability functions vectors that
 will provide multiple runs possibility. For example, if we have \num{5} different
 possible seeds and \num{3} different delays, the total number of runs combinations
-is \num{15}, as showed in Code \ref{lst:environment_example}.
+is \num{15}, as shown in Code \ref{lst:environment_example}.
 is possible to run one of the possible combinations of parameters through the identifier
 of the single run.
 
@@ -109,13 +109,13 @@ Though the \textit{delay} parameter is possible to define the default delay on t
 is important to remember that the links are FIFO so there is no reordering
 of messages in the same link, there is also no messages lost.
 That because it was out of the scope of this thesis to study the evolution
-of the protocol with packet loss, but it could be a future work.
+of the protocol with packet loss, but it could be future work.
 
 \subsection{Clique environment}
 \label{subsec:clique_env}
 
 One of the special environment that I used in my experiments uses clique 
-graphs of different dimensions, an example of clique graph is given in
+graphs of different dimensions, an example of the clique graph is given in
 \Cref{fig:clique_topology}.
 
 The only node that shares a destination is the node \q{\textit{d}}, the node
@@ -125,7 +125,7 @@ that the node \num{5} will share.
 
 This topology is used to enforce the \textit{Path exploration} problem, it also
 gives the possibility to study how \ac{BGP} parameters can influence the messages
-distribution in stresfull cases like the clique one.
+distribution in stressful cases like the clique one.
 I'm going also to study how the variation of those parameters from the standard
 ones can impact the performances in this environment of high load.
 
@@ -135,7 +135,7 @@ ones can impact the performances in this environment of high load.
 Another interesting chase to test the path exploration problem is the one
 presented in \cite{fabrikant2011there}.
 In that study, Fabrikant et al. presents how particular \ac{MRAI} setting could 
-make the network converge with an exponential behaviour because of the 
+make the network converge with exponential behaviour because of the 
 continuous decision change in terms of best paths from the nodes. 
 I used the basic example of their study to investigate how the choice of \ac{MRAI}
 is fundamental for the network convergence.
@@ -152,32 +152,32 @@ A wrong configuration of \ac{MRAI} can provoke the entire exploration of the
 possibility set.
 
 This environment is also used to show how a \ac{BGP} \ac{FSM} would explode
-in terms of possible states and edges producing an enourmous ammount of possible
+in terms of possible states and edges producing an enormous ammount of possible
 output signals from the same input.
 
 \subsection{Internet-like environment}
 \label{subsec:internet_like_env}
 
-The last noteworthy environment is the one which purpose is to simulate the Internet
+The last noteworthy environment is the one whose purpose is to simulate the Internet
 behaviour.
 This has been possible thanks to the study by Elmokashfi et al. \cite{elmokashfi2010scalability}
 and the internet like graph generator present in Networkx \footnote{\href{https://networkx.org/documentation/stable/reference/generated/networkx.generators.internet_as_graphs.random_internet_as_graph.html\#networkx.generators.internet_as_graphs.random_internet_as_graph}{Networkx internet as graph generator}}
 (a Python library famous for graph and network studies).
 An example with a small set of nodes is presented in \Cref{fig:internet_like_topology}.
 
-The different nodes are colored accordingly with the node type represented.
-The tier one nodes that generate the central clique are colored in red and
-is possible to notice in \Cref{fig:internet_topology_hierarchical} that them are
+The different nodes are coloured accordingly with the node type represented.
+The tier one nodes that generate the central clique are coloured in red and
+is possible to notice in \Cref{fig:internet_topology_hierarchical} that they are
 in the highest levels of the networks.
 This environment has been used to study the behaviour of the network with 
 topologies resembling the real internet.
 
-In the next studies I generally refers to this kind of topology with the 
+In the next studies, I generally refer to this kind of topology with the 
 terms \q{Internet-like}, and the dimension is never less than \num{1000} nodes,
 otherwise is not possible to ensure all the Internet topological properties.
 
-The goal of the experiments that uses those kind of topologies is to study
+The goal of the experiments that use that kind of topologies is to study
 the general network performances in terms of average convergence time and 
-number of messages transmitted.
-This would help to see and study behaviour that are more tipical in the actual
+the number of messages transmitted.
+This would help to see and study behaviours that are more typical in the actual
 Internet.
