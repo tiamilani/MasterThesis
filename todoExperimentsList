@@ -18,10 +18,52 @@
 [V] Comments again the plots in RFD internet like
 	V Mice
 	V Elephants
-[~] Move topologies to the previous chapter from DES
-[] Update the environments section of the DES chapter
-[~] BGP state of the ART
+[V] Move topologies to the previous chapter from DES
+[V] Update the environments section of the DES chapter
+[V] BGP state of the ART
 	V talk about the two type of noise
-[] Introduction
+[V] Introduction
 [] Summary
 [V] Title
+
+[V] fixme pg 6, df 1
+[~] fixme pg 9, remvove but propose new experiments, df 1
+[V] pg 12 expand topology, df 5
+[V] pg 12 introduce valley free concept, df 2
+[] pg 14 insert citations on des simulators df 5
+[V] pg 14 cref implementation of the code, remove it df 0
+[V] pg 18 cumbersome paragraf, df 8
+[V] pg 23, find a better end for the chapter, df 5
+[V] pg 24, check sentence, df 3
+[V] pg 27, cumbersome paragraph, df 8
+[V] pg 27, consider a comparison figure, df 2
+[V] pg 29, make both figures of the same dimension
+[V] pg 30, explain why, df -
+[V] pg 30, consider moving figures to the chapter, df 2
+[] pg 32, consider using a table to show the varaiance, df 7
+[V] pg 37, explain better the concept, df 4
+[V] pg 40, insert apnic citation, df 2
+[V] pg 42, add conclusion, df 4
+[V] pg 43, elaborate again the end of the section, df 5
+[V] pg 44, check phrase, df 7
+[X] pg 47, bibliography adjust -> Not solvable, IEEtran.sty not working
+[V] pg 51, reproduce the plots in figure a7, df 3, pr 1
+[V] pg 52, remove clear page, df 0
+
+[V] pg 33, correct from group to level, df 2
+[V] pg 20, figure 4.5b not readable, move it to a single column figure df 1
+[] pg 18 remove messages from figures 4.3 etc, duable df 5
+[V] figure 2.3 remove dots, df 3
+[V] fig 2.1, split the two links, check if servicer is spelled correctly, df 1
+[V] pg 25, adapt y axis, df 4
+[V] pg 34, adapt y axis, df 2
+[] pg 34, Adjust y-axis ticks, df 2
+[V] pg 30, adapt y axis, df 2
+[V] pg 37, adapt y range, df 3
+[V] pg 42, adapt y axis, df 3
+
+[] pg 30, redo experiments with a step of 1
+[] pg 44, redo experiments with a step of 1
+
+[] pg 28, expand with more strategies, df -
+[] pg 35, use DPC vs fixed, df 4

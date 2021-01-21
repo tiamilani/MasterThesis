@@ -28,7 +28,8 @@ link, I will talk about peering referring to the connection, and those \ac{BGP}
 speakers interconnected will be the peers.
 Each \ac{BGP} connection is based on a direct \ac{TCP} connection.
 On these links, every \ac{AS} can configure its own policies that would be used
-to evaluate routes at the reception or at the output \fxfatal{Find a better word}.
+to evaluate routes at the reception or in the moment there is something new 
+to share.
 There are three different possible type of relations that can be created by two
 \ac{BGP} speaker, accordingly to the \ac{CAIDA}:
 
@@ -63,7 +64,8 @@ If something comes from one of its customers it will share the knowledge with
 every other link that it has, even other customers (always respecting the output policies).
 If a route has come from its provider or a peer then it will be only shared with 
 its own customers.
-Those policies are dictated by convenience, an \ac{AS} has all the advantages when
+Those policies are commonly called "valley-free" and are dictated by convenience, 
+an \ac{AS} has all the advantages when
 other \acp{AS} decide to use it to reach a specific destination.
 
 This behaviour can be modelled with a variant of the \ac{SSP} algebra described
@@ -240,8 +242,9 @@ overpassed and then it depends on its decay function before it can send
 again the network to the second clique triggering \ac{MRAI} on those nodes that
 will experience the path exploration problem.
 
-\fxfatal{I think that the graphs in Fig 2 and Fig 3 of Fabrikant et al. in 
-\cite{fabrikant2011there} will easily trigger both \ac{MRAI} and \ac{RFD}}
+%\fxfatal{I think that the graphs in Fig 2 and Fig 3 of Fabrikant et al. in 
+%\cite{fabrikant2011there} will easily trigger both \ac{MRAI} and \ac{RFD}}
+
 \section{BGP MRAI}
 \label{sec:bgp_mrai}
 
@@ -470,8 +473,7 @@ Is possible to see an example of this distinction in \Cref{fig:astopology_vs_int
 		 \caption{Actual geographical topology}
          \label{fig:actual_topology}
      \end{subfigure}
-		\caption{Differences between two levels of detail on the Internet graph
-			\fxfatal{Remember to remove the dots behind the figures}}
+		\caption{Differences between two levels of detail on the Internet graph}
         \label{fig:astopology_vs_internet}
 \end{figure}
 
@@ -507,7 +509,10 @@ a similar chain network to show, in a theoretical way, how an uncontrolled
 \ac{MRAI} setting could lead to explosive situations.
 This topology will be used for the same purpose in this thesis, an example
 of it is showed in \Cref{fig:fabrikant_topology}.
-\fxfatal{Expand?}
+The explosion is caused by the \textit{Path exploration} problem, at a certain
+point the node \num{2} would change idea on which path to follow to reach $d$
+and all nodes will go through a transition state where they will 
+share their backup path.
 
 \begin{figure}[ht]
      \centering
@@ -554,5 +559,3 @@ levels by the type and properties of the nodes.
 4 types of nodes, T (tier 1 mesh), M, CP, C (Customers, the purple one)}
         \label{fig:internet_like_topology}
 \end{figure}
-
-\fxfatal{Name the valley free}
