@@ -4,55 +4,60 @@
 The incremental nature of \ac{BGP} suggests that is possible to study the
 evolution of the protocol looking to the events that have been triggered
 and the causes of them.
-A model that can give this sort of information would be helpful to debug 
+A model that can give this sort of information would be helpful to debug
 the protocol, analyze faulty situations or prevent them.
-The main idea behind this model of the protocol has been taken and 
+The main idea behind this model of the protocol has been taken and
 expanded from \cite{griffinFSM}.
 I'm going to show that inferring information from \ac{BGP} events and actions
 is more difficult than expected.
-In fact, due to the \textit{Path Exploration} problem, presented in \Cref{sec:bgp_fsm_explosion},
-the node will experience an explosion in the number of possible evolutions.
-Multiple inputs can lead to the same output of the node, so it is not enough to
-know it to infer a precise input signal.
+In fact, due to the \textit{Path Exploration} problem
+nodes will experience an explosion in the number of possible evolutions,
+presented in \Cref{sec:bgp_fsm_explosion}.
+In addition to that, multiple inputs can lead to the same output of the node,
+for this reason, it is not enough to know it to infer a precise input signal,
+showed in \Cref{sec:bgp_fsm_experiments}.
 Furthermore, \ac{MRAI} can make the situation even more complicated, increasing
-the number of transitions.
+the number of transitions because of all the new possible combinations of
+inputs.
 
 \section{BGP generalization}
 \label{sec:bgp_generalization}
 
 The main idea behind the \ac{BGP} \ac{FSM} is to represent the knowledge as
-states and a different set of messages as transitions.
-The knowledge is represented by the actual routes that the node knows on how 
-to reach a single destination.
+states and a set of messages as transitions.
+The knowledge is represented by the actual routes that the node knows on how
+to reach a single destination, we will have a different \ac{FSM} for every
+destination.
 Transitions encode the messages that a node has received to trigger the state change,
 on the edges are also inserted the response messages that the node will transmit.
 We can see an example of these transitions in \Cref{fig:fsm_example}
 
-\begin{figure}[h]                                                               
-    \begin{center}                                                              
+\begin{figure}[h]
+    \begin{center}
         \input{images/tikzpictures/FSM_example}
-    \end{center}                                                                
+    \end{center}
 	\caption{Example of the \ac{BGP} \ac{FSM} state transition}
-    \label{fig:fsm_example}                                                   
+    \label{fig:fsm_example}
 \end{figure}
 
 In \Cref{fig:fsm_example} there are two states, both represent the knowledge of
 the node, the first one represents the \ac{RIB} with just the route \num{1}, in
 the second state the \ac{RIB} will contain both the routes \num{1} and \num{3}.
-This transition is caused by the reception of the advertisement of the route 
+This transition is caused by the reception of the advertisement of the route
 \num{3} and will cause the transmission of another advertisement.
 The opposite transition is caused by the reception of the withdraw of the route
-\num{4} with the consequent withdraw of the route \num{4}.
-
-In \ac{BGP} messages transfer information about routes, there could be the advertisement
-or the withdraw of the route.
+\num{3} with the consequent withdraw of the route \num{4}.
+The route which id is bold represent the actual best path chosen by the node, in
+this case the reception of \q{A3} provoke the change of the best path, noticeable
+in the second state where the route \num{3} is bold.
 
 Thanks to \ac{MRAI} the evaluation of multiple messages could be delayed and
 provoke then the compression of them.
-For this reason on the edges is possible to see multiple messages, for example 
-\q{A1W1A1}, that will be compressed in \q{A1} and then evaluated.
-
-The concept for a \ac{BGP} \ac{FSM} has been expanded from \cite{griffinFSM}.
+For this reason on the edges is possible to see multiple messages, for example
+\q{[A1W1A1]}, that will be compressed in \q{[A1]} and then evaluated.
+The output part of the transition will be influenced by \ac{MRAI}, the output
+message strongly depend on the number of messages that the node was able
+to compressed.
 
 %\begin{itemize}
 %    \item BGP as an FSM main idea
@@ -62,24 +67,26 @@ The concept for a \ac{BGP} \ac{FSM} has been expanded from \cite{griffinFSM}.
 \section{BGP FSM experiments}
 \label{sec:bgp_fsm_experiments}
 
-The first experiments, about the translation of a single node evolution in a
-\ac{FSM}, the goal is to reproduce what has been shown in \cite{griffinFSM}.
+The first experiments that I executed are about the translation of a single
+node evolution in a \ac{FSM}.
+The goal is to reproduce what has been shown in \cite{griffinFSM}.
 The graph used for the study is presented in \cref{fig:griffin_fig_4}.
 
-\begin{figure}[h]                                                               
-    \begin{center}                                                              
+\begin{figure}[h]
+    \begin{center}
         \input{images/tikzpictures/griffin_fig_4}
-    \end{center}                                                                
+    \end{center}
 	\caption{Graph from fig 4 of \cite{griffinFSM} used to study the \ac{FSM}
-		of the nodes}                                
-    \label{fig:griffin_fig_4}                                                   
+		of the nodes}
+    \label{fig:griffin_fig_4}
 \end{figure}
 
-This topology, \Cref{fig:griffin_fig_4}, present an \ac{SPP} with five nodes \cite{griffin2002stable}. 
+This topology, \Cref{fig:griffin_fig_4}, present an \ac{SPP} with five nodes \cite{griffin2002stable}.
 The \ac{SPP} model is used to eliminate much of the complexity of \ac{BGP}.
 The arrows in the graph represent the flow of information, node \num{1} is the one
-that will receive a new route to reach a hypothetical destination and it will 
-spread this information through an \ac{ADV} to all its neighbours.
+that will receive a new route to reach a hypothetical destination and it will
+spread this information using an \ac{ADV} towards all its neighbours.
+After a while node \num{1} will also distribute the withdraw of that route.
 The translation to the \ac{CFSM} will use an enumeration to encode all the
 paths that a single node will encounter, for example, the path \q{5 3 1} will
 be converted in \textit{a3}, each path has its own identifier.
@@ -95,14 +102,14 @@ The properties of the environment for this experiment are listed in \Cref{tbl:fi
 
 The total number of runs generated by this environment is \num{100}.
 
-The two nodes interest us most are node \num{4} and node \num{5} because of their
+The two nodes that interest us most are node \num{4} and node \num{5} because of their
 position after a fork.
 The first one is going to receive the messages of node \num{2} and \num{3}, for
 sure there will be two announcements and two withdraws because of the signal
 imposed on node 1.
 Node \num{2} will share an announcement followed by a withdraw and the same node
 \num{3}.
-Those messages can be reordered in different way, always respecting the local 
+Those messages can be reordered in different way, always respecting the local
 order, and for each sequence the node \num{4} can take different decision, for
 example use the path though node \num{3} and then change its decision using the
 one received from node \num{2}.
@@ -119,15 +126,17 @@ inputs of node \num{5}.
 	\label{tbl:fig_4_node4_possible_inputs}
 \end{table}
 
-The node \num{5} is going to receive all the possible outputs from node \num{3} and 
+The node \num{5} is going to receive all the possible outputs from node \num{3} and
 \num{4}.
 The number of input signals of node \num{5} is composed by all the possible
 combinations of messages in the output signals of node \num{4} and \num{3}.
 The total number of possible inputs for node \num{4} is \num{6}, like
 showed in \Cref{tbl:fig_4_node4_possible_inputs}, for node \num{5} is going
 to be \num{71}.
-Some of all those possible inputs produces the same output signal, so in total
-node \num{5} is going to have \num{52} unique output signals.
+In \Cref{tbl:fig_4_node4_possible_inputs} is possible to notice that the
+first two sequence are going to produce the same output signal.
+We can say that node \num{4} has in total \num{5} unique output states, while
+node \num{5} has \num{52}.
 
 From the \num{100} total runs, we can generate the \ac{CFSM} of node \num{4} and
 node \num{5}, in order to be able to study how the nodes react to different
@@ -149,8 +158,8 @@ The two \ac{CFSM} are presented in \Cref{fig:fsm_griffin_fig4}.
 		 \caption{Node \num{5} \ac{CFSM} from the environment of \Cref{tbl:fig_4_example}}
          \label{fig:fsm_node5}
      \end{subfigure}
-		\caption{\ac{CFSM} of nodes \num{4} and \num{5} of the graph 
-			\Cref{fig:griffin_fig_4} with an input signal of \q{AW} 
+		\caption{\ac{CFSM} of nodes \num{4} and \num{5} of the graph
+			\Cref{fig:griffin_fig_4} with an input signal of \q{AW}
 			\fxfatal{Remove message tables?}}
         \label{fig:fsm_griffin_fig4}
 \end{figure}
@@ -160,20 +169,19 @@ knowledge of the nodes, composed by the routes that are in the \ac{RIB} of the n
 The bold value is the actual best route to the destination chosen by the node.
 If in the state transition to a new state the best path is not affected then the
 node will not transmit the new route to its neighbours, for an example take
-a look to \Cref{fig:fsm_node4} from the state $\{1\}$ to the state $\{1, 3\}$
+a look to \Cref{fig:fsm_node4} from the state $\{4\}$ to the state $\{3, 4\}$
 where the node \num{4} will learn a new route that is not the best one.
 
 The effects of the implicit withdraw can be seen in \Cref{fig:fsm_node5}
 the transition from $\{4, 6\}$ to $\{4, 5\}$ thanks to the reception of the
-announcement $a3$ from the node \num{4}.
+announcement $a5$ from the node \num{4}.
 
 As written in \cite{griffinFSM}, I would like to underline the fact that, given
 the \num{52} unique possible outputs of the node \num{5} it would be very difficult
 to infer the initial signal that provokes all the transitions.
 
-We can also analyze those output signals, having all the events for each single
-run we can infer which were the most common output signals that a single node
-experienced.
+We can also analyze those output signals, knowing all the events for each single
+run we can infer which were the most common output signals experienced by a single node.
 Is sufficient to take all the transmitted messages of a node and look the sequence
 of advertisement and withdraws.
 
@@ -192,7 +200,7 @@ of advertisement and withdraws.
 		 \caption{Node \num{5} output signals study}
          \label{fig:signal_node5}
      \end{subfigure}
-		\caption{Output signal study of nodes \num{4} and \num{5} of the graph 
+		\caption{Output signal study of nodes \num{4} and \num{5} of the graph
 			\Cref{fig:griffin_fig_4} with an input signal of \q{AW} at node \num{1}}
         \label{fig:signal_griffin_fig4}
 \end{figure}
@@ -203,9 +211,9 @@ of a unique length has been found.
 The $x$ axis represents the number of messages in the output signal, a message
 is a single announcement or withdraw.
 The first $y$ axis represents the probability to see a certain number of messages
-taking a random output signal from the output.
-For this axis there are three lines that refer to it, the blue one represents the
-number of advertisement messages in the output signal correlated with the 
+taking a random output signal from the set.
+Three lines refers to this axis, the blue one represents the
+number of advertisement messages in the output signal correlated with the
 respective probability.
 For example, in \Cref{fig:signal_node4} there is a probability around $0.45$ to have
 exactly two advertisement messages per output signal. And respectively a probability
@@ -213,12 +221,16 @@ slightly larger than $0.25$ to have only one advertisement or three.
 We can also notice that we didn't see more than three advertisements or less than one.
 The green line instead represents the total number of messages in the signal,
 without distinguishing between advertisement and withdraws.
-By the fact that we will always have one withdraw (the orange line) this line 
+By the fact that we will always have one withdraw (the orange line) this line
 is simply shifted by one unit in respect of the advertisement line.
+There is a probability around the $0.45$ to have exactly \num{3} messages in the
+output signal.
 The second $y$ axis refers to the number of unique output signals encountered and
 their length.
 For example, in \Cref{fig:signal_node5} we will have \num{1} unique output signal
-of length \num{2}, \num{3} signals of length \num{3} and \num{4} of length \num{4} and \num{2} of length \num{5}.
+of length \num{2}, \num{3} signals of length \num{3} and \num{4} of length \num{4}
+and \num{2} of length \num{5}.
+In total we saw \num{10} different unique signals on \num{100} different runs.
 
 Those plots do not give a complete perspective of all the possible outputs
 that can be generated but only the ones encountered during the runs.
@@ -273,13 +285,18 @@ We can see the effects of \ac{MRAI} on the \ac{CFSM}s in \Cref{fig:fsm_griffin_f
         \label{fig:fsm_griffin_fig4_MRAI}
 \end{figure}
 
+The results in \Cref{fig:fsm_griffin_fig4_MRAI} have been generated with the same
+environment of the one in \Cref{fig:fsm_griffin_fig4} but with an \ac{MRAI} value
+equal to \SI{30}{\second} in each link, as defined by the \ac{RFC} \num{4271}
+\cite{rfc4271}.
 \Cref{fig:fsm_node4} and \Cref{fig:fsm_node4_MRAI} permits us to compare the two
-\ac{CFSM}s of node \num{4} and is possible to nice a big difference in terms of edges
+\ac{CFSM}s of node \num{4}, is possible to notice a big difference in terms of edges
 between one figure and the other, the first one has \num{8} transitions, the
 second one \num{15}.
-For the node \num{5}, we pass from \num{16} transitions to \num{36}.
+For the node \num{5}, we pass from \num{16} transitions in \Cref{fig:fsm_node5}
+to \num{36} thanks to \ac{MRAI}.
 
-But the positive effects of \ac{MRAI} can be found in the output signals, 
+But the positive effects of \ac{MRAI} can be found in the output signals,
 showed in \Cref{fig:signal_griffin_fig4_MRAI}.
 
 \begin{figure}[h]
@@ -297,20 +314,25 @@ showed in \Cref{fig:signal_griffin_fig4_MRAI}.
 		 \caption{Node \num{5} output signals study with \ac{MRAI}=\SI{30}{\second}}
          \label{fig:signal_node5_MRAI}
      \end{subfigure}
-		\caption{Output signal study of nodes \num{4} and \num{5} of the graph 
+		\caption{Output signal study of nodes \num{4} and \num{5} of the graph
 			\Cref{fig:griffin_fig_4} with an input signal of \q{AW} at node \num{1}
 			with \ac{MRAI}=\SI{30}{\second} for every link}
         \label{fig:signal_griffin_fig4_MRAI}
 \end{figure}
 
 Comparing \Cref{fig:signal_node5_MRAI,fig:signal_node5} is possible to notice
-that there is a different distribution of output signals.
-The $x$ axis never reach the value of \num{5}, this means that the output signals
+that there is a different distribution in the output signals.
+The $x$ axis never reaches the value of \num{5}, this means that the output signals
 of the node \num{5} never used more than \num{4} messages.
+While, without \ac{MRAI} there were \num{2} unique output states with \num{5}
+messages, with a total frequency of \num{11}.
 And we can also notice that the majority of the signals this time have a length
 of \num{3} messages, instead of the previous \num{4}.
 This is a hint that \ac{MRAI} can have positive effects on the number of output messages
 produced by single nodes, having, however, more possible transitions to consider.
+
+This makes inferring the input signal even more difficult because we have a lower
+number of output state with a broader number of possible transitions.
 
 \section{BGP FSM explosion}
 \label{sec:bgp_fsm_explosion}
@@ -326,14 +348,13 @@ optimal paths towards the destination before reaching a stable state.
 \textit{Path exploration} can lead to an enormous amount of messages even with
 a small set of nodes \cite{deshpande2004impact}.
 
-As we saw in \Cref{subsec:mrai_vs_bgpfsm} that \ac{MRAI} can influence the
+As we saw in \Cref{subsec:mrai_vs_bgpfsm}, \ac{MRAI} can influence the
 \ac{CFSM}s of the nodes and their output signals, which impact could it have
 if it is not set correctly?
 
 I have then created an environment that resembles the study conducted by
 \cite{fabrikant2011there} using a topology like the one described in \Cref{subsec:fabrikant_env}
-with \num{3} rings.
-with different \ac{MRAI} settings.
+with \num{3} rings and I compared different \ac{MRAI} settings.
 The environment properties are presented in \Cref{tbl:fabrikant_environment}.
 
 \begin{table}[h]
@@ -358,8 +379,8 @@ capability of \ac{BGP}.
 This parameter will influence the number of messages
 that will be transmitted.
 
-The results of all those different experiments, in terms of \ac{CFSM} are
-exposed in \Cref{tbl:fabrikant_cfsm}
+The results of all those different experiments, in terms of \ac{CFSM} states and
+transitions are exposed in \Cref{tbl:fabrikant_cfsm}
 
 \begin{table}[h]
 	\input{tables/fabrikant_cfsm_results}
@@ -373,8 +394,9 @@ exposed in \Cref{tbl:fabrikant_cfsm}
 As is possible to see from the grey squares in \Cref{tbl:fabrikant_cfsm} the more
 complex \ac{CFSM}s are the ones without \ac{MRAI} and with a descendent \ac{MRAI}
 timing.
-The second case is the same described in \cite{fabrikant2011there} and the extremely
-high number of transitions is caused by the \textit{Path Exploration} problem.
+In fact, the descendent strategy is the same described in \cite{fabrikant2011there}
+and the extremely high number of transitions is caused by the \textit{Path Exploration}
+problem.
 Is also noticeable that the \ac{IW} has a huge effect on both the number
 of states and the number of transitions.
 This because there are less possible combinations of input signals for the nodes.
@@ -410,43 +432,47 @@ are presented in \Cref{fig:signal_fabrikant}.
          \centering
          \includegraphics[width=\textwidth]{images/signal_study/fabrikant/Ascending.pdf}
 		 \caption{Node \num{9} output signals study with \textbf{\textit{Ascendant}} strategy}
-         \label{fig:signal_node9_fabrikant_ascendent_noIW}
+         \label{fig:signal_node9_fabrikant_ascendant_noIW}
      \end{subfigure}
-		\caption{Output signal study of nodes \num{8} of the graph 
+		\caption{Output signal study of nodes \num{8} of the graph
 			\Cref{fig:fabrikant_topology} with an input signal of \q{AWA} at node $d$
 			with the \textbf{\textit{Fixed \SI{30}{\second}}}, \textbf{\textit{Descendent}}
 			and \textbf{\textit{Ascendant}}	strategies, without the help of the \ac{IW}}
         \label{fig:signal_fabrikant}
 \end{figure}
 
+For simplicity I decided to study only the output signals caused by the sequence
+\q{AWA} and without considering the \textit{No MRAI} case.
 The first signal study, \Cref{fig:signal_node9_fabrikant_fixed30_noIW} is the
 one that represents the actual standard of the protocol \cite{rfc4271}.
 We can notice in that particular output study that the maximum detected length of
-a signal is \num{13} and it's the last probable output, while the most probable
+a signal is \num{13} and it's the last likely output, while the most probable
 output length is \num{5}.
-While we can notice the \textit{Path Exploration} problem by the spike of unique
+While we can infer the \textit{Path Exploration} problem by the spike of unique
 output signals with a length of \num{9}, this mean that the node experienced some
 changes in its decisions.
 The worst-case scenario is the one represented by \cref{fig:signal_node9_fabrikant_descendent_noiw}
 where the maximum length of the output signal reaches almost \num{40} messages, but
 the most probable output signal has a length between \num{20} and \num{30}.
-This is the marker of a lot of decision changes in the best path for the node \num{8}.
-Opposite to that case, we found the \textit{Ascendant} strategy in 
-\Cref{fig:signal_node9_fabrikant_ascendent_noIW} where the number of output
+This is the marker of a lot of decision changes in the best path for the destination.
+Opposite to that case, we found the \textit{Ascendant} strategy in
+\Cref{fig:signal_node9_fabrikant_ascendant_noIW} where the output
 signals never used more than \num{7} messages.
-The node \num{8} in this last case almost never experienced the \textit{Path Exploration}
-problem, thanks to the fact that most of the times the information it receives
-from the neighbourhood are already corrected.
+In this last scenario we don't see a clear appearance of the \textit{Path Exploration}
+problem, due to the fact that the node \num{8} is the last of the chain and
+the \ac{MRAI} values permits to the other nodes to shares almost their best
+possible path.
 
 In conclusion of this chapter, we can say without doubts that \ac{MRAI} influences
-the number of states experienced by a node and, confirming what has been sad in
+the number of states experienced by a node and, confirming what has been presented in
 \cite{fabrikant2011there}, that an incorrect setting of it can lead to an explosion
 in terms of messages.
-And by consequence, to an explosion on the number of states and transitions.
-It is also noticeable that a different set of \ac{MRAI} can lead
+And by consequence, to an explosion on the number of states and transitions
+and it complicates the input signal inferring from the output.
+It is also noticeable that a different set of \ac{MRAI} values can also lead
 to a better scenario than the standard one.
-An alternative to the standard \ac{MRAI} has been already presented in 
+An alternative to the standard \ac{MRAI} has been already presented in
 \cite{milani2020improving} with the use of centrality metrics.
 Is possible to study, other than specific nodes in the network also the performances
-of all the sets of \ac{BGP} speaker, in order to study the impat of \ac{MRAI}
+of all the sets of \ac{BGP} speaker, in order to study the impact of \ac{MRAI}
 in general and what can affect it.

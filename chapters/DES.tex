@@ -4,99 +4,118 @@
 Experiments on \ac{BGP} are not applicable on the Internet, for this
 reason different studies show their results using a simulate environment
 \cite{griffin2001experimental} \fxfatal{Insert other citations}.
-The majority of the studies uses small graphs and each node 
+The majority of the studies uses small graphs and each node
 of the graph simulate the behaviour of a \ac{BGP} speaker.
 Each node represent also a single \ac{AS} and the \ac{BGP} speaker is it's own
 exterior router, for simplicity, reduced to one speaker that handles all the
-connections. 
- 
+connections.
+
 For this reason, I decided to use and expand a \ac{DES} that permits to have
 different grades of freedom, respecting on the other side all the properties
 required for a reliable simulator environment.
 I decided to use the \textit{Simpy}\footnote{\href{https://simpy.readthedocs.io/en/latest/index.html}{Simpy website}}
-package to make the environment evolve. I decided for this package for the
+package to create the environment and make it evolve. I decided for this package for the
 extensive documentation and because it has been already used for different
-studies, demonstrating its adaptability \cite{matloff2008introduction,dagkakis2013manpy}.
+studies, demonstrating its adaptability \cite{matloff2008introduction,dagkakis2013manpy},
+other than an active community.
 
 I developed the \ac{DES} as a highly modular environment.
-\begin{figure}[h]                                                               
-    \begin{center}                                                              
+\begin{figure}[h]
+    \begin{center}
         \input{images/tikzpictures/des}
-    \end{center}                                                                
-    \caption{Discrete event simulator structure}                                
-    \label{fig:des_structure}                                                   
+    \end{center}
+    \caption{Discrete event simulator structure}
+    \label{fig:des_structure}
 \end{figure}
 
 In \Cref{fig:des_structure} is possible to see the basic idea of the simulator.
-The first component needed is a graph, represented by a \textit{graphml} file, 
-this file is the descriptor of the network. 
+The first component needed is a graph, represented by a \textit{graphml} file,
+this file is the descriptor of the network.
 it defines also all topological information and all the properties of every single node.
 In Code \ref{lst:graph_example} is possible to see an example of a \textit{graphml} file,
 it describes that node \num{0} contains a single destination and that the edge
 between nodes \num{2} and \num{5} is controlled by the policy |2, 2, 2| that defines
 a servicer-provider policy.
 Policies are encoded using the convention described in \cite{daggitt2018rate}.
+Is possible to define multiple topological properties in the graph file, for
+example the \ac{MRAI} value in an edge or the set of parameters that
+controls \ac{RFD}.
 
 \lstcaptionname{Code}
 \begin{lstlisting}[language=graphml, caption=Graph example, label=lst:graph_example]
  <node id="0">
       <data key="d0">10.0.0.0/24</data>
  </node>
- <edge source="2" target="5">                                                  
-     <data key="d2">2, 2, 2</data>                                             
- </edge> 
+ <edge source="2" target="5">
+     <data key="d2">2, 2, 2</data>
+ </edge>
 \end{lstlisting}
 
-The graph is then embedded in the environment file, this file is in \textit{JSON}
-format and it describes how the environment is characterized, it gives the 
-initial values for the \ac{RNG} so that each experiment is replicable and
-other properties, like where the output should be saved, and, most importantly
-how the experiment should be conducted.
-There is two possible evolution of the environment:
+The graph is then embedded in the environment file, this is a \textit{JSON} file
+that describes how the environment is characterized, is possible to define the
+initial values for the \ac{RNG} so that each experiment is replicable.
+In the environment file is also possible to define different properties that
+would be used to make the experiments evolve, for example the distribution that
+will be used for the network delay.
+Is also possible to define multiple values for single properties and decided which
+combination of them to use before the experiment starts.
+There is two possible evolution of the environment that can be used:
 \begin{itemize}
     \item \textbf{\textit{Continuous evolution}}: In this category all the nodes
     that contains at least a destination will continuously share and retrieve
     the destination accordingly with the distributions defined in the environment;
     \item \textbf{\textit{Signaling evolution}}: Is possible to define a precise
-    signal that should be executed by the nodes that contain a destination, for 
-    example, the signal \q{AWA} defines that there will be an announce followed by 
-    a withdraw and another announce.
+    signal that should be followed by the nodes that contain a destination, for
+    example, the signal \q{AWA} defines that there will be an announce followed by
+    a withdraw and then another announce.
 \end{itemize}
 
 The \ac{DES} take as input this \textit{JSON} file where all the information
-are described, it creates an object for each node in the graph file, with
-each own characteristics.
+are described, it creates an object for each node in the graph file, respecting
+the topological characteristics defined in the \textit{graphml} file.
 After the initialization, all the nodes that contain a destination will schedule
-the first advertisement of it to their neighbour.
+the first advertisement to their neighbours.
+And then, all the nodes can evolve using the distributions and the properties
+defined in the environment.
 The simulation run will terminate only if there are no more events scheduled or
 if the maximum simulation time is reached.
 
-The \ac{DES} will then produce a \textit{CSV} output, with all the events that 
+The \ac{DES} will then produce a \textit{CSV} output, with all the events that
 can be analyzed to see the evolution of a specific node or to evaluate the
 whole network.
- 
+For each event the \ac{DES} will record the exact moment when it happened and
+the associated values, for example for the reception of a message would be registered
+the node that received the message and the message itself in plain text.
+
 \section{DES Environments}
 \label{sec:des_environment}
 
 Thanks to the environment codification in a \textit{JSON} file is possible to
-define experiments with a high grade of freedom. 
-Is possible to define multiple delays as probability functions vectors that
-will provide multiple runs possibility. For example, if we have \num{5} different
+define experiments with a high grade of freedom.
+Some elements can be defined as vectors of properties, those vectors can
+contain $n$ objects that describe that property, but in each run just one
+of them can be used.
+Each run is composed by a combination of one object from each vector.
+For example, if we have \num{5} different
 possible seeds and \num{3} different delays, the total number of runs combinations
 is \num{15}, as shown in Code \ref{lst:environment_example}.
-is possible to run one of the possible combinations of parameters through the identifier
-of the single run.
+If a property has only one object, then, this object will be used in every
+combination.
+If all the properties has only one object then the environment describes only
+a single run.
+A unique identifier is associated to every possible run, through it is possible
+to execute specific experiments.
 
 \lstcaptionname{Code}
 \begin{lstlisting}[language=json, caption=Environment example, label=lst:environment_example]
-"simulation" : {                                                              
-    // seed(s) to initialize RNG                                      
-    "seed" : [0, 1, 2, 3, 4], 
+"simulation" : {
+    // seed(s) to initialize RNG
+    "seed" : [0, 1, 2, 3, 4],
     ....
     // Multiple withdraw distributions
     "withdraw_dist": [{"distribution": "unif", "min": 5, "max": 10, "int": 0.1},
                       {"distribution": "unif", "min": 8, "max": 10, "int": 0.1},
-                      {"distribution": "unif", "min": 2, "max": 3, "int": 0.1}],       
+                      {"distribution": "unif", "min": 2, "max": 3, "int": 0.1}],
     ....
 }
 \end{lstlisting}
@@ -108,17 +127,24 @@ Though the \textit{delay} parameter is possible to define the default delay on t
 is important to remember that the links are FIFO so there is no reordering
 of messages in the same link, there is also no messages lost.
 That because it was out of the scope of this thesis to study the evolution
-of the protocol with packet loss, but it could be future work.
+of the protocol with packet loss, but it could be in the future works.
+
+During the thesis I used different standard environments to study different
+properties and behaviours of \ac{BGP} network, the main ones are described in
+\Cref{subsec:clique_env,subsec:fabrikant_env,subsec:internet_like_env}.
 
 \subsection{Clique environment}
 \label{subsec:clique_env}
 
-One of the special environment that I used in my experiments uses clique 
+One of the special environment that I used in my experiments uses clique
 graphs of different dimensions, an example of the clique graph is given in
 \Cref{fig:clique_topology}.
+This environment points to produce a high load of messages that each node has
+to process in order to take the best decision on how to reach the single
+destination distributed.
 
 The only node that shares a destination is the node \q{\textit{d}}, the node
-\num{0} will then spread the knowledge to the whole network, and the node 
+\num{0} will then spread the knowledge to the whole network, and the node
 \q{\textit{x}} will act as a black hole for all the possible paths
 that the node \num{5} will share.
 
@@ -131,11 +157,11 @@ ones can impact the performances in this environment of high load.
 \subsection{Fabrikant environment}
 \label{subsec:fabrikant_env}
 
-Another interesting chase to test the path exploration problem is the one
+Another interesting case to test the path exploration problem is the one
 presented in \cite{fabrikant2011there}.
-In that study, Fabrikant et al. presents how particular \ac{MRAI} setting could 
-make the network converge with exponential behaviour because of the 
-continuous decision change in terms of best paths from the nodes. 
+In that study, Fabrikant et al. presents how particular \ac{MRAI} setting could
+make the network converge with an exponential behaviour. The continuous decision
+change in the nodes \ac{RIB} is the cause of the problem.
 I used the basic example of their study to investigate how the choice of \ac{MRAI}
 is fundamental for the network convergence.
 An example of the network used is presented in \Cref{fig:fabrikant_topology}.
@@ -145,13 +171,13 @@ edge. The node \num{2} will receive the destination through node \num{1}, after 
 of time the network will converge to the best path (without using the backup links).
 But, after a while, node \num{2} will receive the network also through node \num{0}
 and it will prefer this new path, provoking then the reconfiguration of all
-the other nodes that will use the backup links for a while, announcing their 
+the other nodes that will use the backup links for a while, announcing their
 new paths.
-A wrong configuration of \ac{MRAI} can provoke the entire exploration of the 
+A wrong configuration of \ac{MRAI} can provoke the entire exploration of the
 possibility set.
 
 This environment is also used to show how a \ac{BGP} \ac{FSM} would explode
-in terms of possible states and edges producing an enormous ammount of possible
+in terms of possible states and edges producing an enormous amount of
 output signals from the same input.
 
 \subsection{Internet-like environment}
@@ -168,15 +194,15 @@ The different nodes are coloured accordingly with the node type represented.
 The tier one nodes that generate the central clique are coloured in red and
 is possible to notice in \Cref{fig:internet_topology_hierarchical} that they are
 in the highest levels of the networks.
-This environment has been used to study the behaviour of the network with 
+This environment has been used to study the behaviour of the network with
 topologies resembling the real internet.
 
-In the next studies, I generally refer to this kind of topology with the 
+In the next studies, I generally refer to this kind of topology with the
 terms \q{Internet-like}, and the dimension is never less than \num{1000} nodes,
 otherwise is not possible to ensure all the Internet topological properties.
 
 The goal of the experiments that use that kind of topologies is to study
-the general network performances in terms of average convergence time and 
+the general network performances in terms of average convergence time and
 the number of messages transmitted.
 This would help to see and study behaviours that are more typical in the actual
 Internet.
