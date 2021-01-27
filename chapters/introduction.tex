@@ -8,36 +8,68 @@
 
 %\fxfatal{Expand the concepts}
 
-What we call the Internet is a single network that interconnects more than \num{60000}
-\acp{AS} that share their knowledge to spread the sub-nets reachability.
-An \ac{AS} is a single entity that holds and controls some \textit{IP} prefixes
-used by one or more operators.
-Every \ac{AS} is responsible for its own inter-connectivity policies that control
-the spread of information obtained by the outside and the one from the inside.
+With the name \q{The Internet} we define a network composed by more than \num{60000}
+entities that share their knowledge in order to permits us to reach every website
+whenever we want.
+We are used to think about Internet as something far away from us, something
+that we do not have to care about, we can use it leaving all the complexity
+out.
+But, by a more physical point of view, what is the Internet? It is nothing
+more than a big network where interconnected entities keeps the prefixes reachable.
+Those entities are in reality called \acp{AS} and their function is to hold and
+control some \ac{IP} prefixes used by one or more operators.
 
-The \ac{BGP} is the only protocol used on the Internet that controls the propagation
-of the knowledge between different \acp{AS}.
-\ac{BGP} has been released in \num{1989} and is in use on the internet since
-\num{1994}.
-Since that year \ac{BGP} is growth a lot, it reached its last version, number
-fourth, in \num{2006} \cite{rfc4271}.
-Up to now, \ac{BGP} can be expanded with tens of \acp{RFC} that extends the
-range of possibilities,
-from policies to attributes used to tag messages and give more information than
-just the path to reach the destination.
+Every \ac{AS} is responsible for the connectivity to the prefixes that it shares.
+We know that the networks are able to react to changes thanks to routing protocols,
+and Internet is not different in that.
+Every \ac{AS} has to keep active its own instance of an Internet routing protocol
+in order react to changes.
+This routing protocol is the glue of the Internet, its the thing that permits
+us to always be able to reach the other side of the world without knowing
+the actual route that our packets take.
 
-Multiple of its parameters play a central role in it, and the correct setting
+The path that we use could change because of different factors that could
+be technical, economical or even political.
+Thats because the \ac{AS} relationships are controlled by contracts and different
+contracts can have different fees applied for the transmission of the knowledge.
+Some paths may be used only as backups if the primary one fail, or even used
+only for certain type of traffic flows.
+This policies must be implementable in the Internet routing protocol that has
+to discern on which path, among all the known alternatives, is the best one
+considering the \ac{AS} convenience.
+
+The protocol that has been created to handle this situations is the \ac{BGP}.
+It has been released in the \num{1989} and is in use on the Internet since
+the \num{1994}.
+It reached its last version, the fourth one, in \num{2006} \cite{rfc4271}.
+Is easy to imagine that in almost \num{30} year \ac{BGP} is changed a lot from
+the beginning and also the needs of the different \acp{AS} are changed a lot
+because of the technology improvements.
+Up to now, \ac{BGP} can be expanded with tens of \acp{RFC} that improve the
+range of possibilities, those optional parameters are actually very important
+for the \acp{AS} because the complexity of the relationships is growth a lot
+in the last years.
+
+\ac{BGP} is an instance of the \textit{Bellman-Ford} distance vector routing
+protocol that shares other than the prefixes known by the speakers also the
+path used to reach the destination.
+Other than that, to control all the possible policies applied by the \acp{AS}
+\ac{BGP} implements also different parameters and attributes that can be
+personalized.
+In \ac{BGP} multiple of its parameters play a central role, and the correct setting
 of them could influence the performances of, not only the single \ac{AS} but
 the entire network.
 For this reason, the research is still active to find new technologies and
-a trade-off between, convergence time and messages transmitted.
+a trade-off between, convergence time and messages transmitted that could
+be sustainable by the current hardware.
 
 In this thesis, more precisely in \Cref{cha:bgp_art}, I'm going to introduce
-two of them, \ac{MRAI}, used to compress multiple input messages into one
-output message and the \ac{RFD} parameter, that is used to penalize unstable paths
-suppressing routes.
-Those two parameters goal is to control two different types of noise that
-\ac{BGP} creates/suffers.
+two of those important parameters, \ac{MRAI} and \ac{RFD}.
+The first one is used to compress multiple input messages into one
+output message in order to reduce the network load provoked by a change.
+The second one, \ac{RFD}, is used to penalize unstable paths, suppressing
+the route and blocking the spreading of it to further node to circumscribe
+the zone of instability.
 
 The existence of those two parameters has been studied separately many different
 times \cite{fabrikant2011there,daggitt2018rate,qiu2005optimal,gray2020bgp}.
@@ -49,24 +81,30 @@ Even if the effects of one interact with the other.
 
 Internet, as a network, is constantly growing, in terms of \acp{AS}, prefixes
 and messages transmitted.
-Increasing also the load on the \ac{BGP} nodes and by consequence the load
-of the network in general.
-There are constantly smaller prefixes announced, the number of $/24$ prefixes
-distributed in the last years has been growing constantly.
-Data obtained from the annual report of the \ac{AS} 131072 that register the
-evolution of its node since \num{2007} from two \ac{BGP}
-speakers point of the \ac{APNIC}, one located in Japan and the other in
-Australia\footnote{\href{https://blog.apnic.net/2021/01/05/bgp-in-2020-the-bgp-table/}{source APNIC data}}.
+This continuous growth increase also the load on the \ac{BGP} nodes that
+receives more messages and have to manage the effects in terms of memory
+and processing power.
+By consequence, this increases also the load on the network, because of the
+nature of \ac{BGP} to act as echo-chamber.
 
-This growth of the Internet is not negligible because of one, between the may,
-problem that it has due to the \ac{BGP} protocol.
-\ac{BGP} suffers from the \textit{Path Exploration} problem, a node can enter in
-a transitory state where it continuously shares non-optimal paths while it
-doesn't reach a stable state.
-Even few tens of nodes can generate thousands of messages due to this problem
-\cite{deshpande2004impact}.
-And this problem cannot be overloked on a \num{60000} nodes network that we all
-rely on every day.
+Thanks to the annual report from \ac{APNIC} we can have a snapshot of
+the situation of Internet and the evolution of it.
+The data collected by \ac{APNIC} from \num{2007} concern the knowledge
+of the \ac{AS} 131072 that has two links with other \acp{AS}, one in Japan and
+the other one in Australia\footnote{\href{https://blog.apnic.net/2021/01/05/bgp-in-2020-the-bgp-table/}{source APNIC data}}.
+Prefixes of smaller and smaller sizes are continuously shared, the number of
+$/24$ networks distributed in the last year has been growing constantly.
+Fomenting the problem described above, generating a vicious circle of messages.
+
+This redundancy of the \ac{BGP} nodes provoke the \textit{Path Exploration}
+problem.
+This particular issue occurs when a node enter in a transitory state where it
+continuously shares non optimal paths while it doesn't reach a stable state.
+Provoking the propagation of non ideal routes to other nodes causing a vicious
+circle.
+The growing of Internet is not negligible because of this problem, a continuous
+growth in terms of nodes and edges cause the growth of favorable conditions for
+the \textit{Path Exploration} problem.
 
 \section{Correlation between variables and convergence}
 \label{sec:bgp_correlations}

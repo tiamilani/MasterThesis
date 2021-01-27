@@ -207,9 +207,21 @@ alternative and comparing them.
 \section{BGP Noise}
 \label{sec:bgp_noise}
 
-There are basically two types of noises in \ac{BGP}, the inherent noise and the
-noise caused by external sources.
-Those two type of noises are triggered by different causes but are substantially
+With the term \textit{BGP Noise} I would like to define a particular behaviour
+of \ac{BGP}.
+It underline a situation where the nodes are distributing routes
+that would be retrieved few moments later.
+Producing an intense distribution of messages that are not optimal.
+This behaviour is defined as noise because the tendency of \ac{BGP} to act
+as echo-chamber and amplify this distribution of incorrect information.
+In fact, a \ac{BGP} node that receive an update for a neighbour will probably
+redistribute the route to multiple neighbours, peers and servicer.
+Given the hierarchical topology of the internet this behaviour grows
+exponentially while the information reach the center of the network.
+
+There are basically two sources of noises in \ac{BGP}, the inherent noise of
+the protocol and the noise caused by external sources.
+Those two type of noises are triggered by different causes and are
 not discernible one another.
 
 The first one is caused by the protocol itself when it tries to converge
