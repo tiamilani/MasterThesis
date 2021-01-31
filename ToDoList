@@ -73,3 +73,6 @@
 [] Definire meglio che cosa si intende per noise
 [] BGP Noise da risistemare completamente
 
+[] Definire le MRAI strategies, accennandole nella descrizione di BGP
+[] Definire che cos'è la DPC
+[] Splittare il capitolo su RFD

@@ -34,8 +34,7 @@ of the network multiple times.
 \section{Clique Experiments}
 \label{sec:bgp_mrai_clique}
 
-The clique topology is one of the worst-case scenarios as specified in Labovitz et al.
-\cite{labovitz2000delayed}.
+The clique topology is one of the worst-case scenarios as specified in Labovitz et al.~\cite{labovitz2000delayed}.
 For this reason I decided to start my study from it.
 I used two approaches in this Environment, the first one keeps the \ac{IW} active
 the second one doesn't use of this property.
@@ -108,6 +107,11 @@ The effects of \ac{IW} can be saw also in the number of messages and the converg
 time with a low \ac{MRAI} is possible to reach even \num{12000} messages while
 with \ac{IW} the maximum value is around \num{6500} messages.
 
+\section{Different MRAI strategies}
+\label{sec:bgp_mrai_strategies}
+
+\subsection{Centrality based strategy}
+\label{subsec:bgp_mrai_dpc}
 
 \section{Internet like experiments}
 \label{sec:bgp_mrai_internet_like}
@@ -645,7 +649,7 @@ We can conclude that the position of the source can influence the behaviour
 of \ac{MRAI}, it is more influenced when the strategy used relies on topological
 information, like the \ac{DPC} strategy.
 But the strategy used is more influent, like the number of messages transmitted
-by the \ac{DPC} strategy in average in respect of the \texit{Fixed} one in
+by the \ac{DPC} strategy in average in respect of the \textit{Fixed} one in
 \Cref{fig:different_destinations_mean}.
 
 \subsection{Hierarchical influence}

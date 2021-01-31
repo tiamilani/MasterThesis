@@ -1,22 +1,22 @@
 \chapter{Discrete Event Simulator}
 \label{cha:des}
 
-Experiments on \ac{BGP} are not applicable on the Internet, for this
-reason different studies show their results using a simulate environment
-\cite{griffin2001experimental} \fxfatal{Insert other citations}.
-The majority of the studies uses small graphs and each node
+Experiments on \ac{BGP} are not applicable on the actual Internet, for this
+reason different studies show their results using a simulate environment~\cite{griffin2001experimental}
+or experiments executed on a testbed~\cite{milani2020improving}.
+In the simulations the majority of the studies use small graphs and each node
 of the graph simulate the behaviour of a \ac{BGP} speaker.
-Each node represent also a single \ac{AS} and the \ac{BGP} speaker is it's own
+Each node represents a single \ac{AS} and the \ac{BGP} speaker used as
 exterior router, for simplicity, reduced to one speaker that handles all the
 connections.
 
 For this reason, I decided to use and expand a \ac{DES} that permits to have
 different grades of freedom, respecting on the other side all the properties
-required for a reliable simulator environment.
+required for a reliable simulative environment.
 I decided to use the \textit{Simpy}\footnote{\href{https://simpy.readthedocs.io/en/latest/index.html}{Simpy website}}
-package to create the environment and make it evolve. I decided for this package for the
-extensive documentation and because it has been already used for different
-studies, demonstrating its adaptability \cite{matloff2008introduction,dagkakis2013manpy},
+package to create the environment and make it evolve.
+This package present an extensive documentation and it has already been used for different
+studies, demonstrating its adaptability~\cite{matloff2008introduction,dagkakis2013manpy},
 other than an active community.
 
 I developed the \ac{DES} as a highly modular environment.
@@ -28,16 +28,16 @@ I developed the \ac{DES} as a highly modular environment.
     \label{fig:des_structure}
 \end{figure}
 
-In \Cref{fig:des_structure} is possible to see the basic idea of the simulator.
+In \Cref{fig:des_structure} is possible to see the basic idea behind the simulator.
 The first component needed is a graph, represented by a \textit{graphml} file,
 this file is the descriptor of the network.
-it defines also all topological information and all the properties of every single node.
-In Code \ref{lst:graph_example} is possible to see an example of a \textit{graphml} file,
+It defines also all the topological information and properties of every single node.
+In Code~\ref{lst:graph_example} is possible to see an example of a \textit{graphml} file,
 it describes that node \num{0} contains a single destination and that the edge
 between nodes \num{2} and \num{5} is controlled by the policy |2, 2, 2| that defines
 a servicer-provider policy.
-Policies are encoded using the convention described in \cite{daggitt2018rate}.
-Is possible to define multiple topological properties in the graph file, for
+The policies are encoded using the convention described in~\cite{daggitt2018rate}.
+In the graph file Is possible to define multiple topological properties, for
 example the \ac{MRAI} value in an edge or the set of parameters that
 controls \ac{RFD}.
 
@@ -52,17 +52,18 @@ controls \ac{RFD}.
 \end{lstlisting}
 
 The graph is then embedded in the environment file, this is a \textit{JSON} file
-that describes how the environment is characterized, is possible to define the
-initial values for the \ac{RNG} so that each experiment is replicable.
+that describes how the environment is characterized.
+Inside of it is possible to define the initial values for the \ac{RNG} so
+that each experiment is replicable.
 In the environment file is also possible to define different properties that
 would be used to make the experiments evolve, for example the distribution that
 will be used for the network delay.
 Is also possible to define multiple values for single properties and decided which
 combination of them to use before the experiment starts.
-There is two possible evolution of the environment that can be used:
+There are two possible evolution of the environment that can be used:
 \begin{itemize}
     \item \textbf{\textit{Continuous evolution}}: In this category all the nodes
-    that contains at least a destination will continuously share and retrieve
+    that contains at least one destination will continuously share and retrieve
     the destination accordingly with the distributions defined in the environment;
     \item \textbf{\textit{Signaling evolution}}: Is possible to define a precise
     signal that should be followed by the nodes that contain a destination, for
@@ -70,8 +71,8 @@ There is two possible evolution of the environment that can be used:
     a withdraw and then another announce.
 \end{itemize}
 
-The \ac{DES} take as input this \textit{JSON} file where all the information
-are described, it creates an object for each node in the graph file, respecting
+The \ac{DES} take as input this \textit{JSON} that describe all the information,
+it creates an object for each node in the network, respecting
 the topological characteristics defined in the \textit{graphml} file.
 After the initialization, all the nodes that contain a destination will schedule
 the first advertisement to their neighbours.
@@ -125,7 +126,7 @@ inside each \ac{BGP} node to emulate the processing of information or the evalua
 of a packet.
 Though the \textit{delay} parameter is possible to define the default delay on the edges,
 is important to remember that the links are FIFO so there is no reordering
-of messages in the same link, there is also no messages lost.
+of messages in the same link, no messages are lost during transmissions.
 That because it was out of the scope of this thesis to study the evolution
 of the protocol with packet loss, but it could be in the future works.
 
@@ -136,7 +137,7 @@ properties and behaviours of \ac{BGP} network, the main ones are described in
 \subsection{Clique environment}
 \label{subsec:clique_env}
 
-One of the special environment that I used in my experiments uses clique
+One of the special environment that I defined in my experiments uses clique
 graphs of different dimensions, an example of the clique graph is given in
 \Cref{fig:clique_topology}.
 This environment points to produce a high load of messages that each node has
@@ -152,13 +153,13 @@ This topology is used to enforce the \textit{Path exploration} problem, it also
 gives the possibility to study how \ac{BGP} parameters can influence the messages
 distribution in stressful cases like the clique one.
 I'm going also to study how the variation of those parameters from the standard
-ones can impact the performances in this environment of high load.
+can impact the performances in this environment of high load.
 
 \subsection{Fabrikant environment}
 \label{subsec:fabrikant_env}
 
 Another interesting case to test the path exploration problem is the one
-presented in \cite{fabrikant2011there}.
+presented in~\cite{fabrikant2011there}.
 In that study, Fabrikant et al. presents how particular \ac{MRAI} setting could
 make the network converge with an exponential behaviour. The continuous decision
 change in the nodes \ac{RIB} is the cause of the problem.
@@ -179,13 +180,14 @@ possibility set.
 This environment is also used to show how a \ac{BGP} \ac{FSM} would explode
 in terms of possible states and edges producing an enormous amount of
 output signals from the same input.
+This behaviour is presented in \Cref{sec:bgp_fsm_explosion}.
 
 \subsection{Internet-like environment}
 \label{subsec:internet_like_env}
 
 The last noteworthy environment is the one whose purpose is to simulate the Internet
 behaviour.
-This has been possible thanks to the study by Elmokashfi et al. \cite{elmokashfi2010scalability}
+This has been possible thanks to the study by Elmokashfi et al.~\cite{elmokashfi2010scalability}
 and the internet like graph generator present in Networkx \footnote{\href{https://networkx.org/documentation/stable/reference/generated/networkx.generators.internet_as_graphs.random_internet_as_graph.html\#networkx.generators.internet_as_graphs.random_internet_as_graph}{Networkx internet as graph generator}}
 (a Python library famous for graph and network studies).
 An example with a small set of nodes is presented in \Cref{fig:internet_like_topology}.
@@ -201,7 +203,7 @@ In the next studies, I generally refer to this kind of topology with the
 terms \q{Internet-like}, and the dimension is never less than \num{1000} nodes,
 otherwise is not possible to ensure all the Internet topological properties.
 
-The goal of the experiments that use that kind of topologies is to study
+The goal of the experiments that use that kind of environments is to study
 the general network performances in terms of average convergence time and
 the number of messages transmitted.
 This would help to see and study behaviours that are more typical in the actual

@@ -64,19 +64,19 @@ a trade-off between, convergence time and messages transmitted that could
 be sustainable by the current hardware.
 
 In this thesis, more precisely in \Cref{cha:bgp_art}, I'm going to introduce
-two of those important parameters, \ac{MRAI} and \ac{RFD}.
+two of those important \ac{BGP} mechanisms, \ac{MRAI} and \ac{RFD}.
 The first one is used to compress multiple input messages into one
 output message in order to reduce the network load provoked by a change.
 The second one, \ac{RFD}, is used to penalize unstable paths, suppressing
-the route and blocking the spreading of it to further node to circumscribe
+the route and blocking the spreading of it to further nodes to circumscribe
 the zone of instability.
 
-The existence of those two parameters has been studied separately many different
+The existence of those two mechanisms has been studied separately many different
 times \cite{fabrikant2011there,daggitt2018rate,qiu2005optimal,gray2020bgp}.
-But, there are almost no studies on the correlation of those parameters.
+But, there are almost no studies on the interaction of them.
 Even if the effects of one interact with the other.
 
-\section{Internet today}
+\section{Internet Today}
 \label{sec:internet_today}
 
 Internet, as a network, is constantly growing, in terms of \acp{AS}, prefixes
@@ -106,14 +106,14 @@ The growing of Internet is not negligible because of this problem, a continuous
 growth in terms of nodes and edges cause the growth of favorable conditions for
 the \textit{Path Exploration} problem.
 
-\section{Correlation between variables and convergence}
+\section{Interaction between variables and convergence}
 \label{sec:bgp_correlations}
 
 The two parameters that will be studied in this thesis are \ac{MRAI} and \ac{RFD}
 and how the interaction between them works.
 Our first hypothesis is that, indeed, there is an interaction.
 This hypothesis is sustained by the fact that both parameters operate to
-control the noise of \ac{BGP}, with different parameters and different behaviour,
+reduce the noise of \ac{BGP}, with different parameters and different behaviour,
 but, if a node wants to transmit a message it must respect \ac{MRAI} and the input
 could be caused by \ac{RFD} that suppress/reintroduce a route.
 On the opposite case, a too small \ac{MRAI} value could permit different message
@@ -122,7 +122,7 @@ storms that would trigger the \ac{RFD} suppression systems creating vicious circ
 One of the goals of reducing the value of \ac{MRAI} is to reach a faster convergence
 paying the cost of more messages.
 Unfortunately, looking only to \ac{MRAI} is not possible to get reliable results
-for general purposes, in-fact, like showed in \Cref{cha:bgp_rfd}, is possible
+for general purposes, in-fact, like showed in \Cref{cha:bgp_rfd_vs_mrai}, is possible
 to obtain the opposite result due to the fact that to solve \ac{RFD} suppression
 is required a longer time.
 
@@ -140,8 +140,8 @@ there could be a strong co-dependence.
 %    \item Why is important understand this correlation?
 %\end{itemize}
 
-The goal of this thesis is to prove that the noise detectors of the \ac{BGP}
-protocol are correlated, studying this correlation through stimulative experiments
+The goal of this thesis is to prove that the noise reduction mechanisms of \ac{BGP}
+interact one another, studying this interaction through simulative experiments
 and from those give useful hints on how those two parameters interact with one another.
 In order to build the basis for future experiments that can study more deeply
 and maybe in a formal way the phenomena.
@@ -151,7 +151,8 @@ available\footnote{\href{https://github.com/tiamilani/BGPFSM}{GitHub repository}
 
 In \Cref{cha:bgp_art} are going to be presented the protocol and more deeply
 the two parameters studied, while in \Cref{cha:des} I'm going to present
-the structure of the platform that will be used in \Cref{cha:bgp_fsm,cha:bgp_mrai_experiments,cha:bgp_rfd}
+the structure of the platform that will be used in
+\Cref{cha:bgp_fsm,cha:bgp_mrai_experiments,cha:bgp_rfd,cha:bgp_rfd_vs_mrai}
 to perform the experiments about the \textit{Path Exploration} problem and then
 how \ac{MRAI} and \ac{RFD} can impact the performances, conclusions to follow
 in \Cref{cha:conclusion}.
