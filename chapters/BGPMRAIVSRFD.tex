@@ -1,12 +1,6 @@
 \chapter{RFD and MRAI Interaction}
 \label{cha:bgp_rfd_vs_mrai}
 
-%\begin{itemize}
-%    \item Expose more deeply what is RFD
-%    \item Expose previous studies about RFD
-%    \item Today RFD? Outdated
-%\end{itemize}
-
 \ac{RFD} is another parameter of \ac{BGP} used to prevent messages storms.
 It is used to avoid flapping routes to continuously make the network unstable.
 When a network flaps a certain value is increased and when it overpass a threshold
@@ -26,7 +20,7 @@ cause the route to flaps a couple of times.
 
 In the following chapters, I am going to show how legacy \ac{RFD} can affect
 small flaps and how would the new version of \ac{RFD} react to them.
-Finally, I would look forward to understanding the correlation between \ac{RFD}
+Finally, I would look forward to understanding the interaction between \ac{RFD}
 and \ac{MRAI}.
 When a suppressed route is shared again it could provoke messages storms that
 triggers different \ac{MRAI} sessions, or the opposite case, a low \ac{MRAI} that
@@ -241,8 +235,8 @@ In fact, the \ac{RFC} \num{7196} modify the figure
 of merit threshold that is increased up to at least \num{6.0}, introducing
 two new set of possible \ac{RFD} filters that can be used:
 \begin{itemize}
-	\item \textit{\textbf{Aggressive}}, Suppression threshold no less than \num{6.0};
-	\item \textit{\textbf{Conservative}}, Suppression threshold no less than \num{12.0};
+	\item \textit{\textbf{Aggressive}:} Suppression threshold no less than \num{6.0};
+	\item \textit{\textbf{Conservative}:} Suppression threshold no less than \num{12.0}.
 \end{itemize}
 
 Respectively \num{3} and \num{6} times the actual standard.
@@ -364,329 +358,329 @@ or not of a route.
 \section{Mice VS Elephants}
 \label{sec:bgp_rfd_mice_vs_elephants}
 
-From the work of R. Bush et al., \cite{pelsser2011route} we know that the majority
-of the \ac{ADV} that are transmitted on the Internet are from a small set of \acp{AS}.
-Those \acp{AS} with their flaps causes update storms almost continuously.
-I report a figure form \cite{pelsser2011route} for simplicity in
-\Cref{fig:RBushPrefixes}
-Thanks to the studies of
-\ac{APNIC}\footnote{\href{https://blog.apnic.net/2020/01/15/bgp-in-2019-bgp-churn/}{APNIC BGP 2019 report}}
-we also know that this behaviour is still present nowadays, the \Cref{fig:apnicPrefixes}
-is taken from one of their annual reports and shows that \num{10}\% of
-all the active prefixes produce more or less the \num{70}\% of the total
-messages received.
-
-\begin{figure}[h]
-     \centering
-     \begin{subfigure}[b]{0.48\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/prefixVSmessagesRbush.png}
-		 \caption{Prefixes and number of updates associated, figure from \cite{pelsser2011route}}
-         \label{fig:RBushPrefixes}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.48\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/bgp2fig5-pfx-upds-cuml.png}
-         \caption{Prefixes and number of updates associated, [apnic 2019]}
-         \label{fig:apnicPrefixes}
-     \end{subfigure}
-        \caption{Prefixes influence on updates}
-        \label{fig:prefixVSmessages}
-\end{figure}
-
-We can then divide those prefixes in two sets:
-\begin{itemize}
-	\item \textbf{\textit{Mice}}, this set represent the majority of the prefixes,
-		all the prefixes that does not generate more than \num{100} updates
-		in \Cref{fig:RBushPrefixes}
-	\item \textbf{\textit{Elephants}}, this set represent the remaining part
-		of the prefixes, those that produces the majority of the messages.
-\end{itemize}
-
-Thanks to a annual review of \ac{BGP} by APNIC, presented at RIPE 52 \cite{huston2006bgp},
-we can also have an example of those elephants prefixes.
-This example is shown in \Cref{fig:ripePrefixFlaps}, it takes in consideration the
-prefix \q{202.64.49.0/24} showing that in a relatively small period of time it has
-produced thousands of \ac{ADV} per day.
-In this case, this particular prefix has produced \num{198,370} \ac{ADV} producing
-in total \num{96,330} flaps.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[scale=0.22]{images/RFD/miceVSelephants/ripePrefixFlap.png}
-	\caption{202.64.49.0/24 flaps plot from \cite{huston2006bgp}}
-    \label{fig:ripePrefixFlaps}
-\end{figure}
-
-I have then used this data to configure two new environments for the simulations.
-The first one points to reproduce the \textit{Mice} behaviour, the second
-one the \textit{Elephants}.
-
-In both these environments, I have then compared the four different strategies of
-\ac{RFD}, \textit{NoRFD}, standard \ac{RFD} from the \ac{RFC} \num{2439}
-and the two from \cite{rfc7196}.
-
-The topology used for those experiments is an \textit{Internet like} topology
-with \num{1000} nodes and \ac{MRAI} is fixed to \SI{30}{\second} for all the links.
-The source of the signal has been chosen randomly on the graph.
-For each experiment has been executed \num{50} runs.
+%From the work of R. Bush et al., \cite{pelsser2011route} we know that the majority
+%of the \ac{ADV} that are transmitted on the Internet are from a small set of \acp{AS}.
+%Those \acp{AS} with their flaps causes update storms almost continuously.
+%I report a figure form \cite{pelsser2011route} for simplicity in
+%\Cref{fig:RBushPrefixes}
+%Thanks to the studies of
+%\ac{APNIC}\footnote{\href{https://blog.apnic.net/2020/01/15/bgp-in-2019-bgp-churn/}{APNIC BGP 2019 report}}
+%we also know that this behaviour is still present nowadays, the \Cref{fig:apnicPrefixes}
+%is taken from one of their annual reports and shows that \num{10}\% of
+%all the active prefixes produce more or less the \num{70}\% of the total
+%messages received.
+%
+%\begin{figure}[h]
+%     \centering
+%     \begin{subfigure}[b]{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/prefixVSmessagesRbush.png}
+%		 \caption{Prefixes and number of updates associated, figure from \cite{pelsser2011route}}
+%         \label{fig:RBushPrefixes}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.48\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/bgp2fig5-pfx-upds-cuml.png}
+%         \caption{Prefixes and number of updates associated, [apnic 2019]}
+%         \label{fig:apnicPrefixes}
+%     \end{subfigure}
+%        \caption{Prefixes influence on updates}
+%        \label{fig:prefixVSmessages}
+%\end{figure}
+%
+%We can then divide those prefixes in two sets:
+%\begin{itemize}
+%	\item \textbf{\textit{Mice}}, this set represent the majority of the prefixes,
+%		all the prefixes that does not generate more than \num{100} updates
+%		in \Cref{fig:RBushPrefixes}
+%	\item \textbf{\textit{Elephants}}, this set represent the remaining part
+%		of the prefixes, those that produces the majority of the messages.
+%\end{itemize}
+%
+%Thanks to a annual review of \ac{BGP} by APNIC, presented at RIPE 52 \cite{huston2006bgp},
+%we can also have an example of those elephants prefixes.
+%This example is shown in \Cref{fig:ripePrefixFlaps}, it takes in consideration the
+%prefix \q{202.64.49.0/24} showing that in a relatively small period of time it has
+%produced thousands of \ac{ADV} per day.
+%In this case, this particular prefix has produced \num{198,370} \ac{ADV} producing
+%in total \num{96,330} flaps.
+%
+%\begin{figure}[h]
+%    \centering
+%    \includegraphics[scale=0.22]{images/RFD/miceVSelephants/ripePrefixFlap.png}
+%	\caption{202.64.49.0/24 flaps plot from \cite{huston2006bgp}}
+%    \label{fig:ripePrefixFlaps}
+%\end{figure}
+%
+%I have then used this data to configure two new environments for the simulations.
+%The first one points to reproduce the \textit{Mice} behaviour, the second
+%one the \textit{Elephants}.
+%
+%In both these environments, I have then compared the four different strategies of
+%\ac{RFD}, \textit{NoRFD}, standard \ac{RFD} from the \ac{RFC} \num{2439}
+%and the two from \cite{rfc7196}.
+%
+%The topology used for those experiments is an \textit{Internet like} topology
+%with \num{1000} nodes and \ac{MRAI} is fixed to \SI{30}{\second} for all the links.
+%The source of the signal has been chosen randomly on the graph.
+%For each experiment has been executed \num{50} runs.
 
 \subsection{Mice}
 \label{subsec:mice}
 
-The particularity of the \textit{Mice} experiments is in the signal, we have
-a low number of flaps interleaved by a long timer.
-I have then used a signal with \num{5} flaps, \q{AWAWAWAWAWA} with a delay
-of \SI{300}{\second} (\SI{5}{\minute}) between each message.
-The results are presented in \Cref{fig:1000_RFD_MRAI30_mice_bis}.
-I have executed \num{50} runs for each \ac{RFD} strategy.
-
-\begin{figure}[h]
-     \centering
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000MRAI30_rfd_comparison_time_boxplot.pdf}
-         \caption{Convergence time respect to the RFD strategy}
-         \label{fig:1000_RFD_MRAI30_mice_time_bis}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000MRAI30_rfd_comparison_messages_boxplot.pdf}
-         \caption{Number of messages respect to the RFD strategy}
-         \label{fig:1000_RFD_MRAI30_mice_messages_bis}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000MRAI30_rfd_comparison_suppressions_boxplot.pdf}
-         \caption{Number of suppressions respect to the RFD strategy}
-         \label{fig:1000_RFD_MRAI30_mice_suppressions_bis}
-     \end{subfigure}
-		\caption{Internet like topology 1000 nodes, MRAI=30s, random destination,
-		5 flaps, \SI{300}{\second} message delay, Network performances,
-		\num{50} runs per strategy.}
-        \label{fig:1000_RFD_MRAI30_mice_bis}
-\end{figure}
-
-From \Cref{fig:1000_RFD_MRAI30_mice_suppressions_bis} we can see that there is a
-big difference in the number of suppression.
-The standard strategy produces on average almost \num{1500} suppressions and the effects
-of those suppressions can be seen in \Cref{fig:1000_RFD_MRAI30_mice_time_bis,fig:1000_RFD_MRAI30_mice_messages_bis}.
-On average, it presents a convergence time higher than \SI{6000}{\second}
-but with a number of total messages transmitted around \num{16000} with a very
-low variance.
-A different case is presented by the \textit{Conservative} strategy from \ac{RFC}
-7196 \cite{rfc7196}.
-The threshold in this last case is so permissive that we have a really small
-number of suppression.
-For this reason, the number of messages transmitted, on average, is similar to
-the \textit{NoRFD} case, around \num{50000}.
-While, the convergence time is around \SI{6500}{\second}, like the standard \ac{RFD}
-strategy.
-This proves that few suppression can heavily influence the network performances,
-in particular the convergence time.
-Also because the recover from a suppression with a higher threshold would require
-more time.
-
-In the middle we find the \textit{Aggressive} strategy, we can see from the
-suppression boxplot that it produces a smaller number of suppression in respect
-of the legacy strategy with a smaller variance.
-Also, the convergence time respect this trend, in fact, the average time is
-below \SI{6000}{\second}.
-While The number of messages transmitted is more than double in respect
-of the strategy described by the \ac{RFC} \num{2439}.
-
-We can then conclude that a small number of suppression can affect both the
-performances, like the few suppressions in the \textit{Conservative} strategy
-for the convergence time.
-Also, the few missing suppression in the \textit{Aggressive} strategy will
-enormously impact the number of messages transmitted.
-
-Is also possible to study which are the nodes that produce the suppression and how
-far are them from the signal source.
-We can see the results of this study, for each suppression technique in \Cref{fig:1000_RFD_centVSsup}.
-
-\begin{figure}[h]
-     \centering
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000_RFD_nodeConvergence_centVSsup_trend.pdf}
-         \caption{RFD 2439 Strategy}
-         \label{fig:1000_2439RFD_centVSsup}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000_RFD_7196_aggressive_nodeConvergence_centVSsup_trend.pdf}
-         \caption{RFD 7196 Aggressive Strategy}
-         \label{fig:1000_7196RFDA_centVSsup}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000_RFD_7196_conservative_nodeConvergence_centVSsup_trend.pdf}
-         \caption{RFD 7196 Conservative Strategy}
-         \label{fig:1000_7196RFDC_centVSsup}
-     \end{subfigure}
-		\caption{Internet like topology \num{1000} nodes, \ac{MRAI} = \SI{30}{\second}, random destination, \num{5} flaps, \SI{300}{\second} between messages, Suppression trend VS avg hop centrality}
-        \label{fig:1000_RFD_centVSsup}
-\end{figure}
-
-For the plots in \Cref{fig:1000_RFD_centVSsup} the $x$ axis represent the distance
-from the source node in terms of hops and all the other nodes are grouped by this
-distance.
-The blue line represents the average centrality of the groups, for each node of the
-graph I calculated the centrality using the \ac{DPC} metric then grouped them
-and calculated the average value.
-As expected the central nodes have a higher centrality and them are a few hops
-of distance
-from the source node.
-The centrality trend is equal for each plot in \Cref{fig:1000_RFD_centVSsup}
-because the graph and the source node are the same for each experiment.
-
-The red line represents the average number of suppressions per group.
-As we can see with the standard strategy, \Cref{fig:1000_2439RFD_centVSsup},
-on average, the route has been blocked \num{1} time by the nearest nodes and then,
-this value increase reaching the center clique up to \num{3.5} times and then
-slowly decreases in the following groups.
-In the farthest group, we will still see on average \num{1} suppression.
-The \textit{Aggressive} strategy, \Cref{fig:1000_7196RFDA_centVSsup} present
-a similar behaviour, the nearest nodes don't block the route, while the central
-nodes start blocking it with a maximum average of \num{1.6} times.
-After those central nodes, the farthest nodes, that have a low centrality will
-block it on average \num{1} time, like the legacy strategy.
-The \textit{Conservative} strategy, presented in \Cref{fig:1000_7196RFDC_centVSsup},
-has a different trend.
-We can see that the central nodes do not block the route, while only the farthest
-ones block it a few times, with an average value of \num{0.2} times.
-This can give us some hints, a very high threshold can promote the path
-exploration problem that will cause multiple update storms in farthest nodes.
-
-From those experiments we can see that having a higher threshold could help
-to spread the knowledge near the source of the flaps, but once the
-\textit{Path exploration} problem takes over, the nodes are going to suppress
-the destination.
-This is a good behaviour because it circumscribes an area in which the
-information can spread instead of blocking it almost everywhere.
-Those few suppression can highly impact in general the average convergence rate
-of the network.
-Is important to consider that a higher threshold means also a higher time to
-make the destination available again, maybe a new decay function should be considered.
+%The particularity of the \textit{Mice} experiments is in the signal, we have
+%a low number of flaps interleaved by a long timer.
+%I have then used a signal with \num{5} flaps, \q{AWAWAWAWAWA} with a delay
+%of \SI{300}{\second} (\SI{5}{\minute}) between each message.
+%The results are presented in \Cref{fig:1000_RFD_MRAI30_mice_bis}.
+%I have executed \num{50} runs for each \ac{RFD} strategy.
+%
+%\begin{figure}[h]
+%     \centering
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000MRAI30_rfd_comparison_time_boxplot.pdf}
+%         \caption{Convergence time respect to the RFD strategy}
+%         \label{fig:1000_RFD_MRAI30_mice_time_bis}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000MRAI30_rfd_comparison_messages_boxplot.pdf}
+%         \caption{Number of messages respect to the RFD strategy}
+%         \label{fig:1000_RFD_MRAI30_mice_messages_bis}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000MRAI30_rfd_comparison_suppressions_boxplot.pdf}
+%         \caption{Number of suppressions respect to the RFD strategy}
+%         \label{fig:1000_RFD_MRAI30_mice_suppressions_bis}
+%     \end{subfigure}
+%		\caption{Internet like topology 1000 nodes, MRAI=30s, random destination,
+%		5 flaps, \SI{300}{\second} message delay, Network performances,
+%		\num{50} runs per strategy.}
+%        \label{fig:1000_RFD_MRAI30_mice_bis}
+%\end{figure}
+%
+%From \Cref{fig:1000_RFD_MRAI30_mice_suppressions_bis} we can see that there is a
+%big difference in the number of suppression.
+%The standard strategy produces on average almost \num{1500} suppressions and the effects
+%of those suppressions can be seen in \Cref{fig:1000_RFD_MRAI30_mice_time_bis,fig:1000_RFD_MRAI30_mice_messages_bis}.
+%On average, it presents a convergence time higher than \SI{6000}{\second}
+%but with a number of total messages transmitted around \num{16000} with a very
+%low variance.
+%A different case is presented by the \textit{Conservative} strategy from \ac{RFC}
+%7196 \cite{rfc7196}.
+%The threshold in this last case is so permissive that we have a really small
+%number of suppression.
+%For this reason, the number of messages transmitted, on average, is similar to
+%the \textit{NoRFD} case, around \num{50000}.
+%While, the convergence time is around \SI{6500}{\second}, like the standard \ac{RFD}
+%strategy.
+%This proves that few suppression can heavily influence the network performances,
+%in particular the convergence time.
+%Also because the recover from a suppression with a higher threshold would require
+%more time.
+%
+%In the middle we find the \textit{Aggressive} strategy, we can see from the
+%suppression boxplot that it produces a smaller number of suppression in respect
+%of the legacy strategy with a smaller variance.
+%Also, the convergence time respect this trend, in fact, the average time is
+%below \SI{6000}{\second}.
+%While The number of messages transmitted is more than double in respect
+%of the strategy described by the \ac{RFC} \num{2439}.
+%
+%We can then conclude that a small number of suppression can affect both the
+%performances, like the few suppressions in the \textit{Conservative} strategy
+%for the convergence time.
+%Also, the few missing suppression in the \textit{Aggressive} strategy will
+%enormously impact the number of messages transmitted.
+%
+%Is also possible to study which are the nodes that produce the suppression and how
+%far are them from the signal source.
+%We can see the results of this study, for each suppression technique in \Cref{fig:1000_RFD_centVSsup}.
+%
+%\begin{figure}[h]
+%     \centering
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000_RFD_nodeConvergence_centVSsup_trend.pdf}
+%         \caption{RFD 2439 Strategy}
+%         \label{fig:1000_2439RFD_centVSsup}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000_RFD_7196_aggressive_nodeConvergence_centVSsup_trend.pdf}
+%         \caption{RFD 7196 Aggressive Strategy}
+%         \label{fig:1000_7196RFDA_centVSsup}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/mice/cisco_1000_RFD_7196_conservative_nodeConvergence_centVSsup_trend.pdf}
+%         \caption{RFD 7196 Conservative Strategy}
+%         \label{fig:1000_7196RFDC_centVSsup}
+%     \end{subfigure}
+%		\caption{Internet like topology \num{1000} nodes, \ac{MRAI} = \SI{30}{\second}, random destination, \num{5} flaps, \SI{300}{\second} between messages, Suppression trend VS avg hop centrality}
+%        \label{fig:1000_RFD_centVSsup}
+%\end{figure}
+%
+%For the plots in \Cref{fig:1000_RFD_centVSsup} the $x$ axis represent the distance
+%from the source node in terms of hops and all the other nodes are grouped by this
+%distance.
+%The blue line represents the average centrality of the groups, for each node of the
+%graph I calculated the centrality using the \ac{DPC} metric then grouped them
+%and calculated the average value.
+%As expected the central nodes have a higher centrality and them are a few hops
+%of distance
+%from the source node.
+%The centrality trend is equal for each plot in \Cref{fig:1000_RFD_centVSsup}
+%because the graph and the source node are the same for each experiment.
+%
+%The red line represents the average number of suppressions per group.
+%As we can see with the standard strategy, \Cref{fig:1000_2439RFD_centVSsup},
+%on average, the route has been blocked \num{1} time by the nearest nodes and then,
+%this value increase reaching the center clique up to \num{3.5} times and then
+%slowly decreases in the following groups.
+%In the farthest group, we will still see on average \num{1} suppression.
+%The \textit{Aggressive} strategy, \Cref{fig:1000_7196RFDA_centVSsup} present
+%a similar behaviour, the nearest nodes don't block the route, while the central
+%nodes start blocking it with a maximum average of \num{1.6} times.
+%After those central nodes, the farthest nodes, that have a low centrality will
+%block it on average \num{1} time, like the legacy strategy.
+%The \textit{Conservative} strategy, presented in \Cref{fig:1000_7196RFDC_centVSsup},
+%has a different trend.
+%We can see that the central nodes do not block the route, while only the farthest
+%ones block it a few times, with an average value of \num{0.2} times.
+%This can give us some hints, a very high threshold can promote the path
+%exploration problem that will cause multiple update storms in farthest nodes.
+%
+%From those experiments we can see that having a higher threshold could help
+%to spread the knowledge near the source of the flaps, but once the
+%\textit{Path exploration} problem takes over, the nodes are going to suppress
+%the destination.
+%This is a good behaviour because it circumscribes an area in which the
+%information can spread instead of blocking it almost everywhere.
+%Those few suppression can highly impact in general the average convergence rate
+%of the network.
+%Is important to consider that a higher threshold means also a higher time to
+%make the destination available again, maybe a new decay function should be considered.
 
 \subsection{Elephants}
 \label{subsec:bgp_elephants}
 
-The elephants prefixes, as I mentioned in \Cref{sec:bgp_rfd_mice_vs_elephants},
-are the ones that produce the majority of the \ac{ADV}.
-And we also know, thanks to \cite{huston2006bgp}, that is possible to see over
-thousands of messages per day.
-For this reason, the \textit{elephants} environment signal is composed of \num{100}
-flaps, with a delay between the messages of \SI{3}{\second}.
-All the other properties of the environment are unchanged.
-The results are presented in \Cref{fig:1000_RFD_MRAI_30_elephant,fig:1000_RFD_cent_VS_sup_elephants}.
-
-\begin{figure}[h]
-     \centering
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000MRAI30_rfd_comparison_time_boxplot.pdf}
-         \caption{Convergence time respect to the RFD strategy}
-         \label{fig:1000_RFD_MRAI_30_time_elephant}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000MRAI30_rfd_comparison_messages_boxplot.pdf}
-         \caption{Number of messages respect to the RFD strategy}
-         \label{fig:1000_RFD_MRAI_30_messages_elephant}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000MRAI30_rfd_comparison_suppressions_boxplot.pdf}
-         \caption{Number of suppressions respect to the RFD strategy}
-         \label{fig:1000_RFD_MRAI_30_suppressions_elephant}
-     \end{subfigure}
-		\caption{Internet like topology \num{1000} nodes, \ac{MRAI} = \SI{30}{\second}, random destination, \num{100} flaps, \SI{3}{\second} delay, Network performances}
-        \label{fig:1000_RFD_MRAI_30_elephant}
-\end{figure}
-
-Is possible to see in \Cref{fig:1000_RFD_MRAI_30_elephant} that this time we have
-a different behaviour from all the \num{3} \ac{RFD} strategies.
-In \Cref{fig:1000_RFD_MRAI_30_suppressions_elephant} we can see that
-the standard strategy, on average, does more than \num{1250} suppression, producing
-the lowest number of messages, around \num{11000}, but the highest convergence
-time with more than \SI{5000}{\second}.
-All the suppression are trigger by the \textit{Path Exploration} problem that
-causes \ac{ADV} storms that trigger the suppression on the majority
-of the nodes.
-The two new strategies would produce on average just a few suppression in respect
-of the legacy one, but the number of messages doesn't differ too much.
-While there is a huge improvement on the convergence time, on average,
-both the new strategy permits the network to converge in less than \SI{4000}{\second}.
-All three strategy produce $1/3$ of the messages produced by the
-\textit{NoRFD} strategy.
-
-\begin{figure}[h]
-     \centering
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000_RFD_nodeConvergence_centVSsup_trend.pdf}
-         \caption{RFD 2439 Strategy}
-         \label{fig:1000_2439RFD_cent_VS_sup_elephants}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000_RFD_7196_aggressive_nodeConvergence_centVSsup_trend.pdf}
-         \caption{RFD 7196 Aggressive Strategy}
-         \label{fig:1000_7196RFDA_cent_VS_sup_elephants}
-     \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.325\textwidth}
-         \centering
-         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000_RFD_7196_conservative_nodeConvergence_centVSsup_trend.pdf}
-         \caption{RFD 7196 Conservative Strategy}
-         \label{fig:1000_7196RFDC_cent_VS_sup_elephants}
-     \end{subfigure}
-		\caption{Internet like topology \num{1000} nodes, \ac{MRAI} = \SI{30}{\second},
-		random destination, \num{100} flaps, \SI{3}{\second} delay, suppressions
-		by distance from the source}
-        \label{fig:1000_RFD_cent_VS_sup_elephants}
-\end{figure}
-
-We can see in \Cref{fig:1000_RFD_cent_VS_sup_elephants} the comparison between
-the average number of suppressions per node group of the different strategies.
-In \Cref{fig:1000_7196RFDA_cent_VS_sup_elephants,fig:1000_7196RFDC_cent_VS_sup_elephants}
-we can notice that both strategies reacts in the exact same way at the elephant
-environment.
-The only nodes that suppress the route are the nodes that are closer to the source.
-All the other nodes of the network don't experience enough messages to block
-the route.
-In the first figure, \Cref{fig:1000_2439RFD_cent_VS_sup_elephants}, we can see
-that, on average, every node suppress at least one time the source of the
-signal.
-The hypothesis behind this trend is that the intervention of the closer nodes
-is not timely enough and all the other nodes have the time to experience the
-\textit{Path exploration} problem.
-With a lower threshold is sufficient a small number of \ac{ADV} storms
-to trigger the \ac{RFD} suppression.
-
-%We can then say that all the strategies catch in time the flap and avoid the
-%propagation of the update storm, increasing the convergence time but protecting
-%the network from thousands of messages.
-We can say that all the strategies protect the network from a huge load of messages.
-In \Cref{fig:1000_RFD_MRAI_30_messages_elephant} we can see that the use of \ac{RFD}
-reduces to $1/3$ the number of messages necessary to reach convergence.
-The difference is the convergence time, more nodes experience suppression
-then more time is necessary to converge because there will be more \ac{ADV} when
-the figure of merit becomes lower enough to activate again the route.
-For this reason there is a difference of more than \SI{1000}{\second} between
-the different techniques.
-This experiments reinforce the hypothesis that a small number of suppressions is
-more significant in respect of thousands of them.
+%The elephants prefixes, as I mentioned in \Cref{sec:bgp_rfd_mice_vs_elephants},
+%are the ones that produce the majority of the \ac{ADV}.
+%And we also know, thanks to \cite{huston2006bgp}, that is possible to see over
+%thousands of messages per day.
+%For this reason, the \textit{elephants} environment signal is composed of \num{100}
+%flaps, with a delay between the messages of \SI{3}{\second}.
+%All the other properties of the environment are unchanged.
+%The results are presented in \Cref{fig:1000_RFD_MRAI_30_elephant,fig:1000_RFD_cent_VS_sup_elephants}.
+%
+%\begin{figure}[h]
+%     \centering
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000MRAI30_rfd_comparison_time_boxplot.pdf}
+%         \caption{Convergence time respect to the RFD strategy}
+%         \label{fig:1000_RFD_MRAI_30_time_elephant}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000MRAI30_rfd_comparison_messages_boxplot.pdf}
+%         \caption{Number of messages respect to the RFD strategy}
+%         \label{fig:1000_RFD_MRAI_30_messages_elephant}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000MRAI30_rfd_comparison_suppressions_boxplot.pdf}
+%         \caption{Number of suppressions respect to the RFD strategy}
+%         \label{fig:1000_RFD_MRAI_30_suppressions_elephant}
+%     \end{subfigure}
+%		\caption{Internet like topology \num{1000} nodes, \ac{MRAI} = \SI{30}{\second}, random destination, \num{100} flaps, \SI{3}{\second} delay, Network performances}
+%        \label{fig:1000_RFD_MRAI_30_elephant}
+%\end{figure}
+%
+%Is possible to see in \Cref{fig:1000_RFD_MRAI_30_elephant} that this time we have
+%a different behaviour from all the \num{3} \ac{RFD} strategies.
+%In \Cref{fig:1000_RFD_MRAI_30_suppressions_elephant} we can see that
+%the standard strategy, on average, does more than \num{1250} suppression, producing
+%the lowest number of messages, around \num{11000}, but the highest convergence
+%time with more than \SI{5000}{\second}.
+%All the suppression are trigger by the \textit{Path Exploration} problem that
+%causes \ac{ADV} storms that trigger the suppression on the majority
+%of the nodes.
+%The two new strategies would produce on average just a few suppression in respect
+%of the legacy one, but the number of messages doesn't differ too much.
+%While there is a huge improvement on the convergence time, on average,
+%both the new strategy permits the network to converge in less than \SI{4000}{\second}.
+%All three strategy produce $1/3$ of the messages produced by the
+%\textit{NoRFD} strategy.
+%
+%\begin{figure}[h]
+%     \centering
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000_RFD_nodeConvergence_centVSsup_trend.pdf}
+%         \caption{RFD 2439 Strategy}
+%         \label{fig:1000_2439RFD_cent_VS_sup_elephants}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000_RFD_7196_aggressive_nodeConvergence_centVSsup_trend.pdf}
+%         \caption{RFD 7196 Aggressive Strategy}
+%         \label{fig:1000_7196RFDA_cent_VS_sup_elephants}
+%     \end{subfigure}
+%     \hfill
+%     \begin{subfigure}[b]{0.325\textwidth}
+%         \centering
+%         \includegraphics[width=\textwidth]{images/RFD/miceVSelephants/elephants/cisco_1000_RFD_7196_conservative_nodeConvergence_centVSsup_trend.pdf}
+%         \caption{RFD 7196 Conservative Strategy}
+%         \label{fig:1000_7196RFDC_cent_VS_sup_elephants}
+%     \end{subfigure}
+%		\caption{Internet like topology \num{1000} nodes, \ac{MRAI} = \SI{30}{\second},
+%		random destination, \num{100} flaps, \SI{3}{\second} delay, suppressions
+%		by distance from the source}
+%        \label{fig:1000_RFD_cent_VS_sup_elephants}
+%\end{figure}
+%
+%We can see in \Cref{fig:1000_RFD_cent_VS_sup_elephants} the comparison between
+%the average number of suppressions per node group of the different strategies.
+%In \Cref{fig:1000_7196RFDA_cent_VS_sup_elephants,fig:1000_7196RFDC_cent_VS_sup_elephants}
+%we can notice that both strategies reacts in the exact same way at the elephant
+%environment.
+%The only nodes that suppress the route are the nodes that are closer to the source.
+%All the other nodes of the network don't experience enough messages to block
+%the route.
+%In the first figure, \Cref{fig:1000_2439RFD_cent_VS_sup_elephants}, we can see
+%that, on average, every node suppress at least one time the source of the
+%signal.
+%The hypothesis behind this trend is that the intervention of the closer nodes
+%is not timely enough and all the other nodes have the time to experience the
+%\textit{Path exploration} problem.
+%With a lower threshold is sufficient a small number of \ac{ADV} storms
+%to trigger the \ac{RFD} suppression.
+%
+%%We can then say that all the strategies catch in time the flap and avoid the
+%%propagation of the update storm, increasing the convergence time but protecting
+%%the network from thousands of messages.
+%We can say that all the strategies protect the network from a huge load of messages.
+%In \Cref{fig:1000_RFD_MRAI_30_messages_elephant} we can see that the use of \ac{RFD}
+%reduces to $1/3$ the number of messages necessary to reach convergence.
+%The difference is the convergence time, more nodes experience suppression
+%then more time is necessary to converge because there will be more \ac{ADV} when
+%the figure of merit becomes lower enough to activate again the route.
+%For this reason there is a difference of more than \SI{1000}{\second} between
+%the different techniques.
+%This experiments reinforce the hypothesis that a small number of suppressions is
+%more significant in respect of thousands of them.
 
 \subsection{MRAI influence on Mice and Elephants}
 \label{subsec:bgp_rfd_mrai_influence_mice_elephants}

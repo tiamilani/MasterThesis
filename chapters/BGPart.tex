@@ -67,8 +67,8 @@ its own customers.
 Those policies are commonly called \q{valley-free} and are dictated by convenience,
 an \ac{AS} has all the advantages when
 other \acp{AS} decide to use it to reach a specific destination.
-For this reason is convinient for an \ac{AS} that everyone knows about its clients
-networks, and, in the opposite side, that its clients knowes only the route
+For this reason is convenient for an \ac{AS} that everyone knows about its clients
+networks, and, in the opposite side, that its clients knows only the route
 through it to reach other networks.
 
 This behaviour can be modelled with a variant of the \ac{SSP} algebra described
@@ -82,7 +82,7 @@ relationships.
 %    \item interconnection between ASes
 %\end{itemize}
 
-\section{BGP}
+\section{The protocol in details}
 \label{sec:bgp_intro}
 
 Once a \ac{BGP} node has established a connection with another peer it will
@@ -345,13 +345,6 @@ a node has could influence it and by consequences the position in the topology.
 A well connected node will be more likely to receive multiple paths and messages
 than one with only one link.
 
-%\begin{itemize}
-%    \item What is MRAI?
-%	\item Rember that the MRAI purpose is to avoid the BGP noise
-%    \item Previous works on MRAI
-%    \item Suppositions on the MRAI influence
-%\end{itemize}
-
 \section{BGP RFD, designed to reduce external noise}
 \label{sec:bgp_rfd}
 
@@ -399,7 +392,7 @@ suppress the route and don't advertise it until the figure of merit goes
 below the \textit{reuse threshold}.
 The decay of the \textit{figure of merit} follows a quadratic decay function
 which rate is calculated using the \textit{Half-life} parameter.
-the \textit{Max Suppress Time} will override all this parameters because, as
+The \textit{Max Suppress Time} will override all this parameters because, as
 defined in the original \ac{RFC}, a route cannot be suppressed for more than
 that time, it doesn't matter the figure of merit accumulated by this route.
 
@@ -442,7 +435,7 @@ from the \ac{RFC} \num{2439}.
 
 \ac{RFD} can influence the network convergence time, and this behaviour is
 mostly impacted by the threshold and the decay function applied to the figure
-of metit.
+of merit.
 A more permissive threshold could be helpful in situations where the flaps are
 caused by transitional behaviour.
 I will study and analyze the impact of the threshold in \Cref{cha:bgp_rfd}.
@@ -460,20 +453,6 @@ I will study and analyze the impact of the threshold in \Cref{cha:bgp_rfd}.
 
 \section{Topologies}
 \label{sec:topologies}
-
-%The study of the tomografy of the internet has been a really \q{hot} topic in the
-%90's.
-%Is not possible to know exactly the Internet network, thats because the edges
-%of the network are defined by commercial contracts between the nodes that are
-%kept private between the parts.
-%
-%We are not compleatly blind, we know some properities of the network.
-%Internet is a hierarchical topology where there
-%are different layers of nodes interconnected one anothere and different types of
-%nodes.
-%The nodes in the highest level, Tier one nodes, are the nodes that interconnect
-%all the lower layers of the network and them are
-%connected one another in a clique network.
 
 \ac{BGP} has been designed to throw away information.
 Is important to remember that the actual topology of the Internet depends on the
