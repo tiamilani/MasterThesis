@@ -67,8 +67,8 @@ its own customers.
 Those policies are commonly called \q{valley-free} and are dictated by convenience,
 an \ac{AS} has all the advantages when
 other \acp{AS} decide to use it to reach a specific destination.
-For this reason is convinient for an \ac{AS} that everyone knows about its clients
-networks, and, in the opposite side, that its clients knowes only the route
+For this reason is convenient for an \ac{AS} that everyone knows about its clients
+networks, and, in the opposite side, that its clients knows only the route
 through it to reach other networks.
 
 This behaviour can be modelled with a variant of the \ac{SSP} algebra described
@@ -82,7 +82,7 @@ relationships.
 %    \item interconnection between ASes
 %\end{itemize}
 
-\section{BGP}
+\section{The protocol in details}
 \label{sec:bgp_intro}
 
 Once a \ac{BGP} node has established a connection with another peer it will
@@ -204,7 +204,7 @@ alternative and comparing them.
 %    \item which situations them occur?
 %\end{itemize}
 
-\section{BGP Noise}
+\section{BGP inherent noise vs external noise}
 \label{sec:bgp_noise}
 
 With the term \textit{BGP Noise} I would like to define a particular behaviour
@@ -214,6 +214,7 @@ that would be retrieved few moments later.
 Producing an intense distribution of messages that are not optimal.
 This behaviour is defined as noise because the tendency of \ac{BGP} to act
 as echo-chamber and amplify this distribution of incorrect information.
+%All those wrong messages are going to disturb the convergence of the protocol.
 In fact, a \ac{BGP} node that receive an update for a neighbour will probably
 redistribute the route to multiple neighbours, peers and servicer.
 Given the hierarchical topology of the internet this behaviour grows
@@ -238,21 +239,25 @@ new one received using a timer.
 Only the best decision after that time will be shared.
 
 The second type of noise is caused by a source outside the protocol.
-A miss-configuration, a faulty interface can cause the send of not necessary messages.
+A miss-configuration or a faulty interface can cause the send of not necessary messages.
 For example, the withdraw and the advertisement of a route at a continuous interval.
 This type of behaviour will cause continuous storms of messages and the triggering
 of the first noise type.
+Also, the transmission of a withdraw followed by an announcement is considered
+a \q{flap}.
 
 \ac{BGP} introduce a parameter with the \ac{RFC} \num{2439} \cite{rfc2439} that
 is called \ac{RFD} to overcome this behaviour.
-This parameter increases a value every time a flap or a route change are detected
+This parameter increases a value every time a flap or a route change are detected,
 when this value passes a predefined threshold the route will be suppressed.
 This value will always decay using an exponential decay function, even if it
 doesn't overpass the threshold.
+The decay function is calculated defining the time that the function should take
+to half the value, by default \SI{15}{\minute}.
 Once the route has been suppressed the \ac{BGP} speaker must wait enough time
 that the value goes below another threshold before sharing it again.
 
-Those two parameters are clearly correlated one another from the fact that
+Those two parameters are clearly connected one another from the fact that
 one triggers the other and vice versa, is possible to create a particular topology
 that has different performances based on the values assigned to those
 parameters.
@@ -265,20 +270,22 @@ will experience the path exploration problem.
 %\fxfatal{I think that the graphs in Fig 2 and Fig 3 of Fabrikant et al. in
 %\cite{fabrikant2011there} will easily trigger both \ac{MRAI} and \ac{RFD}}
 
-\section{BGP MRAI}
+\section{BGP MRAI, designed to reduce inherent noise}
 \label{sec:bgp_mrai}
 
-\ac{MRAI} is one of the parameters that mostly affect the convergence of \ac{BGP}
-A high value of it could unnecessarily delay the transmission of messages, but
+\ac{MRAI} is one of the parameters that mostly affect the convergence of \ac{BGP}.
+A high value of it could unnecessarily delay the transmission of messages, but,
 in the opposite case, a value too small can provoke a lot of messages, one for
 every decision change of the node.
+The main function of it is to reduce the intrinsic noise of \ac{BGP} compressing
+the messages received.
 There are a lot of studies about it, and it has already been shown that
 the number of messages and the convergence time can depend on it \cite{griffin2001experimental}.
-It has been also already proven by Fabrikant, Rexford et al. \cite{fabrikant2011there}
+Also, it has been already proven by Fabrikant, Rexford et al. \cite{fabrikant2011there}
 that an incorrect configuration of it could lead to tremendous consequences.
 
 \ac{MRAI} has been introduced in the \num{4}Th version of \ac{BGP} \cite{rfc4271} and
-it is nowadays a mandatory argument for every \ac{BGP} node, otherwise the load
+it is nowadays a mandatory mechanism for every \ac{BGP} node, otherwise the load
 in terms of messages to process and decision changes would be incalculable.
 Its main purpose, as anticipated in \Cref{sec:bgp_noise} is to prevent, or
 at least mitigate the noise created by \ac{BGP} itself.
@@ -289,9 +296,9 @@ The timer is peer-based, for each interconnection an \ac{AS} could have a differ
 \ac{MRAI}, but it acts for every destination in parallel, this means that there
 is a different timer for each destination that a node would share for every
 \ac{BGP} relations that it has.
-The idea behind it is that in this time the \ac{BGP} node will be able
-to receive other possible routes, evaluate them and send a decision on the
-best route considering multiple alternatives.
+The idea behind it is that, in the period of time between one \ac{ADV} and the
+following one the \ac{BGP} node will be able to receive other possible routes.
+Being able to evaluate them and transmit a decision considering multiple alternatives.
 It has the property to compress the input messages sequence in order to have
 an output message sequence with a smaller number of \ac{ADV}.
 
@@ -311,7 +318,7 @@ The second passage permits the route selection process to be executed multiple
 times before the actual transmission of the decision.
 That because \ac{MRAI} limits only the transmission and not the decision process.
 The condition to the last passage is due to the fact that the compression some
-times could lead to the not necessary to actually send a message.
+times could lead to the not necessity to actually send a message.
 
 The default value defined in the \ac{RFC} \num{4271} for \ac{MRAI} is equal to
 \SI{30}{\second}.
@@ -331,21 +338,14 @@ and, by consequences, the performances?
 Obviously, the choice itself of a different \ac{MRAI} strategy as showed for
 example in \cite{milani2019BGP}, where the centrality has been used to obtain better
 results in the case of network faults.
-But, giving the fact that the main function of \ac{MRAI} is to compress the
-input messages also the sequence of messages recept could be meaningful.
+But, giving the fact that, the main function of \ac{MRAI} is to compress the
+input messages also the sequence of messages receipt could be meaningful.
 Giving that \ac{MRAI} is a link-based parameter also the number of links that
 a node has could influence it and by consequences the position in the topology.
 A well connected node will be more likely to receive multiple paths and messages
 than one with only one link.
 
-%\begin{itemize}
-%    \item What is MRAI?
-%	\item Rember that the MRAI purpose is to avoid the BGP noise
-%    \item Previous works on MRAI
-%    \item Suppositions on the MRAI influence
-%\end{itemize}
-
-\section{BGP RFD}
+\section{BGP RFD, designed to reduce external noise}
 \label{sec:bgp_rfd}
 
 \ac{RFD} is a parameter introduced in \ac{BGP} to overcome the problems caused
@@ -354,10 +354,10 @@ Its main function is to avoid fluctuating routes to overload \ac{BGP} nodes
 with continuous message storms.
 It has been introduced with the \ac{RFC} \num{2439} in \num{1998} \cite{rfc2439}.
 Also, \ac{RFD} is a controversial parameter, it has been studied and evaluated again
-different times, but recent studies showed that the majority of the operators
+different times, but, recent studies showed that the majority of the operators
 still use deprecated values from \num{2001} \cite{gray2020bgp}.
 Furthermore, other studies show that the majority of the \ac{ADV} that travels
-through the Internet are generated by a restricted set of \ac{AS} but \ac{RFD}
+through the Internet are generated by a restricted set of \acp{AS} but \ac{RFD}
 seems to be too much restrictive and affect the majority of the \acp{AS} traffic
 \cite{pelsser2011route}.
 
@@ -380,7 +380,7 @@ important are presented in \Cref{tbl:rfd_defaults}.
 	\label{tbl:rfd_defaults}
 \end{table}
 
-Other than the name of the parameters in \Cref{tbl:rfd_defaults} is showed also
+Other than the name of the parameters, in \Cref{tbl:rfd_defaults} is showed also
 the default value decided by Cisco.
 The \ac{RFC} \num{2439} \cite{rfc2439} gives some guidelines on how to set those
 values but the actual choice is left to the discretion of implementors.
@@ -392,7 +392,7 @@ suppress the route and don't advertise it until the figure of merit goes
 below the \textit{reuse threshold}.
 The decay of the \textit{figure of merit} follows a quadratic decay function
 which rate is calculated using the \textit{Half-life} parameter.
-the \textit{Max Suppress Time} will override all this parameters because, as
+The \textit{Max Suppress Time} will override all this parameters because, as
 defined in the original \ac{RFC}, a route cannot be suppressed for more than
 that time, it doesn't matter the figure of merit accumulated by this route.
 
@@ -404,7 +404,7 @@ This image has been taken from \cite{gray2020bgp}.
     \includegraphics[scale=0.22]{images/RFD/evolution.png}
 	\caption{Example of evolution of the \ac{RFD} \textit{figure of merit} taken
 	from \cite{gray2020bgp}, yellow messages represent withdraws and green ones
-	are advertisement, dashed lines are the suppression and reuse threshold}
+	are advertisement, the dashed lines are the suppression and reuse threshold}
     \label{fig:figure_of_merit}
 \end{figure}
 
@@ -435,7 +435,7 @@ from the \ac{RFC} \num{2439}.
 
 \ac{RFD} can influence the network convergence time, and this behaviour is
 mostly impacted by the threshold and the decay function applied to the figure
-of metit.
+of merit.
 A more permissive threshold could be helpful in situations where the flaps are
 caused by transitional behaviour.
 I will study and analyze the impact of the threshold in \Cref{cha:bgp_rfd}.
@@ -454,27 +454,13 @@ I will study and analyze the impact of the threshold in \Cref{cha:bgp_rfd}.
 \section{Topologies}
 \label{sec:topologies}
 
-%The study of the tomografy of the internet has been a really \q{hot} topic in the
-%90's.
-%Is not possible to know exactly the Internet network, thats because the edges
-%of the network are defined by commercial contracts between the nodes that are
-%kept private between the parts.
-%
-%We are not compleatly blind, we know some properities of the network.
-%Internet is a hierarchical topology where there
-%are different layers of nodes interconnected one anothere and different types of
-%nodes.
-%The nodes in the highest level, Tier one nodes, are the nodes that interconnect
-%all the lower layers of the network and them are
-%connected one another in a clique network.
-
 \ac{BGP} has been designed to throw away information.
 Is important to remember that the actual topology of the Internet depends on the
 level of abstraction required.
 If we consider the graph of the relationships within the \acp{AS} is not
 possible to assume that this also represents the geographical graph.
 In fact, one \ac{AS} can have multiple connections with another \ac{AS}
-that are distributed along with different geographical points.
+that are distributed along different geographical points.
 Is also possible to have a connection through a tunnel that will permit to have
 a connection that physically passes over other devices.
 Is possible to see an example of this distinction in \Cref{fig:astopology_vs_internet}
@@ -523,7 +509,7 @@ A clique graph could be composed by an $n$ number of nodes, and every node has
 $n-1$ edges towards every other node.
 An example of clique topology can be sawed in \cref{fig:clique_topology}, I added
 two nodes to the network, outside the clique, in order to be able to have an
-input and an output point outside it.
+input and an output point.
 
 The Fabrikant topology is inspired by \cite{fabrikant2011there} where is used
 a similar chain network to show, in a theoretical way, how an uncontrolled
