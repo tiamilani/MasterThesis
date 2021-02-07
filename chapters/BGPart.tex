@@ -11,10 +11,10 @@ a path also the path itself to reach the destination.
 \ac{BGP} has two major sub-categories with a difference in the flow of information
 direction:
 \begin{itemize}
-	\item \textbf{\textit{\ac{eBGP}}}, we talk about \ac{eBGP} when the
+	\item \textbf{\textit{\ac{eBGP}}:} We talk about \ac{eBGP} when the
 		flow of information goes from the inside
 		of the \ac{AS} to other \acp{AS};
-	\item \textbf{\textit{\ac{iBGP}}}, we talk about \ac{iBGP} when the flow
+	\item \textbf{\textit{\ac{iBGP}}:} We talk about \ac{iBGP} when the flow
 		of information goes from the outside of the \ac{AS} to the inside of
 		it, to make aware of the new route also the internal routing protocol.
 \end{itemize}
@@ -34,13 +34,13 @@ There are three different possible type of relations that can be created by two
 \ac{BGP} speaker, accordingly to the \ac{CAIDA}:
 
 \begin{itemize}
-	\item \textbf{\textit{\ac{c2p}}} This relationship highlights the fact that
+	\item \textbf{\textit{\ac{c2p}}:} This relationship highlights the fact that
 		lower \ac{AS} pays a higher level \ac{AS} to get connectivity and access
 		to the Internet;
-	\item \textbf{\textit{\ac{p2p}}} This relationship is used to share the knowledge
+	\item \textbf{\textit{\ac{p2p}}:} This relationship is used to share the knowledge
 		between two \acp{AS} of their customer providers without paying a higher
 		level \ac{AS};
-	\item \textbf{\textit{\ac{s2s}}} This relationship defines the connection
+	\item \textbf{\textit{\ac{s2s}}:} This relationship defines the connection
 		between \acp{AS} under the same \ac{ISP}.
 \end{itemize}
 
@@ -97,11 +97,11 @@ Every \ac{BGP} node has a \ac{RIB} as data structure to keep the information
 about the received routes, the alternative routes and what should be exported.
 The \ac{RIB} is divided into \num{3} sections.
 \begin{itemize}
-	\item \textbf{\textit{ADJ-RIB\_in}} This \ac{RIB} contains all the routes
+	\item \textbf{\textit{ADJ-RIB\_in}:} This \ac{RIB} contains all the routes
 		that have been received by other \ac{AS} in order to be evaluated;
-	\item \textbf{\textit{LOC-RIB}} This \ac{RIB} contains all the best routes
+	\item \textbf{\textit{LOC-RIB}:} This \ac{RIB} contains all the best routes
 		that have been chosen from the \textit{ADJ-RIB\_in} from the node;
-	\item \textbf{\textit{ADJ-RIB\_out}} There is an output \ac{RIB} for every
+	\item \textbf{\textit{ADJ-RIB\_out}:} There is an output \ac{RIB} for every
 		neighbour of the node, it contains the route that should be advertised
 		to the specific node.
 \end{itemize}
@@ -117,13 +117,13 @@ The decision process is composed of three parts:
 		\textit{ADJ-RIB\_in} using policy filters pre-configured. If a route
 		doesn't respect the policy filters it will be then marked as ineligible,
 		otherwise, a \textit{PREF\_VALUE} will be calculated and assigned to the
-		route.
+		route;
 	\item[2] Route selection: This function is called at the end of the first
 		phase, it collects all the eligible routes and evaluates them removing
 		routes that would create loops or that creates conflicting situations.
 		The evaluated routes are then ordered by the \textit{PREF\_VALUE} and
 		then the best route will be then installed in the \textit{LOC-RIB}.
-		In case of ties, there is an algorithm that can be used to break them.
+		In case of ties, there is an algorithm that can be used to break them;
 	\item[3] Route dissemination: This function can be called in different
 		situations, it will use the information in the \textit{LOC-RIB} to
 		populate every \textit{ADJ-RIB\_out}, according to configuration
@@ -144,10 +144,10 @@ contain additive information and subtractive information.
 We can distinguish \ac{ADV} messages using the type of information that are
 transmitting:
 \begin{itemize}
-	\item \textbf{\textit{UPDATE}}, this type of messages represent the distribution
+	\item \textbf{\textit{UPDATE}:} This type of messages represent the distribution
 		of new reachability information, a new best route to a destination will be
 		shared through an update message;
-	\item \textbf{\textit{WITHDRAW}}, this type of messages are distributed when
+	\item \textbf{\textit{WITHDRAW}:} This type of messages are distributed when
 		a node want to share that it doesn't know how to reach
 		a destination anymore.
 \end{itemize}
@@ -307,9 +307,9 @@ change in the \textit{ADJ-RIB\_out} of a neighbour caused by the
 \textit{Update-send} process:
 \begin{itemize}
 	\item If there isn't an active \ac{MRAI} timer for the destination changed
-		send the \ac{ADV} and set an \ac{MRAI} timer.
+		send the \ac{ADV} and set an \ac{MRAI} timer;
 	\item If there is an active \ac{MRAI} timer for the destination then
-		don't send anything.
+		don't send anything;
 	\item When the active \ac{MRAI} timer ends if there is still the necessity
 		to send an \ac{ADV} then send it and set another \ac{MRAI} timer.
 \end{itemize}
@@ -491,14 +491,14 @@ where this interconnection resides.
 I will then use three different topologies to show particular situations or
 behaviours of the network with certain events.
 \begin{itemize}
-	\item \textbf{\textit{Clique topology}}, This topology represent the higher
+	\item \textbf{\textit{Clique topology}:} This topology represent the higher
 		level of the internet, in fact, all the Tier one nodes are interconnected
 		in a clique network;
-	\item \textbf{\textit{Fabrikant topology}}, This is a particular topology
+	\item \textbf{\textit{Fabrikant topology}:} This is a particular topology
 		because it represent a special case that can be present in the internet,
 		and also is possible to show that special configurations of this topology
-		can lead to difficult situations.
-	\item \textbf{\textit{Internet-like topology}}, This kind of topologies
+		can lead to difficult situations;
+	\item \textbf{\textit{Internet-like topology}:} This kind of topologies
 		have the goal to resemble the real internet using statistical information
 		about it.
 \end{itemize}
@@ -549,14 +549,14 @@ levels by the type and properties of the nodes.
 
 \begin{figure}[ht]
      \centering
-     \begin{subfigure}[b]{0.4\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_graph/graph-100-colored.pdf}
 		 \caption{Internet like graph with an \q{explosive}}
          \label{fig:internet_topology_explosive}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.4\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_graph/graph_dot.pdf}
 		 \caption{\q{Hierarchical} Internet like graph}

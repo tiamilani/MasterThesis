@@ -1,6 +1,8 @@
 \chapter{Abstract Finite State Model of inherent noise}
 \label{cha:bgp_fsm}
 
+\fxfatal{explicit that the fsms are produced by the experiments with the des}
+
 The incremental nature of \ac{BGP} suggests that is possible to study the
 evolution of the protocol looking to the events that have been triggered
 and the causes of them.
@@ -76,7 +78,7 @@ The graph used for the study is presented in \cref{fig:griffin_fig_4}.
     \begin{center}
         \input{images/tikzpictures/griffin_fig_4}
     \end{center}
-	\caption{Graph from fig 4 of \cite{griffinFSM} used to study the \ac{FSM}
+	\caption{Graph from fig 4 of~\cite{griffinFSM} used to study the \ac{FSM}
 		of the nodes}
     \label{fig:griffin_fig_4}
 \end{figure}
@@ -152,14 +154,14 @@ The two \ac{CFSM} are presented in \Cref{fig:fsm_griffin_fig4}.
 
 \begin{figure}[h]
      \centering
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/fsm/fig_4_4.pdf}
 		 \caption{Node \num{4} \ac{CFSM} from the environment of \Cref{tbl:fig_4_example}}
          \label{fig:fsm_node4}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/fsm/fig_4_5.pdf}
 		 \caption{Node \num{5} \ac{CFSM} from the environment of \Cref{tbl:fig_4_example}}
@@ -184,7 +186,7 @@ The effects of the implicit withdraw can be seen in \Cref{fig:fsm_node5}
 the transition from $\{4, 6\}$ to $\{4, 5\}$ thanks to the reception of the
 announcement $a5$ from the node \num{4}.
 
-As written in \cite{griffinFSM}, I would like to underline the fact that, given
+As written in~\cite{griffinFSM}, I would like to underline the fact that, given
 the \num{52} unique possible outputs of the node \num{5} it would be very difficult
 to infer the initial signal that provokes all the transitions.
 
@@ -195,14 +197,14 @@ of advertisement and withdraws.
 
 \begin{figure}[h]
      \centering
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/signal_study/fig_4/fig_4_4_signaling_nmessage_prob.pdf}
 		 \caption{Node \num{4} output signals study}
          \label{fig:signal_node4}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/signal_study/fig_4/fig_4_5_signaling_nmessage_prob.pdf}
 		 \caption{Node \num{5} output signals study}
@@ -315,14 +317,14 @@ showed in \Cref{fig:signal_griffin_fig4_MRAI}.
 
 \begin{figure}[h]
      \centering
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/signal_study/fig_4_MRAI/fig_4_4_signaling_nmessage_prob.pdf}
 		 \caption{Node \num{4} output signals study with \ac{MRAI}=\SI{30}{\second}}
          \label{fig:signal_node4_MRAI}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.45\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/signal_study/fig_4_MRAI/fig_4_5_signaling_nmessage_prob.pdf}
 		 \caption{Node \num{5} output signals study with \ac{MRAI}=\SI{30}{\second}}
@@ -359,7 +361,7 @@ This is a well-known problem in the \ac{BGP} community and it is experienced
 by a node when it enters in a transitory phase where it accepts and publishes not
 optimal paths towards the destination before reaching a stable state.
 \textit{Path exploration} can lead to an enormous amount of messages even with
-a small set of nodes \cite{deshpande2004impact}.
+a small set of nodes~\cite{deshpande2004impact}.
 
 As we saw in \Cref{subsec:mrai_vs_bgpfsm}, \ac{MRAI} can influence the
 \ac{CFSM}s of the nodes and their output signals, which impact could it have
@@ -381,10 +383,10 @@ I have then introduced \num{4} different \ac{MRAI} strategies for each different
 signal.
 The different \ac{MRAI} strategies are the following one:
 \begin{itemize}
-	\item \textbf{\textit{Fixed \SI{30}{\second}}}: \ac{MRAI} is fixed for each link to \SI{30}{\second};
-	\item \textbf{\textit{No \ac{MRAI}}}: \ac{MRAI} is fixed for each link to \SI{0.0}{\second};
-	\item \textbf{\textit{Ascendant}}: \ac{MRAI} will be doubled at each leach (1 − 2 − 4 − 8 − ...);
-	\item \textbf{\textit{Descendent}}: Reverse of the ascendant case, \ac{MRAI} will be divided by two at each leach.
+	\item \textbf{\textit{Fixed \SI{30}{\second}}:} \ac{MRAI} is fixed for each link to \SI{30}{\second};
+	\item \textbf{\textit{No \ac{MRAI}}:} \ac{MRAI} is fixed for each link to \SI{0.0}{\second};
+	\item \textbf{\textit{Ascendant}:} \ac{MRAI} will be doubled at each leach (1 − 2 − 4 − 8 − ...);
+	\item \textbf{\textit{Descendent}:} Reverse of the ascendant case, \ac{MRAI} will be divided by two at each leach.
 \end{itemize}
 
 Another important factor to consider during those experiments is the \ac{IW}
@@ -428,21 +430,20 @@ are presented in \Cref{fig:signal_fabrikant}.
 
 \begin{figure}[ht]
      \centering
-     \begin{subfigure}[b]{0.32\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/signal_study/fabrikant/30Fixed.pdf}
 		 \caption{Node \num{8} output signals study with \textbf{\textit{Fixed \SI{30}{\second}}} strategy}
          \label{fig:signal_node9_fabrikant_fixed30_noIW}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.32\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/signal_study/fabrikant/Descendent.pdf}
 		 \caption{Node \num{9} output signals study with \textbf{\textit{Descendent}} strategy}
          \label{fig:signal_node9_fabrikant_descendent_noiw}
      \end{subfigure}
-     \hfill
-     \begin{subfigure}[b]{0.32\textwidth}
+     \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/signal_study/fabrikant/Ascending.pdf}
 		 \caption{Node \num{9} output signals study with \textbf{\textit{Ascendant}} strategy}
