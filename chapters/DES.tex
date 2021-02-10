@@ -1,10 +1,9 @@
 \chapter{Experimentation environment}
 \label{cha:des}
 
-\fxfatal{fix label}
 Experiments on \ac{BGP} are not applicable on the actual Internet, for this
-reason different studies show their results using a simulate environment~\cite{griffin2001experimental}
-or experiments executed on a testbed~\cite{milani2020improving}.
+reason different studies show their results using a simulated environment~\cite{griffin2001experimental}
+or emulations executed on a testbed~\cite{milani2020improving}.
 In the simulations the majority of the studies use small graphs and each node
 of the graph simulate the behaviour of a \ac{BGP} speaker.
 
@@ -56,14 +55,15 @@ The three parts that compose the system can be summarized as follow:
 
 All the experiments executed relay on an environment that contains all
 the information necessary for the \ac{DES} to make the network evolve.
-First of all is mandatory to create a topology that represent the network
-of \acp{AS} which is used by the simulator. Then could be necessary to configure
-different parameters on each node, for example, \ac{MRAI} on the links, the
+First of all, is mandatory to create a topology that represent the network
+of \acp{AS} which is used by the simulator.
+Then, could be necessary to configure
+different parameters, for example, \ac{MRAI} on the links, the
 \ac{RFD} mechanism or other properties of the node.
 Finally, is possible to insert the reference to the graph inside the file that
 describes the environment with all the other properties of it, like the delay
 on the links or the \ac{RNG} initial values.
-After that is possible to pass this file to the \ac{DES} that will execute
+After that, is possible to pass this file to the \ac{DES} that will execute
 the experiments.
 
 \subsection{BGP Topology generation}
@@ -73,10 +73,11 @@ To store all the topological information that represent a \ac{BGP} graph I use
 the \textit{graphml} standard.
 I developed two components that can be used to generate and populate the graph
 file.
-The first one is the graph generator, is possible through it to obtain graphml
+The first one is the graph generator, through it is possible to obtain graphml
 files with the required topology. For the time being is possible to generate
 clique or Internet-like topologies.
-The output graph is a directed graph that contains the required number of edges.
+The output graph is a directed graph that contains the required number of nodes
+and all the edges.
 The second software that is possible to use is the \q{Attribute Generator}, this
 tool is an agglomerate of small gadgets which goal is to add some properties to
 the graph, those properties could be for example the \ac{RFD} mechanism for
@@ -124,9 +125,8 @@ An extract from a graphml file is showed in Code~\ref{lst:graph_example}.
 
 \subsection{Environment definition}
 \label{subsec:exp_environments_definition}
-\fxfatal{adjust references}
 
-The environment where the network would evolve is defined with a \textit{JSON}
+The environment where the network evolve is defined with a \textit{JSON}
 file that contains all the properties used by the \ac{DES}.
 Inside the environment are also defined the values to initialize the \ac{RNG}
 so that every experiment is completely reproducible.
@@ -147,7 +147,7 @@ freedom and vectors of properties.
 Those vectors can contain $n$ objects that describe that property, but in each
 run just one of them can be used.
 Each run is composed by a combination of one object from each vector.
-For example, if we have \num{5} different possible seeds and \num{3} different
+For example, with \num{5} different possible seeds and \num{3} different
 delays, the total number of runs combinations is \num{15}, as shown in Code
 \ref{lst:environment_example}.
 %If a property has only one object, then, this object will be used in every
@@ -307,8 +307,8 @@ to process only one message at a time.
 The simulation run will terminate only if there are no more events scheduled or
 if the maximum simulation time is reached.
 
-During the evolution of the experiment the \ac{DES} produce a \textit{CSV} output
-that contains all the events triggered and the data associated with the message.
+The \ac{DES} produces a \textit{CSV} output that contains all the events triggered and the
+data associated during the evolution of the experiment.
 For each event the \ac{DES} will record the exact moment when it happened and
 the data concerning the event.
 For example for the reception of a message would be registered

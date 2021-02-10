@@ -12,7 +12,7 @@ With the name \q{The Internet} we define a network composed by more than \num{60
 entities that share their knowledge in order to permits us to reach every website
 whenever we want.
 We are used to think about Internet as something far away from us, something
-that we do not have to care about, we can use it leaving all the complexity
+that we do not have to care about, leaving all the complexity
 out.
 But, by a more physical point of view, what is the Internet? It is nothing
 more than a big network where interconnected entities keeps the prefixes reachable.
@@ -20,20 +20,20 @@ Those entities are in reality called \acp{AS} and their function is to hold and
 control some \ac{IP} prefixes used by one or more operators.
 
 Every \ac{AS} is responsible for the connectivity to the prefixes that it shares.
-We know that the networks are able to react to changes thanks to routing protocols,
+We know that networks are able to react to changes thanks to routing protocols,
 and Internet is not different in that.
 Every \ac{AS} has to keep active its own instance of an Internet routing protocol
-in order react to changes.
-This routing protocol is the glue of the Internet, its the thing that permits
+so that it can react to changes.
+This routing protocol is the glue of the Internet, is what permits
 us to always be able to reach the other side of the world without knowing
 the actual route that our packets take.
 
 The path that we use could change because of different factors that could
 be technical, economical or even political.
 Thats because the \ac{AS} relationships are controlled by contracts and different
-contracts can have different fees applied for the transmission of the knowledge.
+arrangements can have different fees applied to the transmission of the knowledge.
 Some paths may be used only as backups if the primary one fail, or even used
-only for certain type of traffic flows.
+only for certain types of traffic flows.
 This policies must be implementable in the Internet routing protocol that has
 to discern on which path, among all the known alternatives, is the best one
 considering the \ac{AS} convenience.
@@ -57,16 +57,16 @@ Other than that, to control all the possible policies applied by the \acp{AS},
 \ac{BGP} implements also different parameters and attributes that can be
 personalized.
 In \ac{BGP} multiple parameters play a central role, and the correct setting
-of them could influence the performances of, not only the single \ac{AS} but
+of them could influence the performances of, not only the single \ac{AS} but,
 the entire network.
 For this reason, the research is still active to find new technologies and
-a trade-off between, convergence time and messages transmitted that could
+a trade-off, between convergence time and messages transmitted, that could
 be sustainable by the current hardware.
 
 In this thesis, more precisely in \Cref{cha:bgp_art}, I'm going to introduce
 two of those important \ac{BGP} mechanisms, \ac{MRAI} and \ac{RFD}.
 The first one is used to compress multiple input messages into one
-output message in order to reduce the network load provoked by a change.
+output packet in order to reduce the network load provoked by a change.
 The second one, \ac{RFD}, is used to penalize unstable paths, suppressing
 the route and blocking the spreading of it to further nodes to circumscribe
 the zone of instability.
@@ -93,8 +93,8 @@ The data collected by \ac{APNIC} from \num{2007} concern the knowledge
 of the \ac{AS} 131072 that has two links with other \acp{AS}, one in Japan and
 the other one in Australia\footnote{\href{https://blog.apnic.net/2021/01/05/bgp-in-2020-the-bgp-table/}{source APNIC data}}.
 Prefixes of smaller and smaller sizes are continuously shared, the number of
-$/24$ networks distributed in the last year has been growing constantly.
-Fomenting the problem described above, generating a vicious circle of messages.
+$/24$ networks distributed in the last year has been growing constantly,
+fomenting the problem described above.
 
 This redundancy of the \ac{BGP} nodes provoke the \textit{Path Exploration}
 problem.
@@ -104,7 +104,7 @@ Provoking the propagation of non ideal routes to other nodes causing a vicious
 circle.
 The growing of Internet is not negligible because of this problem, a continuous
 growth in terms of nodes and edges cause the growth of favorable conditions for
-the \textit{Path Exploration} problem.
+the \textit{Path Exploration}.
 
 \section{Interaction between variables and convergence}
 \label{sec:bgp_correlations}
@@ -112,12 +112,13 @@ the \textit{Path Exploration} problem.
 The two parameters that will be studied in this thesis are \ac{MRAI} and \ac{RFD}
 and how the interaction between them works.
 Our first hypothesis is that, indeed, there is an interaction.
-This hypothesis is sustained by the fact that both parameters operate to
-reduce the noise of \ac{BGP}, with different parameters and different behaviour,
+This hypothesis is sustained by the fact that both mechanisms operate to
+reduce the noise of \ac{BGP} (defined in \Cref{sec:bgp_noise}).
+Both have different parameters and different behaviours,
 but, if a node wants to transmit a message it must respect \ac{MRAI} and the input
 could be caused by \ac{RFD} that suppress/reintroduce a route.
 On the opposite case, a too small \ac{MRAI} value could permit different message
-storms that would trigger the \ac{RFD} suppression systems creating vicious circle.
+storms that would trigger the \ac{RFD} suppression systems.
 
 One of the goals of reducing the value of \ac{MRAI} is to reach a faster convergence
 paying the cost of more messages.
@@ -126,9 +127,9 @@ for general purposes, in-fact, like showed in \Cref{cha:bgp_rfd_vs_mrai}, is pos
 to obtain the opposite result due to the fact that to solve \ac{RFD} suppression
 is required a longer time.
 
-On the opposite case if we tune in the wrong way \ac{RFD} we would end up to
-be too much permissive, leaving to handle all the noise to \ac{MRAI} that could
-be not effective if the storms are sufficiently delayed in time.
+On the opposite case, if \ac{RFD} is configured in the wrong way is possible to
+end up to be too much permissive, leaving \ac{MRAI} to handle all the noise and
+it could be not effective if the storms are sufficiently delayed in time.
 
 For those reasons is important to study these two parameters together, because
 there could be a strong co-dependence.
@@ -142,16 +143,16 @@ there could be a strong co-dependence.
 
 The goal of this thesis is to prove that the noise reduction mechanisms of \ac{BGP}
 interact one another, studying this interaction through simulative experiments
-and from those give useful hints on how those two parameters interact with one another.
+and from those give useful hints on how the two parameters interact with one another.
 In order to build the basis for future experiments that can study more deeply
 and maybe in a formal way the phenomena.
 Is also mandatory for this thesis to develop the platform where those experiments
 would be executed and make that platform public
 available\footnote{\href{https://github.com/tiamilani/BGPFSM}{GitHub repository}}.
 
-In \Cref{cha:bgp_art} are going to be presented the protocol and more deeply
-the two parameters studied, while in \Cref{cha:des} I'm going to present
-the structure of the platform that will be used in
+The protocol and the two mechanisms are more deeply explained in \Cref{cha:bgp_art},
+while, in \Cref{cha:des} the experimentation system is explained.
+This system will be used in
 \Cref{cha:bgp_fsm,cha:bgp_mrai_experiments,cha:bgp_rfd,cha:bgp_rfd_vs_mrai}
 to perform the experiments about the \textit{Path Exploration} problem and then
 how \ac{MRAI} and \ac{RFD} can impact the performances, conclusions to follow

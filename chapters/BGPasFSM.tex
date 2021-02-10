@@ -1,7 +1,5 @@
-\chapter{Abstract Finite State Model of inherent noise}
+\chapter[Abstract Finite State Model of inherent noise]{Abstract Finite State Model of \\inherent noise}
 \label{cha:bgp_fsm}
-
-\fxfatal{explicit that the fsms are produced by the experiments with the des}
 
 The incremental nature of \ac{BGP} suggests that is possible to study the
 evolution of the protocol looking to the events that have been triggered
@@ -10,17 +8,26 @@ A model that can give this sort of information would be helpful to debug
 the protocol, analyze faulty situations or prevent them.
 The main idea behind this model of the protocol has been taken and
 expanded from~\cite{griffinFSM}.
+
 I'm going to show that inferring information from \ac{BGP} events and actions
 is more difficult than expected.
 In fact, due to the \textit{Path Exploration} problem
 nodes will experience an explosion in the number of possible evolutions,
 presented in \Cref{sec:bgp_fsm_explosion}.
 In addition to that, multiple inputs can lead to the same output of the node,
-for this reason, it is not enough to know it to infer a precise input signal,
+for this reason, is not enough to know it to infer a precise input signal,
 showed in \Cref{sec:bgp_fsm_experiments}.
 Furthermore, \ac{MRAI} can make the situation even more complicated, increasing
 the number of transitions because of all the new possible combinations of
 inputs.
+
+The \ac{FSM}s presented in \Cref{sec:bgp_fsm_experiments,sec:bgp_fsm_explosion} are
+the result of hundred of simulations, which sequence of events can be summarized
+through them.
+These FSM do not take in consideration all the possible evolutions of events,
+but only those encountered during the simulations.
+Using the analyzer, presented in \Cref{sec:exp_output_study}, has been possible
+to automatize the production of those schema.
 
 \section{BGP generalization}
 \label{sec:bgp_generalization}
@@ -28,11 +35,11 @@ inputs.
 The main idea behind the \ac{BGP} \ac{FSM} is to represent the knowledge as
 states and a set of messages as transitions.
 The knowledge is represented by the actual routes that the node knows on how
-to reach a single destination, we will have a different \ac{FSM} for every
+to reach a single destination, an \ac{FSM} exists for every different
 destination.
 Transitions encode the messages that a node has received to trigger the state change,
 on the edges are also inserted the response messages that the node will transmit.
-We can see an example of these transitions in \Cref{fig:fsm_example}
+An example of these transitions is presented in \Cref{fig:fsm_example}
 
 \begin{figure}[h]
     \begin{center}
@@ -107,7 +114,7 @@ and \num{2} possible delay distributions).
 \ac{MRAI} has been setted to \SI{0}{\second} in order to be ininfluent
 during the simulation.
 
-The two nodes we are most interested are node \num{4} and node \num{5}, because of their
+The two more interesting nodes are the number \num{4} and \num{5}, because of their
 position after a fork.
 The first one is going to receive the messages of node \num{2} and \num{3}, for
 sure there will be two announcements and two withdraws because of the signal
@@ -147,9 +154,9 @@ the node \num{5}.
 In fact, node \num{5} has in total \num{52} unique possible output sequence,
 given by all the \num{71} different inputs.
 
-From the \num{100} total runs, we can generate the \ac{CFSM} of node \num{4} and
-node \num{5}, in order to be able to study how the nodes react to different
-input signals.
+From the \num{100} total runs, through the analyzer is possible to generate
+the \ac{CFSM} of node \num{4} and node \num{5}, to study how the nodes react
+to different input signals.
 The two \ac{CFSM} are presented in \Cref{fig:fsm_griffin_fig4}.
 
 \begin{figure}[h]
@@ -190,10 +197,10 @@ As written in~\cite{griffinFSM}, I would like to underline the fact that, given
 the \num{52} unique possible outputs of the node \num{5} it would be very difficult
 to infer the initial signal that provokes all the transitions.
 
-We can also analyze those output signals, knowing all the events for each single
-run we can infer which were the most common output signals experienced by a single node.
+Knowing all the events for each single run is possible to infer which were the
+most common output signals experienced by a single node  and study those trends.
 Is sufficient to take all the transmitted messages of a node and look the sequence
-of advertisement and withdraws.
+of advertisements and withdraws.
 
 \begin{figure}[h]
      \centering

@@ -15,7 +15,7 @@
 
 
 % formato FRONTE RETRO
-\documentclass[epsfig,a4paper,11pt,titlepage,twoside,openany]{book}
+\documentclass[epsfig,a4paper,11pt,titlepage,oneside,openany]{book}
 \usepackage{import}
 \usepackage{preamble}
 
@@ -35,6 +35,7 @@
 
   % indice
   \tableofcontents
+  \addtocontents{toc}{~\hfill\textbf{Page}\par}
   \clearpage
 
   % gruppo per definizone di successione capitoli senza interruzione di pagina

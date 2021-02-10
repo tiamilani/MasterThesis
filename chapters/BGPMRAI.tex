@@ -8,7 +8,7 @@ is one of the parameter more studied for it multiple effects, the correct settin
 can improve the protocol performances, while, an incorrect one can generate
 exponential convergence behaviours even in small network~\cite{fabrikant2011there,griffin2001experimental}.
 
-The protocol strictly depends on this parameter, because as we saw in \Cref{cha:bgp_fsm},
+The protocol strictly depends on this parameter, because, as showed in \Cref{cha:bgp_fsm},
 the incorrect use of it can lead to tremendous consequences, even worst of not
 having it at all.
 In other cases, with a particular setting of it is possible to improve the network
@@ -19,7 +19,7 @@ timer trade-off improvement~\cite{MaLo18_ToN,GhiMa18_infocom}.
 This kind of approach has been also applied on \ac{BGP} with positive results on
 network failures~\cite{milani2019BGP,milani2020improving}.
 
-All those study points out how we can set \ac{MRAI} to improve network
+All those studies points out how we can set \ac{MRAI} to improve network
 performances, but what about how \ac{MRAI} reacts to different problems?
 Is it possible that \ac{MRAI} reacts differently based on where the signal
 occurs?
@@ -209,7 +209,7 @@ This can be seen also in the number of messages that reaches a constant value.
 Other messages are not necessary to converge and \ac{MRAI} doesn't compress
 the input anymore, so the nodes are not able to aggregate more information.
 
-In \Cref{fig:clique_evolution_noIW} we can see the same effects but with a higher
+In \Cref{fig:clique_evolution_noIW} is possible to see the same effects but after a higher
 \ac{MRAI} value.
 The number of transmitted messages reaches the constant value with an \ac{MRAI}
 value around \SI{30}{\second}.
@@ -934,9 +934,7 @@ The results are showed in \Cref{fig:different_levels_comparison}.
      \hfill
 	 \caption{Internet like topology of \num{1000} nodes grouped by the distance
 	 from the signal source, different level comparison with \ac{MRAI} strategy
-	 \ac{DPC} and reverse \ac{DPC}, \ac{MRAI} value equal to \SI{30}{\second}
-	 \fxfatal{Maybe could be more interesting to see how \ac{DPC} vs \textit{Fixed}
-	 goes}}
+		\ac{DPC} and reverse \ac{DPC}, \ac{MRAI} value equal to \SI{30}{\second}}
 	 \label{fig:different_levels_comparison}
 \end{figure}
 
