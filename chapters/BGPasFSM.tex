@@ -236,23 +236,23 @@ respective probability.
 For example, in \Cref{fig:signal_node4} there is a probability around $0.45$ to have
 exactly two advertisement messages per output signal. And respectively a probability
 slightly larger than $0.25$ to have only one advertisement or three.
-We can also notice that we didn't see more than three advertisements or less than one.
+The number of advertisements never goes above three or below one.
 The green line instead represents the total number of messages in the signal,
 without distinguishing between advertisement and withdraws.
-By the fact that we will always experience one withdraw (the orange line) the
+By the fact that will always be at least one withdraw (the orange line), the
 green line is simply shifted by one unit in respect of the advertisement line.
 There is a probability around the $0.45$ to have exactly \num{3} messages in the
 output signal.
 The second $y$ axis refers to the number of unique output signals encountered and
 their length.
-For example, in \Cref{fig:signal_node5} we will have \num{1} unique output signal
+For example, in \Cref{fig:signal_node5} there are: \num{1} unique output signal
 of length \num{2}, \num{3} signals of length \num{3}, \num{4} of length \num{4}
 and \num{2} of length \num{5}.
-In total we saw \num{10} different unique signals on \num{100} different runs.
+In total, \num{100} different runs have produced \num{10} different unique signals.
 
 Those plots do not give a complete perspective of all the possible outputs
 that can be generated but only the one encountered during the runs.
-In fact, during the \num{100} runs, we encountered only the output signals listed
+In fact, during the \num{100} runs, I encountered only the output signals listed
 in \cref{tbl:signals}.
 
 \begin{table}[h]
@@ -286,7 +286,7 @@ messages could be compressed in the same set by \ac{MRAI}.
 For example the sequence \q{A} could produce the same effects of the sequence
 \q{AWA} once its compressed.
 
-We can see the effects of \ac{MRAI} on the \ac{CFSM}s in \Cref{fig:fsm_griffin_fig4_MRAI}.
+In \Cref{fig:fsm_griffin_fig4_MRAI} are presented the effects of \ac{MRAI} on the \ac{CFSM}s.
 
 \begin{figure}[h]
      \centering
@@ -316,7 +316,7 @@ equal to \SI{30}{\second} in each link, as defined by the \ac{RFC} \num{4271}~\c
 \ac{CFSM}s of node \num{4}, is possible to notice a big difference in terms of edges
 between one figure and the other, the first one has \num{8} transitions, the
 second one \num{15}.
-For the node \num{5}, we pass from \num{16} transitions in \Cref{fig:fsm_node5}
+For the node \num{5}, the \ac{CFSM} pass from \num{16} transitions in \Cref{fig:fsm_node5}
 to \num{36} thanks to \ac{MRAI} in \Cref{fig:fsm_node5_MRAI}.
 
 But the positive effects of \ac{MRAI} can be found in the output signals,
@@ -349,12 +349,12 @@ The $x$ axis never reaches the value of \num{5}, this means that the output sign
 of the node \num{5} never used more than \num{4} messages.
 While, without \ac{MRAI} there were \num{2} unique output states with \num{5}
 messages, with a total frequency of \num{11}.
-And we can also notice that the majority of the signals this time have a length
-of \num{3} messages, instead of the previous \num{4}.
+The majority of the signals this time have a length of \num{3} messages instead of
+the previous \num{4}.
 This is a hint that \ac{MRAI} can have positive effects on the number of output messages
 produced by single nodes, having, however, more possible transitions to consider.
 
-This makes inferring the input signal even more difficult because we have a lower
+This makes inferring the input signal even more difficult because there is a lower
 number of output state with a broader number of possible transitions.
 
 \section{BGP FSM explosion}
@@ -370,7 +370,7 @@ optimal paths towards the destination before reaching a stable state.
 \textit{Path exploration} can lead to an enormous amount of messages even with
 a small set of nodes~\cite{deshpande2004impact}.
 
-As we saw in \Cref{subsec:mrai_vs_bgpfsm}, \ac{MRAI} can influence the
+As described in \Cref{subsec:mrai_vs_bgpfsm}, \ac{MRAI} can influence the
 \ac{CFSM}s of the nodes and their output signals, which impact could it have
 if it is not set correctly?
 
@@ -468,25 +468,25 @@ For simplicity I decided to study only the output signals caused by the sequence
 \Cref{fig:signal_fabrikant}.
 The first signal study, \Cref{fig:signal_node9_fabrikant_fixed30_noIW}, is the
 one that represents the actual standard value of the protocol~\cite{rfc4271}.
-We can notice in that particular output study that the maximum detected length of
+In that particular output study the maximum detected length of
 a signal is \num{13} and it's the last likely output, while the most probable
 output length is \num{5}.
-While, we can infer the \textit{Path Exploration} problem by the spike of unique
+While, is possible to infer the \textit{Path Exploration} problem by the spike of unique
 output signals with a length of \num{9}, this represent that the node experienced multiple
 changes in its decisions.
 The worst-case scenario is the one represented by \cref{fig:signal_node9_fabrikant_descendent_noiw}
 where the maximum length of the output signal reaches almost \num{40} messages, but
 the most probable output signal has a length between \num{20} and \num{30}.
 This is the marker of a lot of decision changes in the best path for the destination.
-Opposite to that case, we found the \textit{Ascendant} strategy in
+Opposite to that case, the \textit{Ascendant} strategy is presented in
 \Cref{fig:signal_node9_fabrikant_ascendant_noIW} where the output
 signals never used more than \num{7} messages.
-In this last scenario we don't see a clear appearance of the \textit{Path Exploration}
+In this last scenario is not possible to see a clear appearance of the \textit{Path Exploration}
 problem, due to the fact that the node \num{8} is the last of the chain and
 the \ac{MRAI} values permits to the other nodes to shares almost their best
 possible path.
 
-In conclusion of this chapter, we can say without doubts that \ac{MRAI} influences
+In conclusion of this chapter, I can say without doubts that \ac{MRAI} influences
 the performances, confirming what has been presented in~\cite{fabrikant2011there},
 that an incorrect setting of it can lead to an explosion in terms of messages.
 And by consequence, to an explosion on the number of states and transitions.

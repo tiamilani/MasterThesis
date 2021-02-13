@@ -583,7 +583,7 @@ The only nodes that suppress the route are the nodes that are closer to the sour
 All the other nodes of the network don't experience enough messages to block
 the route.
 
-In the first figure, \Cref{fig:1000_2439RFD_cent_VS_sup_elephants}, we can see
+The first figure, \Cref{fig:1000_2439RFD_cent_VS_sup_elephants} shows
 that, on average, every node suppress at least one time the source of the
 signal.
 The hypothesis behind this trend is that the number of messages that pass the
@@ -596,15 +596,15 @@ to trigger the \ac{RFD} suppression.
 %We can then say that all the strategies catch in time the flap and avoid the
 %propagation of the update storm, increasing the convergence time but protecting
 %the network from thousands of messages.
-We can say that all the strategies protect the network from a huge load of messages.
+With those experiments has been proven that all the strategies protect the
+network from a huge load of messages.
 In \Cref{fig:1000_RFD_MRAI_30_messages_elephant} we can see that the use of \ac{RFD}
 reduces to $1/3$ the number of messages necessary to reach convergence.
 The difference is the convergence time, more nodes experience suppression
 then more time is necessary to converge because there will be more \ac{ADV} when
 the figure of merit becomes lower enough to activate again the route.
 For this reason there is a difference of more than \SI{1000}{\second} between
-the different techniques.
+the techniques.
 This experiments reinforce the hypothesis that a small number of suppressions is
 more significant in respect of thousands of them.
 
-\fxfatal{Add an end.}

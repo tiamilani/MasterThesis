@@ -3,10 +3,11 @@
 
 \ac{MRAI} is one of the parameters that mostly has caused divergences in the
 scientific community.
-And, after the introduction in the protocol since version 4~\cite{rfc4271},
-is one of the parameter more studied for it multiple effects, the correct setting
-can improve the protocol performances, while, an incorrect one can generate
-exponential convergence behaviours even in small network~\cite{fabrikant2011there,griffin2001experimental}.
+And, after the introduction in the protocol in version 4~\cite{rfc4271},
+is one of the parameter more studied for its multiple effects, the correct setting
+can improve the protocol performances.
+While, an incorrect one can generate exponential convergence behaviours even
+in small network~\cite{fabrikant2011there,griffin2001experimental}.
 
 The protocol strictly depends on this parameter, because, as showed in \Cref{cha:bgp_fsm},
 the incorrect use of it can lead to tremendous consequences, even worst of not
@@ -23,8 +24,8 @@ All those studies points out how we can set \ac{MRAI} to improve network
 performances, but what about how \ac{MRAI} reacts to different problems?
 Is it possible that \ac{MRAI} reacts differently based on where the signal
 occurs?
-In fact, our hypothesis is that is not enough just look to the \ac{MRAI} setting
-because other factors can be relevant too.
+In fact, our hypothesis is that is not enough just look to the \ac{MRAI} setting,
+because, other factors can be relevant too.
 For example, a change near the central clique of $T$ nodes could provoke a large
 storm of messages because \ac{MRAI} doesn't affect in time the spreading of information.
 While, a change in the periphery could be cushioned without it reaching the center
@@ -34,13 +35,13 @@ of the network multiple times.
 \label{sec:bgp_mrai_strategies}
 
 An \ac{MRAI} strategy define a particular way to set all the timers accordingly
-to some rules or properties.
+to a set of rules or properties.
 For example, the default strategy of \ac{MRAI}, defined in~\cite{rfc4271}, is
 to set all the timers to \SI{30}{\second}.
 In \cref{sec:bgp_fsm_experiments} I used \num{4} different \ac{MRAI} strategies
 to show that an incorrect setting of it can lead to dangerous consequences.
 Another strategy that can be used during some experiments is the complete avoidance
-of \ac{MRAI}, this is the \emph{NoRFD} technique.
+of it, this is the \emph{NoMRAI} technique.
 
 The hypothesis behind all the different strategies is that is possible to
 adjust the trade-off between the network performances adapting this timer.
@@ -75,7 +76,7 @@ is defined as follow.
 \end{definition}
 
 This mechanism is compatible with network protocols where there is an exchange
-of messages where is possible to introduce the commodity.
+of messages that accept the introduction of the commodity.
 In \ac{BGP} is possible to include optional attributes inside the \ac{ADV} messages.
 For this reason I have created the \ac{DPC} and demonstrated that is possible
 to calculate it in a distributed way~\cite{milani2019BGP} with small changes
@@ -92,7 +93,7 @@ We call $\destinationset \subseteq \nodeset$ the set of nodes that can be source
 and/or destination of traffic (they export at least one network)
 and $N_s, N_d$ the number of networks that are exported by node $s$ and $d$,
 respectively, then $\theta_{s,d} = \frac{N_s + N_d}{2}$. \ac{DPC} $\Delta(v)$ of
-any vertex $v\in \nodeset$ is defined as
+any vertex $v\in \nodeset$ is defined as:
 \begin{equation}
 		\dpc(v) = \sum_{s,d\in \pathset} \theta_{s,d} (v)
 		\label{eq:dpcv}
@@ -131,13 +132,13 @@ Given $M$ as the set of all the timers used in the network defined as follow:
 
 \[M=\{T_{ij} | \forall (i,j) \in \edgeset\}\]
 
-The average value of \ac{MRAI} is represented by \(M_{avg}=E{M}\).
+The average value of \ac{MRAI} is represented by \(M_{avg}=\frac{\sum_{m\in M} m}{\edgeset}\).
 Given \(M_{avg}\) and the required \(MRAI_{mean}\) is possible to define
 \(k=\frac{MRAI_{mean}}{M_{avg}}\).
 Giving us the possibility to adapt \(M\) in order to respect \(MRAI_{mean}\)
 multiplying each element of \(M\) by \(k\).
 
-\[M_k=\{T_{ij}k | \forall (i,j) \in \edgeset\}\]
+\[M^k=\{T_{ij}k | \forall (i,j) \in \edgeset\}\]
 
 \section{Clique Experiments}
 \label{sec:bgp_mrai_clique}
@@ -145,8 +146,8 @@ multiplying each element of \(M\) by \(k\).
 The clique topology is one of the worst-case scenarios as specified in Labovitz et al.~\cite{labovitz2000delayed}.
 For this reason I decided to start my study from it.
 I used two approaches in this Environment, the first one keeps the \ac{IW} active
-the second one doesn't use this property.
-To emphasize the effects of this parameter with the effects also of different
+the second one doesn't use this mechanism.
+This to emphasize the effects of this mechanism with the influence also of different
 \ac{MRAI} configurations.
 
 The Environment properties are listed in \Cref{tbl:clique_properties}
@@ -186,17 +187,17 @@ The results are presented in \Cref{fig:clique_evolution}
         \label{fig:clique_evolution}
 \end{figure}
 
-Is possible to notice in \Cref{fig:clique_evolution} both the effect of \ac{MRAI}
+In \Cref{fig:clique_evolution} is possible to notice both the effect of \ac{MRAI}
 and \ac{IW}.
 Those plots represent the network performances in terms of convergence time and
 number of messages transmitted to reach the convergence after the transmission
 of the signal \q{AW}.
-The convergence time is described by the average value from all the nodes in the
-network.
 Each point in the plots is the average of the \num{10} runs executed with the
 \textit{Fixed} \ac{MRAI} value on the $x$ axis.
 The left $y$ axis should be used with the convergence time, the green line, while
 the second $y$ axis represents the number of messages transmitted, the red line.
+The convergence time represent the average convergence time of the entire network,
+a node is considered converged when its \ac{RIB} doesn't change anymore.
 
 The effects of \ac{MRAI} are present in both the plots but in two different
 moments.
@@ -210,26 +211,26 @@ Other messages are not necessary to converge and \ac{MRAI} doesn't compress
 the input anymore, so the nodes are not able to aggregate more information.
 
 In \Cref{fig:clique_evolution_noIW} is possible to see the same effects but after a higher
-\ac{MRAI} value.
+\ac{MRAI} threshold.
 The number of transmitted messages reaches the constant value with an \ac{MRAI}
 value around \SI{30}{\second}.
 The effects of \ac{IW} can be saw also in the number of messages and the convergence
 time with a low \ac{MRAI}.
 In \Cref{fig:clique_evolution_noIW} is possible to reach even \num{12000} messages
 with an \ac{MRAI} equal to \SI{0}{\second}, while, with \ac{IW} active, there are no
-more than \num{6500} messages.
+more than \num{6500} messages on average.
 
 \section{Internet like experiments}
 \label{sec:bgp_mrai_internet_like}
 
-The internet like environment is more complex than the clique one, but it permits
+The \textit{Internet-like} environment is more complex than the clique one, but, it permits
 to have a more close vision of what can really happen on the Internet.
 During my studies, I used different topologies with \num{1000} nodes resembling
-the Elmokashfi properties \cite{elmokashfi2010scalability} already
+the Elmokashfi properties \cite{elmokashfi2010scalability},
 described in \Cref{subsec:internet_like_env}.
 
 Using this graphs I will look for a possible interaction between \ac{MRAI} and other
-factors that can influence the network.
+factors that can influence the network convergence.
 First of all, \ac{MRAI} has a dependence on how it is set, I'm going to compare
 different \ac{MRAI} strategies that can be used on an Internet-like graph.
 Another influencing factor could be the signal used as an input or even the position
@@ -239,11 +240,11 @@ of the node that provoke the change.
 \label{sec:bgp_mrai_strategy_dependance}
 
 Like showed in \Cref{sec:bgp_fsm_explosion}, the network performances depend
-on the \ac{MRAI} strategy chose.
+on the \ac{MRAI} strategy chosen.
 For this reason, the first goal of my study is to point out this differences.
 In order to do that, the first investigation that I would like to present is the one
 that takes in consideration how the standard protocol evolves on an Internet environment
-with different possible \ac{MRAI} strategy.
+with different possible \ac{MRAI} strategies.
 
 The property of the environment chosen are described in \Cref{tbl:internet_like_properties}
 
@@ -314,8 +315,8 @@ The results of the \textit{Fixed} strategy are showed in
         \label{fig:internet_like_1000_constant_evolution}
 \end{figure}
 
-As is possible to see in \Cref{fig:internet_like_1000_constant_evolution_evolution}
-without \ac{MRAI} we would have a low convergence time, dictated mostly by
+As is possible to see in \Cref{fig:internet_like_1000_constant_evolution_evolution},
+without \ac{MRAI} the convergence time would be low, dictated mostly by
 network delays and processing time. With, on the other hand, an enormous amount
 of messages.
 Slightly increasing the \ac{MRAI} value, the number of messages fell down
@@ -329,12 +330,12 @@ front of those experiments.
 The Pareto frontier is the set of values that are Pareto efficient, this concept
 has been already used in engineering to define the set of best outcomes from
 the trade-off of two different parameters \cite{goodarzi2014introduction}.
-We can clearly see that the majority of the points is concentrated on the left
+The majority of the points is concentrated on the left
 of the chart, this means that few \ac{MRAI} values would give as a result
 a high number of messages and a small convergence time.
-While, multiple \ac{MRAI} values permits to have results concentrate around the
+While, multiple \ac{MRAI} values permits to have a concentration of results around the
 same amount of messages transmitted.
-This can confirm the fact that \ac{MRAI} would not influence messages
+This confirm the fact that \ac{MRAI} would not influence messages
 after a certain threshold but only the convergence time.
 
 The results of the same environment without \ac{IW} are showed in
@@ -412,7 +413,7 @@ both the number of transmitted messages and the convergence time diverge.
 The number of messages with the \ac{DPC} strategy variate more and it converges
 around \num{9000} messages, while the \textit{fixed} strategy reaches \num{8000}
 messages as stable point.
-And the convergence time with the second strategy grows more quickly.
+And, the convergence time with the second strategy grows more quickly.
 This is caused by the central clique of tier-one nodes that have a high \ac{MRAI}
 value.
 The high \ac{MRAI} value is caused by the fact that all the leaves have \num{0.0}
@@ -423,10 +424,10 @@ one of the central clique nodes) has an \ac{MRAI} value of \SI{79.35}{\second} f
 neighbours.
 
 
-The standard value of \ac{MRAI} is \SI{30}{\second} as described in
-\cite{rfc4271} so I compared those strategies performances with that amount
-with a box-plot in \Cref{fig:boxplot_internet_like_1000}.
-I decided to ru\num{100} different runs for each strategy with the $MRAI_{mean}$
+I compared those strategies performances using a box-plot, \Cref{fig:boxplot_internet_like_1000},
+in a special case, the standard value of \ac{MRAI} is \SI{30}{\second} as described
+in~\cite{rfc4271}, so I used it as \(MRAI_{mean}\).
+I decided to execute \num{100} different runs for each strategy with the $MRAI_{mean}$
 fixed to \SI{30}{\second}.
 
 \begin{figure}[h]
@@ -434,7 +435,7 @@ fixed to \SI{30}{\second}.
      \begin{subfigure}[b]{0.49\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_like/1000/comparison/comparison_messages_boxplot.pdf}
-		 \caption{Network performances, messages necessary to reach convergence
+		 \caption{Messages necessary to reach convergence
 			with different \ac{MRAI} strategies}
          \label{fig:boxplot_internet_like_1000_messages}
      \end{subfigure}
@@ -442,7 +443,7 @@ fixed to \SI{30}{\second}.
      \begin{subfigure}[b]{0.475\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_like/1000/comparison/comparison_time_boxplot.pdf}
-		 \caption{Network performances, time required to reach convergence
+		 \caption{Time required to reach convergence
 			with different \ac{MRAI} strategies}
          \label{fig:boxplot_internet_like_1000_time}
      \end{subfigure}
@@ -452,11 +453,13 @@ fixed to \SI{30}{\second}.
         \label{fig:boxplot_internet_like_1000}
 \end{figure}
 
-In \Cref{fig:boxplot_internet_like_1000} we can compare those two strategies,
-the first figure, \Cref{fig:boxplot_internet_like_1000_messages} represent
-the number of messages transmitted by the \num{100} runs, we can see that
-the two strategies, with the use of \ac{IW}, are really close one another.
-While, in the time required to convergence, \Cref{fig:boxplot_internet_like_1000_time},
+\Cref{fig:boxplot_internet_like_1000} permits to compare the two strategies already
+mentioned.
+The first plot, \Cref{fig:boxplot_internet_like_1000_messages}, represent
+the number of messages transmitted by the \num{100} runs.
+The two strategies, with the use of \ac{IW}, are really close one another on average,
+with a difference of few thousands messages.
+While, considering the time required to convergence, \Cref{fig:boxplot_internet_like_1000_time},
 there are some huge difference between the two strategies.
 The fact that the \ac{DPC} strategy requires almost the double of the
 \textit{Fixed} one is not negligible.
