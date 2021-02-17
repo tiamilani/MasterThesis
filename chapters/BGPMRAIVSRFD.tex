@@ -2,7 +2,7 @@
 \label{cha:bgp_rfd_vs_mrai}
 
 During \Cref{cha:bgp_mrai_experiments} I studied how \ac{MRAI} can influence
-the network performances and how different factor can influence it.
+the network performances and how multiple factor may influence it.
 Thanks to \ac{MRAI} is possible to compress the input messages choosing the best
 alternative among multiple possibilities and transmitting only it as output.
 I showed that the strategy is a key factor of the performances, preventing or
@@ -10,19 +10,19 @@ mitigating the \textit{Path Exploration} problem.
 
 In \Cref{cha:bgp_rfd} I showed that \ac{RFD} can highly impact the performances,
 preventing huge messages storms paying a high price in terms of convergence time.
-I presented different \ac{RFD} strategies that reacts in different ways to
-different signals.
+I presented multiple \ac{RFD} strategies that reacts differently depending on
+the input signal.
 The \ac{RFD} parameters play also a central role in the time required by a node
 to converge because of the decay function and the reuse threshold.
 This two parameters could make a route be available in less time, and by consequence,
-the node would converge faster.
+the node could converge faster or be more susceptible to following flaps.
 
 The hypothesis behind this study is that there is actually an interaction between
 those two mechanisms.
 This hypothesis is sustained by the fact that both actively act to reduce the
 noise in the network and that both relies on the messages received.
 
-In the following sections I am going to prove that an interaction exists and that \ac{MRAI}
+In the following sections I am about to prove that an interaction exists and that \ac{MRAI}
 plays a more fundamental role than \ac{RFD}.
 The variation of \ac{MRAI} can provoke huge changes in the behaviour of \ac{RFD}
 because the prevention of multiple messages could make the difference between
@@ -78,10 +78,10 @@ messages that travels among the network.
 
 In \Cref{sec:rfd_toy_topologies} is presented a study that uses a clique
 network as graph with a fixed \ac{MRAI} of \SI{30}{\second} and the \ac{RFD}
-configured like the legacy version descried in~\cite{rfc2439}.
+filter configured with the legacy version described in~\cite{rfc2439}.
 I have then executed again those experiments with the same toy topology and the
 same \ac{RFD} filter with multiple \ac{MRAI} values.
-The strategy used is alway the \textit{Fixed} one, so every link have the same
+The strategy used is alway the \textit{Fixed} one, so every link has the same
 value of the others.
 \ac{MRAI} goes from \SI{0}{\second} up to \SI{120}{\second}.
 The results are presented in \Cref{fig:clique_evolution_rfd_vs_noRFD}.
@@ -101,7 +101,7 @@ The results are presented in \Cref{fig:clique_evolution_rfd_vs_noRFD}.
 		 \caption{Network performances standard \ac{RFD} vs no \ac{RFD}}
          \label{fig:clique_evolution_rfd_vs_noRFd_comparison}
      \end{subfigure}
-		\caption{Evolution of the performances changing \ac{MRAI} in the links
+		\caption{Evolution of the performances changing \ac{MRAI} in the links,
 			standard \ac{RFD} vs no \ac{RFD},
 			graph clique of \num{10} nodes, \ac{MRAI} strategy fixed, signal \q{AWAWAWA}.
 			Each point represent the average of \num{10} runs.}
@@ -111,37 +111,39 @@ The results are presented in \Cref{fig:clique_evolution_rfd_vs_noRFD}.
 The plot in \Cref{fig:clique_evolution_rfd} shows how the performances of the
 network variate changing the \ac{MRAI} value on the $x$ axis.
 It contains a third line that represent the average total number of suppression
-detected on the experiment, for each experiment has been executed \num{10} different
+detected during the experiments, for each experiment has been executed \num{10} different
 runs.
 The blue line that represents the number of suppression refers to the third y-axis
 on the right.
 
 In \cref{fig:clique_evolution_rfd} is possible to see that small changes to \ac{MRAI}
-can lead to some small differences in the number of suppressions.
-Also, the number of messages decreases rapidly and reaches a constant
+don't really affect the number of suppressions.
+But, on the other hand, the number of messages decreases rapidly and reaches a constant
 value around \num{1000}, as expected by the passage from an \ac{MRAI} of \SI{0}{\second}
 to a few seconds.
-The convergence time stays stable around \SI{4000}{\second} due to the
+The difference in the messages, even with the same amount of suppression is caused
+by the fact that few \ac{ADV} are sufficient to overpass the threshold.
+The convergence time is stable around \SI{4000}{\second} due to the
 fact that there are almost no variations in the number of suppression,
-and those suppressions always take the same time to be solved.
-A node wouldn't be considered converged until it has also solved the suppressed
-routes.
+and they always take the same time to be resolved.
+A node wouldn't be considered converged until it \ac{RIB} doesn't converge.
 
 In \Cref{fig:clique_evolution_rfd_vs_noRFd_comparison} is possible to see the
 gap between the environment with \ac{RFD} and without it.
-\ac{MRAI} slightly affect both the messages trends, with a low value of the timer
+\ac{MRAI} affects both the message trends, with a low value of the timer
 is possible to notice a huge difference, almost one magnitude order with \ac{MRAI}
 equal \SI{0}{\second}.
-But, thanks to the growth of it the gap become smaller and smaller up to
+But, thanks to the growth of it the gap becomes smaller and smaller up to
 the point where the difference is just of few tens of messages.
-The difference in the convergence time is due to the fact that with \ac{RFD} some
-nodes block the best path that takes a lot of time to become available again.
+The difference in the convergence time is caused by, some
+nodes, with \ac{RFD}, that block the best path, it takes a lot of time to
+pass the \textit{reuse threshold} and become available again.
 
 Like in \Cref{sec:rfd_toy_topologies}, the suppressions on nodes \num{0} and
 \num{5} play an important role.
-For this reason, we can look more deeply on what happened to the figure of merit
-of node $x$ and five in \Cref{fig:clique_nodex,fig:clique_node5} with multiple
-\ac{MRAI} values.
+For this reason, in \Cref{fig:clique_nodex,fig:clique_node5} is possible to
+take a look more deeply on what happened to the figure of merit
+of node $x$ and five in considering multiple \ac{MRAI} values.
 
 \begin{figure}[h]
      \centering
@@ -169,18 +171,18 @@ of node $x$ and five in \Cref{fig:clique_nodex,fig:clique_node5} with multiple
         \label{fig:clique_nodex}
 \end{figure}
 
-The node $x$ is a leaf of the network that will absorb everything the node \num{5}
-sends to it.
+The node $x$ is a leaf of the network, it absorb everything the node \num{5} decides
+to send to it.
 In \Cref{fig:clique_nodex} is possible to see the evolution of the figure of merit
 with different \ac{MRAI} values.
-In the first case, with an \ac{MRAI} equal to \SI{0}{\second}, we will see a huge
+In the first case, with an \ac{MRAI} equals to \SI{0}{\second}, is present a huge
 spike caused by a lot of messages and route changes that the node \num{5} sends
-to it.
+to it at the first flap.
 While in the other two cases \Cref{fig:clique_x_mrai50,fig:clique_x_mrai100}
 the \ac{MRAI} seems to not be much effective on the route through node \num{5}.
-The messages are more delayed with high \ac{MRAI} but the growth of the figure
+The messages are more delayed with a higher \ac{MRAI}, but, the growth of the figure
 of merit has the same trend.
-We can see that the route has been suppressed around \SI{1000}{\second}
+The route has been suppressed around \SI{1000}{\second}
 and it is going to become available again around \SI{4000}{\second}.
 In this period of time, from \SI{1000}{\second} to \SI{4000}{\second}, node $x$ still
 receives some updates from node \num{5} that affects its best path, and this
@@ -220,24 +222,24 @@ available again for node \num{5} that communicates the change to $x$.
 
 The evolution of the figure of merit of the best path of node \num{5} is different
 from the one of node $x$.
-In fact, it is not influenced by \ac{MRAI} as we can see in \Cref{fig:clique_node5}.
-That because the node \num{5} is directly connected to the node \num{0} that every
-\SI{300}{\second} forward the message of $d$. \SI{300}{\second} are a delay large
-enough to be not affected by the compression effect of \ac{MRAI}.
-Around \SI{2000}{\second} node \num{5} suppress the route (as any other node in the
-clique) and stops to forward it to node $x$ until \SI{3000}{\second} when it becomes
+In fact, it is not influenced by \ac{MRAI}, as showed in \Cref{fig:clique_node5}.
+Thats because the node \num{5} is directly connected to the node \num{0} that every
+\SI{300}{\second} forward the message of $d$. The delay of \SI{300}{\second} is large
+enough to not be affected by the compression effect of \ac{MRAI}.
+Around \SI{2000}{\second} node \num{5} suppresses the route (as any other node in the
+clique) and stops to forward it to node $x$, until \SI{3000}{\second} when it becomes
 available again.
 
 Node $x$ took almost \SI{4000}{\second} to converge because of the big fluctuations
-of node \num{5} that suffers from the \textit{Path Exploration} problem, path
-changes are considered bad behaviour in \ac{RFD}.
+of node \num{5} that suffers from the \textit{Path Exploration} problem, continuous
+changes are considered a bad behaviour in \ac{RFD}.
 
-In conclusion, is not possible to notice an interaction between \ac{MRAI} and
+In conclusion, is not possible to notice an interaction between \ac{MRAI} and the legacy
 \ac{RFD}, the differences are minor and the figure of merit growth is not
 affected.
 On the other hand, \ac{MRAI} can help to reduce the gap between the load that
 the nodes have to handle.
-If the number of messages is treatable, the convergence time given by the
+If the number of messages is tolerable, the convergence time given by the
 environment that doesn't use \ac{RFD} is an overwhelming factor.
 
 %\begin{itemize}
@@ -269,7 +271,7 @@ environment that doesn't use \ac{RFD} is an overwhelming factor.
 Like before I repeated the same experiments of \Cref{sec:rfd_2439_Vs_7196} with
 different \ac{MRAI} settings.
 In that section I was evaluating the two new techniques presented in~\cite{rfc7196},
-which points to overcome some to restrictive settings of the original \ac{RFD}.
+which points to overcome some too restrictive settings of the original \ac{RFD}.
 I have then evaluated the clique network with the \textit{Aggressive} and
 \textit{Conservative} strategies and multiple \ac{MRAI} values.
 
@@ -294,24 +296,27 @@ The results are presented in \Cref{fig:clique_rfd7196}.
          \label{fig:rfd7196conservative}
      \end{subfigure}
 		\caption{MRAI influence with different RFD strategies from \cite{rfc7196}.
-		Clique graph, \ac{MRAI} \textit{Fixed}, signal \q{AWAWAWA}.}
+		Clique graph, \ac{MRAI} \textit{Fixed}, signal \q{AWAWAWA}.
+		Each point is the average of \num{10} runs.}
         \label{fig:clique_rfd7196}
 \end{figure}
 
-We can see two completely different evolutions of the performances in \Cref{fig:clique_rfd7196}.
-On the left plot, we can see the evolution with the \textit{Aggressive} strategy.
-\ac{MRAI} is more effective to this strategy in respect to the standard one.
+In \Cref{fig:clique_rfd7196} is possible to see two completely different evolutions
+of the performances.
+The evolution of the \textit{Aggressive} strategy is presented in the left plot,
+\Cref{fig:rfd7196aggressive}.
+\ac{MRAI} is more effective on this strategy in respect to the standard one,
 The number of suppressions fell down to almost \num{0} with an \ac{MRAI} near
 \SI{90}{\second}.
 The message trend is similar to the one of the case without \ac{RFD} but with an
-important difference in the case of  \ac{MRAI} equal \SI{0}{\second}, the number
+important difference in the case of  \ac{MRAI} equal to \SI{0}{\second}, the number
 of average messages is around \num{2600} in respect of the \num{10000} without
 \ac{RFD}.
 While with a high \ac{MRAI} the message trends are similar and equal when the number of
 suppressions reach \num{0}.
 
 The convergence time, on the other hand, has a different trend in respect of
-the one that we saw in \Cref{fig:clique_evolution_rfd}.
+the one that presented in \Cref{fig:clique_evolution_rfd}.
 It is stable until \ac{MRAI} reaches \SI{70}{\second}, at that point, the number
 of message reduction permits to avoid multiple suppressions.
 This gain in the suppressions has a positive effect on the convergence time that
@@ -321,7 +326,7 @@ starts to act as the \textit{NoRFD} case.
 While, before \ac{MRAI} equal \SI{60}{\second}, the number of suppression is half
 in respect of the standard case but the convergence time is not affected.
 
-In \Cref{fig:rfd7196conservative} we can see the evolution of the network with the
+In \Cref{fig:rfd7196conservative} is presented the evolution of the network with the
 \textit{Conservative} strategy, the threshold of this strategy is the double of
 the \textit{Aggressive} one.
 The effects of this difference are huge, is sufficient an \ac{MRAI} of \SI{10}{\second}
@@ -332,8 +337,8 @@ terms of messages and convergence time in respect of the other two strategies.
 This is the strategy that more likely resembles the \textit{NoRFD} one,
 having a convergence time incredibly more low, at the cost of few hundreds of messages.
 
-We can now take a look more closely to what happens to the figure of merit
-for the only route that node $x$ receives with an \ac{MRAI} of \SI{30}{\second}.
+The figure of merit evolution of node \(x\) may change with different \ac{MRAI}
+timers applied to the network.
 Results are showed in \Cref{fig:clique_nodex_rfd7196Aggressive}, reporting
 the evolution of the figure of merit in the \textit{Aggressive} strategy.
 The \textit{Conservative} case is not presented because it is never going to suppress
@@ -365,15 +370,16 @@ the route.
         \label{fig:clique_nodex_rfd7196Aggressive}
 \end{figure}
 
-We can see in \Cref{fig:clique_x_mrai0_rfd7196Aggressive,fig:clique_x_mrai50_rfd7196Aggressive}
+In \Cref{fig:clique_x_mrai0_rfd7196Aggressive,fig:clique_x_mrai50_rfd7196Aggressive}
+is possible to see
 that \ac{MRAI} plays an important role in the figure of merit of node $x$.
 In the first case, the route would be delayed up to \SI{4000}{\second} with a
 suppression value that touches \num{12} few seconds after the first flap.
 In the second one, the growth is slower but it passes the threshold around
 \SI{1800}{\second} reaching a value of \num{7}.
 For this reason, it requires a higher time to become available again.
-We can also notice that the route become available with a figure of merit of
-\num{0}, that's because it has been triggered the max suppression threshold,
+The route become available with a figure of merit of \num{0}, that's because it
+has been triggered the max suppression threshold,
 with the default value of cisco after \SI{1}{\hour} a route would become available
 again, no matter the evolution of the figure of merit.
 With a higher \ac{MRAI} node \num{5} is able to compress more routes, the effects
@@ -724,12 +730,14 @@ of the threshold would require a longer time to reactivate the route.
 \section{MRAI influence on Mice and Elephants}
 \label{sec:bgp_rfd_mrai_influence_mice_elephants}
 
-We can now study the influence of \ac{MRAI} on the \textit{Mice} and \textit{Elephants}
-case.
+In \Cref{sec:rfd_mice_vs_elephants} I have presented the difference between the
+two sets of prefixes that we can find on the internet, the \textit{Mice} and the
+\textit{Elephants} subcategories, is now possible to study the effects of \ac{MRAI}
+on those two environments.
 The first one describes an environment with few flaps delayed in time, while the
 second represent the opposite case with multiple flaps transmitted with high
 frequency.
-For this experiments I used the same environment described in \Cref{sec:rfd_mice_vs_elephants}.
+For this experiments I used the same environments described in \Cref{sec:rfd_mice_vs_elephants}.
 The results of the \textit{Mice} case are exposed in \Cref{fig:1000_RFD_multiMRAI_mice},
 while the results of the \textit{Elephants} case are presented in \Cref{fig:1000_RFD_multiMRAI_elephants}.
 
@@ -756,31 +764,32 @@ while the results of the \textit{Elephants} case are presented in \Cref{fig:1000
      \end{subfigure}
 		\caption{Internet like topology \num{1000} nodes, random destination,
 		\num{5} flaps, \SI{300}{\second} delay, Network performances, \ac{MRAI}
-		strategy fixed, \fxfatal{Adapt y ranges}}
+		strategy fixed, \fxfatal{Adapt y ranges}, each point is the average of
+		\num{10} repetitions}
         \label{fig:1000_RFD_multiMRAI_mice}
 \end{figure}
 
 \fxfatal{Redo this graphs with more \ac{MRAI} values, update the figures with the same y-range}
 
-We can see in \Cref{fig:1000_RFD_multiMRAI_mice} how the different \ac{RFD} strategies
+In \Cref{fig:1000_RFD_multiMRAI_mice} is possible to see how the different \ac{RFD} strategies
 react, on the same topology, with different \ac{MRAI} settings.
-The network performances with the legacy \ac{RFD} strategy from the \ac{RFC}
-\num{2439} \cite{rfc2439} are presented in \Cref{fig:1000_2439RFD_multiMRAI_mice}.
+The network performances, with the legacy \ac{RFD} strategy from the \ac{RFC}
+\num{2439}~\cite{rfc2439}, are presented in \Cref{fig:1000_2439RFD_multiMRAI_mice}.
 First of all, is possible to see the influence of \ac{MRAI} on the number of suppressions
 that decrease from \num{1600} with an \ac{MRAI} equal to \SI{0}{\second} to almost
-\num{1400} with \ac{MRAI} $=$ \SI{60}{\second}.
+\num{1400} with \ac{MRAI} of \SI{60}{\second}.
 The messaging trend reacts as expected with the increasing of
 \ac{MRAI}, but, is remarkable that with an \ac{MRAI} of \SI{0}{\second} there
 are less than \num{20000} messages thanks to \ac{RFD}.
 The convergence time doesn't have the same trend as other \ac{MRAI} experiments,
-it has a decreasing trend, while we were expecting an increasing one.
-This is caused by the routes that don't suppress anymore the route.
+it has a decreasing trend, while I was expecting an increasing one.
+This is caused by the nodes that don't suppress anymore the route.
 It is greater the gain obtained by the suppression reduction than the disadvantage
 caused by \ac{MRAI} that requires the nodes to wait more time.
 
-The second case we can analyze is the \textit{Aggressive} strategy presented
-in \Cref{fig:1000_7196RFDA_multiMRAI_mice}.
-We can easily notice that this time the variation in terms of suppression is smaller,
+The second case, the \textit{Aggressive} strategy, is presented in
+\Cref{fig:1000_7196RFDA_multiMRAI_mice}.
+The variation in terms of suppression, with this configuration, is smaller,
 going from a value of \num{1265} to \num{1240} suppressions.
 The number of messages has a similar trend to the standard strategy, but with
 a different range.
@@ -788,23 +797,23 @@ At the beginning, with \ac{MRAI} $=$ \SI{0}{\second} there are more than \num{42
 messages, after a while it converges around a value of \num{37000} messages.
 The convergence time respect the expected trend by the growth of \ac{MRAI}.
 The higher number of messages is caused by the fact that \ac{RFD} requires more time
-to activate itself, and in the meanwhile, a lot of messages storm will pass the
+to activate itself, and in the meanwhile, a lot of message storms will flood the
 network.
 The convergence time, in this case, is not affected by the decrease in the number
 of suppressions.
 The gain obtained by the \ac{RFD} suppression trend doesn't compensate the
 effects of \ac{MRAI} that makes the convergence time grow.
 
-In the last strategy, the \textit{Conservative} one, we can see another, different,
-behaviour.
-In terms of suppressions \ac{MRAI} makes a huge difference, we go from \num{1200}
+In the last strategy, the \textit{Conservative} one, is possible to see another
+different behaviour.
+In terms of suppressions \ac{MRAI} makes a huge difference, the range goes from \num{1200}
 suppressions to \num{0}, is sufficient an \ac{MRAI} of \SI{15}{\second} to reduce
 it around \num{50}.
 Also in this case, the number of messages is higher than the other two strategies.
 The higher suppression threshold, like for the \textit{Aggressive} strategy, permits
 multiple \ac{ADV} storms without blocking the route.
-An interesting behaviour can be seen for the convergence time, in fact like for
-the \textit{Aggressive} strategy it starts growing also with more than \num{1000}
+An interesting behaviour can be seen for the convergence time, in fact, like for
+the \textit{Aggressive} strategy, it starts growing even with more than \num{1000}
 suppressions of difference, but as soon the number of suppression touches \num{0}
 it goes back to the \textit{NoRFD} behaviour.
 
@@ -844,24 +853,24 @@ with the elephant environment and multiple \ac{MRAI} values.
 
 The trends in the elephant case are completely different in respect to the
 mice environment.
-Starting from the standard strategy in \Cref{fig:1000_2439RFD_multiMRAI_mice}
-we can see that the number of suppression decreases of a few hundred units
+Starting from the standard strategy in \Cref{fig:1000_2439RFD_multiMRAI_mice},
+The number of suppression decreases of a few hundred units
 thanks to a higher \ac{MRAI}.
 Also, the number of messages decrease from around \num{14500} reaching a stable
 state around \num{11000}.
-While the convergence time benefits of the suppression rate decrease, reaching
+While, the convergence time benefits from the suppression rate decrease, reaching
 a valley around \SI{5400}{\second}.
 But, after that point, the effect of avoiding the next suppression set is not enough to keep
-a descending trend, while \ac{MRAI} acquire a more predominant position making
+a descending trend, and \ac{MRAI} acquire a more predominant position making
 the convergence time slightly increasing.
 
-A different behaviour can be saw in
+A different behaviour can be seen in
 \Cref{fig:1000_7196RFDA_multiMRAI_elephants,fig:1000_7196RFDC_multiMRAI_elephants},
 where the number off suppression, thanks to \ac{MRAI}, reaches a number slightly
 higher than \num{0}.
 The number of messages reaches the same convergence point around \num{12500} but
 with a completely different starting point.
-With \ac{MRAI} at \SI{0}{\second} the aggressive strategy presents a number of
+With \ac{MRAI} at \SI{0}{\second} the \textit{Aggressive} strategy presents a number of
 messages around \num{32500} while the conservative strategy is around \num{60000},
 almost the double of the \textit{Aggressive} one.
 This huge difference is caused by the fact that the \textit{conservative} strategy requires
@@ -876,32 +885,33 @@ The fact that in the last two strategies the time is not affected by the huge nu
 of suppression could be saw as an error, but it is not.
 In fact, the suppressions with an \ac{MRAI} of \SI{0}{\second} happens
 few seconds after the beginning of the experiment and the majority of the nodes
-will suppress the route, but we know that after \SI{3600}{\second} a route
+will suppress the route.
+But, the CISCO configuration of \ac{RFD} requires that after \SI{3600}{\second} a route
 can't be suppressed anymore.
 For this reason after that time, there will be just a last update storm to propagate
 the reintroduction of the route.
 And, on average, all the nodes will converge a few seconds after \SI{1}{\hour}.
 Causing \ac{MRAI} to be the only influence factor after \SI{1}{\hour}.
 
-We can then conclude that \ac{MRAI} influences both the \textit{Mice} and
+I can conclude that, \ac{MRAI} influences both the \textit{Mice} and
 \textit{Elephants} cases.
 The major effects can be saw on the two modern strategies of \ac{RFD}.
 For the \textit{Mice} environment, those two strategies will tend to have
 a behaviour similar to the \textit{NoRFD} strategy. And \ac{MRAI} would
 influence the number of suppressions and indirectly the convergence time
 and the number of messages transmitted.
-We can see from \Cref{fig:1000_RFD_centVSsup_mices} that also the set of
+From \Cref{fig:1000_RFD_centVSsup_mices} is possible to see that also the set of
 nodes that triggers the suppressions change.
-We can see even more effects in the \textit{Elephants} environment, where
+The \textit{Elephants} environment presents event more effects, where
 \ac{MRAI} highly impact the number of suppressions.
 Both the \textit{Aggressive} and \textit{Conservative} strategies would present
 just few suppression in comparison of the thousands suppression triggered with the
 legacy \num{2439} strategies.
-And the new strategies would have a high impact on the convergence time, at
+And the new strategies would have a higher impact on the convergence time, at
 the cost of a few hundred messages on average.
 In \Cref{fig:1000_RFD_centVSsup_elephants} is possible to see the effects
-on the set of nodes that effectively suppress the route, in the legacy
-case even the more distance nodes would suppress it, while with the new
+on the set of nodes that actually suppress the route, in the legacy
+case even the farthest nodes would suppress it, while with the new
 strategies is sufficient a suppression near the source, and \ac{MRAI} would
 help to prevent suppressions due to the \textit{Path exploration} problem.
 
