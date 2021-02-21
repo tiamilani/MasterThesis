@@ -8,20 +8,20 @@
 
 %\fxfatal{Expand the concepts}
 
-With the name \q{The Internet} we define a network composed by more than \num{60000}
-entities that share their knowledge in order to permits us to reach every website
+With the name \q{The Internet} we define a network composed of more than \num{60000}
+entities that share their knowledge in order to permit us to reach every website
 whenever we want.
-We are used to think about Internet as something far away from us, something
+We are used to thinking about the Internet as something far away from us, something
 that we do not have to care about, leaving all the complexity
 out.
-But, by a more physical point of view, what is the Internet? It is nothing
-more than a big network where interconnected entities keeps the prefixes reachable.
+But, from a more physical point of view, what is the Internet? It is nothing
+more than a big network where interconnected entities keep the prefixes reachable.
 Those entities are in reality called \acp{AS} and their function is to hold and
 control some \ac{IP} prefixes used by one or more operators.
 
 Every \ac{AS} is responsible for the connectivity to the prefixes that it shares.
 We know that networks are able to react to changes thanks to routing protocols,
-and Internet is not different in that.
+and the Internet does not differ on that.
 Every \ac{AS} has to keep active its own instance of an Internet routing protocol
 so that it can react to changes.
 This routing protocol is the glue of the Internet, is what permits
@@ -30,17 +30,16 @@ the actual route that our packets take.
 
 The path that we use could change because of different factors that could
 be technical, economical or even political.
-Thats because the \ac{AS} relationships are controlled by contracts and different
+That's because the \ac{AS} relationships are controlled by contracts and different
 arrangements can have different fees applied to the transmission of the knowledge.
-Some paths may be used only as backups if the primary one fail, or even used
+Some paths may be used only as backups if the primary one fails, or even used
 only for certain types of traffic flows.
-This policies must be implementable in the Internet routing protocol that has
+These policies must be implementable in the Internet routing protocol that has
 to discern on which path, among all the known alternatives, is the best one
 considering the \ac{AS} convenience.
 
-The protocol that has been created to handle this situations is the \ac{BGP}.
-It has been released in the \num{1989} and is in use on the Internet since
-the \num{1994}.
+The protocol that has been created to handle these situations is the \ac{BGP}.
+It has been released in \num{1989} and is in use on the Internet since \num{1994}.
 It reached its last version, the fourth one, in \num{2006} \cite{rfc4271}.
 Is easy to imagine that in almost \num{30} year \ac{BGP} is changed a lot from
 the beginning and also the needs of the different \acp{AS} are changed a lot
@@ -88,7 +87,7 @@ As a consequence, this increases also the load on the network, because of the
 nature of \ac{BGP} to act as echo-chamber.
 
 Thanks to the annual report from \ac{APNIC} we can have a snapshot of
-the situation of Internet and the evolution of it.
+the situation of the Internet and the evolution of it.
 The data collected by \ac{APNIC} from \num{2007} concern the knowledge
 of the \ac{AS} 131072 that has two links with other \acp{AS}, one in Japan and
 the other one in Australia\footnote{\href{https://blog.apnic.net/2021/01/05/bgp-in-2020-the-bgp-table/}{source APNIC data}}.
@@ -96,13 +95,13 @@ Prefixes of smaller and smaller sizes are continuously shared, the number of
 $/24$ networks distributed in the last year has been growing constantly,
 fomenting the problem described above.
 
-This redundancy of the \ac{BGP} nodes provoke the \textit{Path Exploration}
+This redundancy of the \ac{BGP} nodes provokes the \textit{Path Exploration}
 problem.
-This particular issue occurs when a node enter in a transitory state where it
-continuously shares non optimal paths while it doesn't reach a stable state.
-Provoking the propagation of non ideal routes to other nodes causing a vicious
+This particular issue occurs when a node enters a transitory state where it
+continuously shares non-optimal paths while it doesn't reach a stable state.
+Provoking the propagation of non-ideal routes to other nodes causing a vicious
 circle.
-The growing of Internet is not negligible because of this problem, a continuous
+The growing of the Internet is not negligible because of this problem, a continuous
 growth in terms of nodes and edges cause the growth of favorable conditions for
 the \textit{Path Exploration}.
 
@@ -117,17 +116,17 @@ reduce the noise of \ac{BGP} (defined in \Cref{sec:bgp_noise}).
 Both have different parameters and different behaviours,
 but, if a node wants to transmit a message it must respect \ac{MRAI} and the input
 could be caused by \ac{RFD} that suppress/reintroduce a route.
-On the opposite case, a too small \ac{MRAI} value could permit different message
+In the opposite case, a too small \ac{MRAI} value could permit different message
 storms that would trigger the \ac{RFD} suppression systems.
 
 One of the goals of reducing the value of \ac{MRAI} is to reach a faster convergence
 paying the cost of more messages.
-Unfortunately, looking only to \ac{MRAI} is not possible to get reliable results
+Unfortunately, looking only at \ac{MRAI} is not possible to get reliable results
 for general purposes, in-fact, like showed in \Cref{cha:bgp_rfd_vs_mrai}, is possible
 to obtain the opposite result due to the fact that to solve \ac{RFD} suppression
 is required a longer time.
 
-On the opposite case, if \ac{RFD} is configured in the wrong way is possible to
+In the opposite case, if \ac{RFD} is configured in the wrong way is possible to
 end up to be too much permissive, leaving \ac{MRAI} to handle all the noise and
 it could be not effective if the storms are sufficiently delayed in time.
 
@@ -142,12 +141,12 @@ there could be a strong co-dependence.
 %\end{itemize}
 
 The goal of this thesis is to prove that the noise reduction mechanisms of \ac{BGP}
-interact one another, studying this interaction through simulative experiments
+interact with one another, studying this interaction through simulative experiments
 and from those give useful hints on how the two parameters interact with one another.
 In order to build the basis for future experiments that can study more deeply
 and maybe in a formal way the phenomena.
 Is also mandatory for this thesis to develop the platform where those experiments
-would be executed and make that platform public
+would be executed and make that platform publicly
 available\footnote{\href{https://github.com/tiamilani/BGPFSM}{GitHub repository}}.
 
 The protocol and the two mechanisms are more deeply explained in \Cref{cha:bgp_art},

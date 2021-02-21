@@ -30,7 +30,7 @@ Each \ac{BGP} link is based on a direct \ac{TCP} connection.
 On these links, every \ac{AS} can configure its own policies that would be used
 to evaluate routes at the reception or in the moment there is something new
 to share.
-There are three different possible type of relations that can be created by two
+There are three different possible types of relations that can be created by two
 \ac{BGP} speaker, accordingly to the \ac{CAIDA}:
 
 \begin{itemize}
@@ -67,8 +67,8 @@ its own customers.
 Those policies are commonly called \q{valley-free} and are dictated by convenience,
 an \ac{AS} has all the advantages when
 other \acp{AS} decide to use it to reach a specific destination.
-For this reason is convenient for an \ac{AS} that everyone knows about its clients
-networks, and, in the opposite side, that its clients knows only the route
+For this reason is convenient for an \ac{AS} that everyone knows about its clients'
+networks, and, on the opposite side, that its clients know only the route
 through it to reach other networks.
 
 This behaviour can be modelled with a variant of the \ac{SSP} algebra described
@@ -120,7 +120,7 @@ The decision process is composed of three parts:
 		route;
 	\item[2] Route selection: This function is called at the end of the first
 		phase, it collects all the eligible routes and evaluates them removing
-		routes that would create loops or that creates conflicting situations.
+		routes that would create loops or that create conflicting situations.
 		The evaluated routes are then ordered by the \textit{PREF\_VALUE} and
 		then the best route will be then installed in the \textit{LOC-RIB}.
 		In case of ties, there is an algorithm that can be used to break them;
@@ -144,10 +144,10 @@ contain additive information and subtractive information.
 Is possible to distinguish \ac{ADV} messages using the type of information that are
 transmitting:
 \begin{itemize}
-	\item \textbf{\textit{UPDATE}:} This type of messages represent the distribution
+	\item \textbf{\textit{UPDATE}:} This type of messages represents the distribution
 		of new reachability information, a new best route to a destination will be
 		shared through an update message;
-	\item \textbf{\textit{WITHDRAW}:} This type of messages are distributed when
+	\item \textbf{\textit{WITHDRAW}:} This type of messages is distributed when
 		a node want to share that it doesn't know how to reach
 		a destination anymore.
 \end{itemize}
@@ -156,7 +156,7 @@ information about the route (advertised or withdrawn).
 There is an attribute that describes the address that the route represents,
 another one that contains the path that will be used to reach the
 destination, the next-hop used, etc.
-During the years multiple new \ac{RFC} have introduced, modified, updated and removed
+During the years multiple new \acp{RFC} have introduced, modified, updated and removed
 attributes that can be found inside an advertisement message.
 Not all the attributes are mandatory for \ac{BGP} nodes, in fact, for a node
 is possible to receive a route with an attribute that it is not able to interpret
@@ -169,7 +169,7 @@ any route that contains a specific \ac{AS} in the received path.
 
 The \textit{Update-send} process is responsible for the distribution of the
 messages that are stored in the \textit{ADJ-RIB\_out}.
-It execute again some checks on the \ac{RIB}, removing unfeasible routes
+It executes again some checks on the \ac{RIB}, removing unfeasible routes
 and removing routes that have already been advertised to the pear.
 It also has to respect a temporal constraint, introduced in \cite{rfc4271},
 a \ac{BGP} speaker can't send to the same neighbour routes for the same destination
@@ -207,33 +207,33 @@ alternative and comparing them.
 \section{BGP inherent noise vs external noise}
 \label{sec:bgp_noise}
 
-With the term \textit{BGP Noise} I define a particular behaviour
+With the term \textit{BGP Noise}, I define a particular behaviour
 of \ac{BGP}.
 It underlines a situation where the nodes are distributing routes
-that would be retrieved few moments later.
-Non optimal messages are shared while nodes don't have a compleate knowledge
+that would be retrieved a few moments later.
+Non-optimal messages are shared while nodes don't have a compleate knowledge
 to take the best possible solution, producing multiple \ac{ADV} storms.
 This behaviour is defined as noise because of the tendency of \ac{BGP} to act
 as an echo-chamber amplifying this distribution of incorrect information.
 %All those wrong messages are going to disturb the convergence of the protocol.
 In fact, a \ac{BGP} node that receives an update from a neighbour will probably
 redistribute the route to multiple neighbours, peers and servicer.
-Given the hierarchical topology of the internet this behaviour grows
-exponentially while the information reach the center of the network.
+Given the hierarchical topology of the Internet, this behaviour grows
+exponentially while the information reaches the centre of the network.
 
 There are basically two sources of noises in \ac{BGP}, the inherent noise of
 the protocol and the noise caused by external sources.
-Those two type of noises are triggered by different causes and are
-not discernible one another.
-Because, both the noise situation are characterized by an intense distribution
+Those two types of noises are triggered by different causes and are
+not discernible from one another.
+Because, both the noise situations are characterized by an intense distribution
 of messages and there are no other distinguishing features.
 
 The first one is caused by the protocol itself when it tries to converge
 on new knowledge.
 The sharing of new routes can cause new \ac{ADV} that can then trigger the
 \textit{Path Exploration} problem.
-This is a noise caused by the protocol itself that distribute \ac{ADV} for
-new paths that will change until the best possible path is taken in consideration.
+This is a noise caused by the protocol itself that distributes \ac{ADV} for
+new paths that will change until the best possible path is taken into consideration.
 
 One \ac{BGP} parameter tries to limit this noise acting as a message cache with
 a compression system.
@@ -264,7 +264,7 @@ Those two parameters are clearly connected one another from the fact that
 one triggers the other and vice versa, is possible to create a particular topology
 that has different performances based on the values assigned to those
 parameters.
-Think about two clique networks connected one another by only one node, that
+Think about two clique networks interconnected by only one node, that
 node will act as a bottleneck, probably its \ac{RFD} threshold would be easily
 overpassed and then it depends on its decay function before it can share
 again the prefix to the second clique triggering \ac{MRAI} on those nodes that
@@ -355,7 +355,7 @@ than one with only one link.
 
 \ac{RFD} is a parameter introduced in \ac{BGP} to overcome the problems caused
 by exterior sources of noise.
-It main function is to avoid the computation overload provoked by fluctuating
+Its main function is to avoid the computation overload provoked by fluctuating
 routes with continuous message storms.
 It has been introduced with the \ac{RFC} \num{2439} in \num{1998}~\cite{rfc2439}.
 Also, \ac{RFD} is a controversial parameter, it has been studied and evaluated again
@@ -396,7 +396,7 @@ suppress the route and don't advertise it until the figure of merit goes
 below the \textit{reuse threshold}.
 The decay of the \textit{figure of merit} follows a quadratic decay function
 which rate is calculated using the \textit{Half-life} parameter.
-The \textit{Max Suppress Time} will override all this parameters because, as
+The \textit{Max Suppress Time} will override all these parameters because, as
 defined in the original \ac{RFC}, a route cannot be suppressed for more than
 that time, it doesn't matter the figure of merit accumulated by this route.
 
@@ -495,9 +495,9 @@ Is possible to see an example of this distinction in \Cref{fig:astopology_vs_int
         \label{fig:astopology_vs_internet}
 \end{figure}
 
-In this thesis I will consider only the first case, all my topologies are composed by
+In this thesis I will consider only the first case, all my topologies are composed of
 the connections between the \acp{AS} without considering the actual physical layer
-where this interconnections resides.
+where these interconnections reside.
 
 I will then use three different topologies to show particular situations or
 behaviours of the network with certain events.
@@ -506,7 +506,7 @@ behaviours of the network with certain events.
 		level of the internet, in fact, all the Tier one nodes are interconnected
 		in a clique network;
 	\item \textbf{\textit{Fabrikant topology}:} This is a particular topology
-		because it represent a special case that can be present in the internet,
+		because it represents a special case that can be present on the internet,
 		and also is possible to show that special configurations of this topology
 		can lead to problematic situations;
 	\item \textbf{\textit{Internet-like topology}:} This kind of topologies

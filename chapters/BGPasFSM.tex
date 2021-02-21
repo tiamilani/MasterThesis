@@ -149,7 +149,7 @@ The total number of possible inputs for node \num{4} is \num{6}, like
 showed in \Cref{tbl:fig_4_node4_possible_inputs}, for node \num{5} is going
 to be \num{71}.
 In \Cref{tbl:fig_4_node4_possible_inputs} is possible to notice that
-there are no inputs that produce the same output, thats not true also for
+there are no inputs that produce the same output, that's not true also for
 the node \num{5}.
 In fact, node \num{5} has in total \num{52} unique possible output sequence,
 given by all the \num{71} different inputs.
@@ -176,8 +176,7 @@ The two \ac{CFSM} are presented in \Cref{fig:fsm_griffin_fig4}.
      \end{subfigure}
 		\caption{\ac{CFSM} of nodes \num{4} and \num{5} of the graph
 			\Cref{fig:griffin_fig_4} with an input signal of \q{AW},
-			\num{100} total different runs, \ac{MRAI} ininfluent.
-			\fxfatal{Remove message tables?}}
+			\num{100} total different runs, \ac{MRAI} equal \SI{0}{\second}.}
         \label{fig:fsm_griffin_fig4}
 \end{figure}
 
@@ -219,7 +218,7 @@ of advertisements and withdraws.
      \end{subfigure}
 		\caption{Output signal study of nodes \num{4} and \num{5} of the graph
 			\Cref{fig:griffin_fig_4} with an input signal of \q{AW} at node \num{1},
-			\num{100} of total runs, \ac{MRAI} ininfluent}
+			\num{100} of total runs, \ac{MRAI} equal \SI{0}{\second}}
         \label{fig:signal_griffin_fig4}
 \end{figure}
 
@@ -278,9 +277,9 @@ in \cref{tbl:signals}.
 \label{subsec:mrai_vs_bgpfsm}
 
 How would \ac{MRAI} affect the study of the signals produced by \Cref{fig:griffin_fig_4}?
-The answer is that the number of states will be the same but the number of possible
-transitions will explode because there will be a lot more possible
-input signals that will be compressed and evaluated by the nodes.
+The answer is that: the number of states will be the same, but, the number of possible
+transitions will explode because there are a lot more possible
+input signals that can be compressed and evaluated by the nodes.
 Multiple transitions between the same nodes can exists because multiple input
 messages could be compressed in the same set by \ac{MRAI}.
 For example the sequence \q{A} could produce the same effects of the sequence
@@ -316,7 +315,7 @@ equal to \SI{30}{\second} in each link, as defined by the \ac{RFC} \num{4271}~\c
 \ac{CFSM}s of node \num{4}, is possible to notice a big difference in terms of edges
 between one figure and the other, the first one has \num{8} transitions, the
 second one \num{15}.
-For the node \num{5}, the \ac{CFSM} pass from \num{16} transitions in \Cref{fig:fsm_node5}
+For the node \num{5}, the \ac{CFSM} passes from \num{16} transitions in \Cref{fig:fsm_node5}
 to \num{36} thanks to \ac{MRAI} in \Cref{fig:fsm_node5_MRAI}.
 
 But the positive effects of \ac{MRAI} can be found in the output signals,
@@ -339,7 +338,8 @@ showed in \Cref{fig:signal_griffin_fig4_MRAI}.
      \end{subfigure}
 		\caption{Output signal study of nodes \num{4} and \num{5} of the graph
 			\Cref{fig:griffin_fig_4} with an input signal of \q{AW} at node \num{1}
-			with \ac{MRAI}=\SI{30}{\second} for every link}
+			with \ac{MRAI}=\SI{30}{\second} for every link, in total has been
+			executed \num{100} runs}
         \label{fig:signal_griffin_fig4_MRAI}
 \end{figure}
 

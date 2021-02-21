@@ -105,7 +105,8 @@ time.
          \caption{Number of suppressions}
          \label{fig:RFD_2439_clique_MRAI30_suppressions}
      \end{subfigure}
-        \caption{Clique topology, MRAI=30s, 10 runs, comparison of the network performances}
+		\caption{Clique topology, \ac{MRAI}=\SI{30}{\second}, \num{10} runs for each strategy,
+				comparison of the network performances}
         \label{fig:RFD_2439_MRAI30}
 \end{figure}
 
@@ -154,7 +155,7 @@ thresholds and the route has been blocked.
          \caption{Node $5$ figure of merit evolution}
          \label{fig:clique_node5_30}
      \end{subfigure}
-        \caption{Clique topology, MRAI=30s, figure of merit evolution
+		\caption{Clique topology, \ac{MRAI}=\SI{30}{\second}, figure of merit evolution
 		of node \(x\) and node \num{5}}
         \label{fig:RFD_2439_figure_of_merit}
 \end{figure}
@@ -163,7 +164,7 @@ In \Cref{fig:RFD_2439_figure_of_merit} is possible to see the two different
 evolution, one of node \num{5} and the other from $x$.
 Node \num{5} is the only servicer of $x$ for this reason every time it changes
 its best path to reach the destination it sends an \ac{ADV} to $x$.
-But, all this changes are interpreted as flaps by the \ac{RFD} filter of $x$,
+But, all these changes are interpreted as flaps by the \ac{RFD} filter of $x$,
 because of that, the figure of merit grows very quickly.
 It is sufficient a single case of \textit{Path Exploration} to provoke the
 suppression of the route in $x$.
@@ -231,7 +232,8 @@ The comparison between the different strategy performances is presented in \Cref
          \caption{Number of suppressions}
          \label{fig:RFD_clique_MRAI30_suppressions}
      \end{subfigure}
-		\caption{Clique topology, MRAI equal to \SI{30}{\second}, \num{10} runs,
+		\caption{Clique topology, \ac{MRAI} equal to \SI{30}{\second}, \num{10}
+				runs for each strategy,
 				comparison of the network performances with all the \ac{RFD} strategies}
         \label{fig:RFD_MRAI30}
 \end{figure}
@@ -299,11 +301,11 @@ messages detected.
 
 All the prefixes are then divisible in two sets:
 \begin{itemize}
-	\item \textbf{\textit{Mice}:} This set represent the majority of them,
-		all the prefixes that does not generate more than \num{100} updates
+	\item \textbf{\textit{Mice}:} This set represents the majority of them,
+		all the prefixes that do not generate more than \num{100} updates
 		in \Cref{fig:RBushPrefixes};
-	\item \textbf{\textit{Elephants}:} This set represent the remaining part
-		of the prefixes, those that produces the majority of the messages.
+	\item \textbf{\textit{Elephants}:} This set represents the remaining part
+		of the prefixes, those that produce the majority of the messages.
 \end{itemize}
 
 Thanks to an annual review of \ac{BGP} by \ac{APNIC}, presented at \ac{RIPE}
@@ -312,7 +314,7 @@ we can also have an example of those elephants prefixes.
 This example is shown in \Cref{fig:ripePrefixFlaps}, it takes in consideration the
 prefix \q{202.64.49.0/24} showing that in a relatively small period of time it has
 produced thousands of \ac{ADV} per day.
-In this case, this particular prefix has produced \num{198,370} \ac{ADV},
+In this case, that particular prefix has produced \num{198,370} \ac{ADV},
 in total \num{96,330} flaps, in one year.
 
 \begin{figure}[h]
@@ -459,7 +461,7 @@ because the graph and the source node are the same for each experiment.
 The red line represents the average number of suppression per group.
 With the standard strategy, \Cref{fig:1000_2439RFD_centVSsup},
 on average, the route has been blocked \num{1} time by the nearest nodes and then,
-this value increase reaching the center clique up to \num{3.5} times and then
+this value increase reaching the central clique up to \num{3.5} times and then
 slowly decreases in the following groups.
 In the farthest group, on average, is possible to notice \num{1} suppression.
 
@@ -475,8 +477,8 @@ The central nodes do not block the route, while only the farthest
 ones block it a few times, with an average value of \num{0.2} times.
 This can give us some hints, a very high threshold can promote the path
 exploration problem that will cause multiple update storms in farthest nodes.
-The suppression on the furthest nodes are the cause to the high convergence time,
-because, all the other groups don't experience suppression and for this reason
+The multiple suppression on the furthest nodes are the cause of the high convergence time,
+because, all the other groups don't experience suppression and for this reason,
 they converge faster.
 
 From those experiments, I can conclude that having a higher threshold could help

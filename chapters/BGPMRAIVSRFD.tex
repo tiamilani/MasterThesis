@@ -172,6 +172,7 @@ of node $x$ and five in considering multiple \ac{MRAI} values.
 \end{figure}
 
 The node $x$ is a leaf of the network, it absorb everything the node \num{5} decides
+everything the node \num{5} decides
 to send to it.
 In \Cref{fig:clique_nodex} is possible to see the evolution of the figure of merit
 with different \ac{MRAI} values.
@@ -223,7 +224,7 @@ available again for node \num{5} that communicates the change to $x$.
 The evolution of the figure of merit of the best path of node \num{5} is different
 from the one of node $x$.
 In fact, it is not influenced by \ac{MRAI}, as showed in \Cref{fig:clique_node5}.
-Thats because the node \num{5} is directly connected to the node \num{0} that every
+That's because the node \num{5} is directly connected to the node \num{0} that every
 \SI{300}{\second} forward the message of $d$. The delay of \SI{300}{\second} is large
 enough to not be affected by the compression effect of \ac{MRAI}.
 Around \SI{2000}{\second} node \num{5} suppresses the route (as any other node in the
@@ -275,7 +276,7 @@ which points to overcome some too restrictive settings of the original \ac{RFD}.
 I have then evaluated the clique network with the \textit{Aggressive} and
 \textit{Conservative} strategies and multiple \ac{MRAI} values.
 
-The \ac{MRAI} \textit{Fixed} strategy has been used also in this experiments,
+The \ac{MRAI} \textit{Fixed} strategy has been used also in these experiments,
 the set of possible values is \([0, 120]\) seconds.
 
 The results are presented in \Cref{fig:clique_rfd7196}.
@@ -295,7 +296,7 @@ The results are presented in \Cref{fig:clique_rfd7196}.
          \caption{RFD 7196 Conservative on the clique topology}
          \label{fig:rfd7196conservative}
      \end{subfigure}
-		\caption{MRAI influence with different RFD strategies from \cite{rfc7196}.
+		\caption{\ac{MRAI} influence with different RFD strategies from \cite{rfc7196}.
 		Clique graph, \ac{MRAI} \textit{Fixed}, signal \q{AWAWAWA}.
 		Each point is the average of \num{10} runs.}
         \label{fig:clique_rfd7196}
@@ -737,7 +738,7 @@ on those two environments.
 The first one describes an environment with few flaps delayed in time, while the
 second represent the opposite case with multiple flaps transmitted with high
 frequency.
-For this experiments I used the same environments described in \Cref{sec:rfd_mice_vs_elephants}.
+For these experiments I used the same environments described in \Cref{sec:rfd_mice_vs_elephants}.
 The results of the \textit{Mice} case are exposed in \Cref{fig:1000_RFD_multiMRAI_mice},
 while the results of the \textit{Elephants} case are presented in \Cref{fig:1000_RFD_multiMRAI_elephants}.
 
@@ -765,7 +766,7 @@ while the results of the \textit{Elephants} case are presented in \Cref{fig:1000
 		\caption{Internet like topology \num{1000} nodes, random destination,
 		\num{5} flaps, \SI{300}{\second} delay, Network performances, \ac{MRAI}
 		strategy fixed, \fxfatal{Adapt y ranges}, each point is the average of
-		\num{10} repetitions}
+		\num{50} repetitions}
         \label{fig:1000_RFD_multiMRAI_mice}
 \end{figure}
 
@@ -847,7 +848,9 @@ with the elephant environment and multiple \ac{MRAI} values.
          \caption{RFD 7196 Conservative Strategy}
          \label{fig:1000_7196RFDC_multiMRAI_elephants}
      \end{subfigure}
-		\caption{Internet like topology \num{1000} nodes, random destination, \num{100} flaps, \SI{3}{\second} delay, Network performances}
+		\caption{Internet like topology \num{1000} nodes, random destination,
+				\num{100} flaps, \SI{3}{\second} delay, Network performances,
+				\num{50} runs for each point.}
         \label{fig:1000_RFD_multiMRAI_elephants}
 \end{figure}
 
@@ -880,8 +883,9 @@ in other parts of the network.
 In both, \textit{Aggressive} and \textit{Conservative} strategy, the convergence
 time is not affected by the variation on the number of suppressions but it's only
 affected by the growth of \ac{MRAI}.
+Except for a small valley in the \textit{Conservative} strategy.
 
-The fact that in the last two strategies the time is not affected by the huge number
+The fact that, in the last two strategies, the time is not affected by the huge number
 of suppression could be saw as an error, but it is not.
 In fact, the suppressions with an \ac{MRAI} of \SI{0}{\second} happens
 few seconds after the beginning of the experiment and the majority of the nodes

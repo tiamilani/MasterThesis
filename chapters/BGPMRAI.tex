@@ -28,7 +28,7 @@ In fact, our hypothesis is that is not enough just look to the \ac{MRAI} setting
 because, other factors can be relevant too.
 For example, a change near the central clique of $T$ nodes could provoke a large
 storm of messages because \ac{MRAI} doesn't affect in time the spreading of information.
-While, a change in the periphery could be cushioned without it reaching the center
+While, a change in the periphery could be cushioned without it reaching the centre
 of the network multiple times.
 
 \section{Different MRAI strategies}
@@ -147,7 +147,7 @@ The clique topology is one of the worst-case scenarios as specified in Labovitz 
 For this reason I decided to start my study from it.
 I used two approaches in this Environment, the first one keeps the \ac{IW} active
 the second one doesn't use this mechanism.
-This to emphasize the effects of this mechanism with the influence also of different
+To emphasize the effects of this mechanism with the influence also of different
 \ac{MRAI} configurations.
 
 The Environment properties are listed in \Cref{tbl:clique_properties}
@@ -229,7 +229,7 @@ During my studies, I used different topologies with \num{1000} nodes resembling
 the Elmokashfi properties \cite{elmokashfi2010scalability},
 described in \Cref{subsec:internet_like_env}.
 
-Using this graphs I will look for a possible interaction between \ac{MRAI} and other
+Using these graphs I will look for a possible interaction between \ac{MRAI} and other
 factors that can influence the network convergence.
 First of all, \ac{MRAI} has a dependence on how it is set, I'm going to compare
 different \ac{MRAI} strategies that can be used on an Internet-like graph.
@@ -241,7 +241,7 @@ of the node that provoke the change.
 
 Like showed in \Cref{sec:bgp_fsm_explosion}, the network performances depend
 on the \ac{MRAI} strategy chosen.
-For this reason, the first goal of my study is to point out this differences.
+For this reason, the first goal of my study is to point out these differences.
 In order to do that, the first investigation that I would like to present is the one
 that takes in consideration how the standard protocol evolves on an Internet environment
 with different possible \ac{MRAI} strategies.
@@ -294,7 +294,7 @@ The results of the \textit{Fixed} strategy are showed in
 
 \begin{figure}[h]
      \centering
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.503\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_like/1000/constantMRAI/internet_like-constant_mrai_evolution.pdf}
 		 \caption{Network performances, messages VS convergence time with different
@@ -302,7 +302,7 @@ The results of the \textit{Fixed} strategy are showed in
          \label{fig:internet_like_1000_constant_evolution_evolution}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.477\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_like/1000/constantMRAI/internet_like-constant.pdf}
 		 \caption{Pareto front of Messages VS Convergence time}
@@ -311,7 +311,7 @@ The results of the \textit{Fixed} strategy are showed in
 		\caption{Evolution of the network performances on the \textbf{Internet Like} graph
 			of \num{1000} nodes using a fixed \ac{MRAI} from \num{0} to \num{60} seconds.
 			Each point is the average of \num{10} runs, in total has been executed
-			\num{610} runs.\fxfatal{Adjust figure dimensions}}
+			\num{610} runs.}
         \label{fig:internet_like_1000_constant_evolution}
 \end{figure}
 
@@ -343,7 +343,7 @@ The results of the same environment without \ac{IW} are showed in
 
 \begin{figure}[h]
      \centering
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.503\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_like/1000/constantMRAI/internet_like-constant-noIW_mrai_evolution.pdf}
 		 \caption{Network performances, messages VS convergence time with different
@@ -351,7 +351,7 @@ The results of the same environment without \ac{IW} are showed in
          \label{fig:internt_like_1000_constant_noIW_evolution_evolution}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.477\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_like/1000/constantMRAI/internet_like-constant-noIW.pdf}
 		 \caption{Pareto front of Messages VS Convergence time}
@@ -360,8 +360,7 @@ The results of the same environment without \ac{IW} are showed in
 		\caption{Evolution of the network performances on the \textbf{Internet Like} graph
 			of \num{1000} nodes \textbf{without \ac{IW}}, \ac{MRAI} strategy
 			\textit{Fixed} from \num{0} to \num{60} seconds. Total number of
-			runs \num{610}, \num{10} for each \ac{MRAI} value used.\fxfatal{Adjust
-			figure dimensions}}
+			runs \num{610}, \num{10} for each \ac{MRAI} value used.}
         \label{fig:internet_like_1000_constant_evolution_noIW}
 \end{figure}
 
@@ -378,7 +377,7 @@ For this reason points with the same \ac{MRAI} value are comparable one another.
 
 \begin{figure}[h]
      \centering
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.503\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_like/1000/dpc/internet_like-DPC_mrai_evolution.pdf}
 		 \caption{Network performances, messages VS convergence time with different
@@ -386,7 +385,7 @@ For this reason points with the same \ac{MRAI} value are comparable one another.
          \label{fig:internt_like_1000_DPC_evolution_evolution}
      \end{subfigure}
      \hfill
-     \begin{subfigure}[b]{0.49\textwidth}
+     \begin{subfigure}[b]{0.477\textwidth}
          \centering
          \includegraphics[width=\textwidth]{images/internet_like/1000/dpc/internet_like-DPC.pdf}
 		 \caption{Pareto front of Messages VS Convergence time}
@@ -394,7 +393,8 @@ For this reason points with the same \ac{MRAI} value are comparable one another.
      \end{subfigure}
 		\caption{Evolution of the network performances on the \textbf{Internet Like} graph
 			of \num{1000} nodes using a \textit{DPC} \ac{MRAI} strategy
-			with an $MRAI_{mean}$ from \num{0} to \num{60} seconds.}
+			with an $MRAI_{mean}$ from \num{0} to \num{60} seconds. Total number
+			of runs \num{610}, \num{10} for each \ac{MRAI} value.}
         \label{fig:internet_like_1000_dpc_evolution}
 \end{figure}
 
@@ -688,7 +688,7 @@ Internet like topology with \num{1000} nodes.
 I have then used the same environment with all the different destinations.
 I also decided to compare different \ac{MRAI} strategies, repeating all the experiments for
 every strategy.
-With this results is possible to analyze how different signal sources provoke
+With these results is possible to analyze how different signal sources provoke
 different network performances and also study how different \ac{MRAI} strategies
 adapt to different nodes that provoke messages storms.
 
@@ -846,7 +846,7 @@ the \num{3} random sources for each different level, from the first to the fourt
 	 \caption{Network performances given \num{3} different signal sources chosen
 		randomly for each level of the Internet like graph, number of nodes
 		\num{1000}, number of levels \num{4}, different \ac{MRAI} strategies
-		\ac{DPC} and reverse \ac{DPC} \fxfatal{Adjust messages ticks}}
+		\ac{DPC} and reverse \ac{DPC}. \num{10} runs for each point. \fxfatal{Adjust messages ticks}}
 	 \label{fig:different_levels}
 \end{figure}
 
@@ -897,7 +897,7 @@ Nodes that are more central, if the signal comes from closer nodes, could
 react with a more explosive \textit{Path exploration} behaviour.
 If the signal comes from the periphery of the network, the other side of
 it could require more time to converge in respect of a signal that starts
-near the center.
+near the centre.
 
 To prove this hypothesis I decided to use the data from this set of experiments
 with an \(MRAI_{mean}\) value equal to \SI{30}{\second}.
