@@ -75,8 +75,6 @@ to a configuration that doesn't work properly, the second one is caused by a
 buggy correction of the configuration and the last one by the introduction of a
 correct configuration.
 
-\fxfatal{execute experiments for RFD and no RFD with MRAI=30sec, at least 50}
-
 The network performances with the environment in \Cref{tbl:clique_rfd_params} are
 presented in \Cref{fig:RFD_2439_MRAI30}.
 Is important to underline that a node is considered converged when all the routes
@@ -204,8 +202,8 @@ two new set of possible \ac{RFD} implementations that can be used:
 	\item \textit{\textbf{Aggressive}:} Suppression threshold no less than \num{6.0};
 	\item \textit{\textbf{Conservative}:} Suppression threshold no less than \num{12.0}.
 \end{itemize}
-Respectively \num{3} and \num{6} times the actual standard.
 
+Respectively \num{3} and \num{6} times the actual standard.
 I have then repeated the same experiments of \Cref{sec:rfd_toy_topologies} on the same
 clique graph, but with the two new \ac{RFD} strategies.
 The comparison between the different strategy performances is presented in \Cref{fig:RFD_MRAI30}.
