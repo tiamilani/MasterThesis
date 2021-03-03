@@ -19,9 +19,10 @@ direction:
 		it, to make aware of the new routes also the internal routing protocol.
 \end{itemize}
 
-My main interest in this thesis is for the \ac{eBGP} part of the protocol, for
+\rlc{The main focus of my thesis is on the \ldots}
+My main interest in this thesis is for the \ac{eBGP} part of the protocol, from
 now on I will refer to it talking in general of \ac{BGP} without further distinguishing
-from the internal protocol.
+it from the internal protocol.
 
 When there is an interconnection between two \acp{AS} that creates a \ac{BGP}
 link, I will talk about peering referring to the connection, and those \ac{BGP}
@@ -44,6 +45,7 @@ There are three different possible types of relations that can be created by two
 		between \acp{AS} under the same \ac{ISP}.
 \end{itemize}
 
+\rlc{La tesi è un documento \ldots anche se voi lo vivete come un periodo della vita \ldots}
 During this thesis, I will only consider the first two relationships \ac{c2p} and
 \ac{p2p}, the schema in \Cref{fig:AS_flow} shows how the traffic is affected
 based on the type of the link crossed.
@@ -221,9 +223,9 @@ redistribute the route to multiple neighbours, peers and servicer.
 Given the hierarchical topology of the Internet, this behaviour grows
 exponentially while the information reaches the centre of the network.
 
-There are basically two sources of noises in \ac{BGP}, the inherent noise of
+There are basically two sources of noise in \ac{BGP}, the inherent noise of
 the protocol and the noise caused by external sources.
-Those two types of noises are triggered by different causes and are
+Those two types of noise are triggered by different causes and are
 not discernible from one another.
 Because, both the noise situations are characterized by an intense distribution
 of messages and there are no other distinguishing features.
@@ -287,7 +289,7 @@ the number of messages and the convergence time can depend on it~\cite{griffin20
 Also, it has been already proven by Fabrikant, Rexford et al.~\cite{fabrikant2011there}
 that an incorrect configuration of it could lead to tremendous consequences.
 
-\ac{MRAI} has been introduced in the \num{4}Th version of \ac{BGP}~\cite{rfc4271} and
+\ac{MRAI} has been introduced in the \num{4}th version of \ac{BGP}~\cite{rfc4271} and
 it is nowadays a mandatory mechanism for every \ac{BGP} node, otherwise the load
 in terms of messages to process and decision changes would be incalculable.
 Its main purpose, as anticipated in \Cref{sec:bgp_noise}, is to prevent or
@@ -458,7 +460,7 @@ I will study and analyze the impact of the threshold in \Cref{cha:bgp_rfd}.
 \section{Topologies}
 \label{sec:topologies}
 
-\ac{BGP} has been designed to hide information, is possible to remove attributes
+\ac{BGP} has been designed to hide information, it is possible to remove attributes
 from packets or aggregate them.
 For this reason, a \ac{BGP} node must overlap the received information with the
 policies.
@@ -575,5 +577,6 @@ levels by the type and properties of the nodes.
      \end{subfigure}
         \caption{Internet like graph coloured to show the hierarchical structure,
 4 types of nodes, T (tier 1 mesh), M, CP, C (Customers, the purple one)}
+\rlc{Aggiungi una legenda con i colori, puoi fare un'altro disegno e assiiungerlo sotto le topologie}
         \label{fig:internet_like_topology}
 \end{figure}

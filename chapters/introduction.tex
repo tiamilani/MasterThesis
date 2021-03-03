@@ -15,7 +15,7 @@ We are used to thinking about the Internet as something far away from us, someth
 that we do not have to care about, leaving all the complexity
 out.
 But, from a more physical point of view, what is the Internet? It is nothing
-more than a big network where interconnected entities keep the prefixes reachable.
+more than a big network where interconnected entities keep the prefixes \rlc{non hai definito cos'è un prefisso} reachable.
 Those entities are in reality called \acp{AS} and their function is to hold and
 control some \ac{IP} prefixes used by one or more operators.
 
@@ -38,7 +38,7 @@ These policies must be implementable in the Internet routing protocol that has
 to discern on which path, among all the known alternatives, is the best one
 considering the \ac{AS} convenience.
 
-The protocol that has been created to handle these situations is the \ac{BGP}.
+The protocol that has been created \rlc{designed / devised} to handle these situations is  \ac{BGP}.
 It has been released in \num{1989} and is in use on the Internet since \num{1994}.
 It reached its last version, the fourth one, in \num{2006} \cite{rfc4271}.
 Is easy to imagine that in almost \num{30} year \ac{BGP} is changed a lot from
@@ -62,6 +62,7 @@ For this reason, the research is still active to find new technologies and
 a trade-off, between convergence time and messages transmitted, that could
 be sustainable by the current hardware.
 
+\rlc{Non passare in prima persona qui e ricorda che in uno scritto formale non si usano le abbreviazioni tipo I'm we're e così via}
 In this thesis, more precisely in \Cref{cha:bgp_art}, I'm going to introduce
 two of those important \ac{BGP} mechanisms, \ac{MRAI} and \ac{RFD}.
 The first one is used to compress multiple input messages into one
@@ -92,6 +93,7 @@ The data collected by \ac{APNIC} from \num{2007} concern the knowledge
 of the \ac{AS} 131072 that has two links with other \acp{AS}, one in Japan and
 the other one in Australia\footnote{\href{https://blog.apnic.net/2021/01/05/bgp-in-2020-the-bgp-table/}{source APNIC data}}.
 Prefixes of smaller and smaller sizes are continuously shared, the number of
+\rlc{Non hai definito la notazione CIDR quindi $/24$  non ha senso se non per gli iniziati. Introducila prima quando spieghi cos'è un prefisso \ldots così poi puoi usare una terminologia più tecnica senza ambiguità}
 $/24$ networks distributed in the last year has been growing constantly,
 fomenting the problem described above.
 
@@ -108,7 +110,7 @@ the \textit{Path Exploration}.
 \section{Interaction between variables and convergence}
 \label{sec:bgp_correlations}
 
-The two parameters that will be studied in this thesis are \ac{MRAI} and \ac{RFD}
+The two parameters  studied in this thesis are \ac{MRAI} and \ac{RFD}
 and how the interaction between them works.
 Our first hypothesis is that, indeed, there is an interaction.
 This hypothesis is sustained by the fact that both mechanisms operate to
@@ -158,6 +160,6 @@ how \ac{MRAI} and \ac{RFD} can impact the performances, conclusions to follow
 in \Cref{cha:conclusion}.
 
 The \ac{BGP} community has not yet reached a common agreement on what values
-to use for this reason I will evaluate different possible techniques that can
+to use; for this reason I will evaluate different possible techniques that can
 be applied to both the parameters and comment on the network performances obtained.
 

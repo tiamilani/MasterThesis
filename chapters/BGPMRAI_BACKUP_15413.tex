@@ -1,6 +1,7 @@
 \chapter{BGP MRAI dependency}
 \label{cha:bgp_mrai_experiments}
 
+
 \ac{MRAI} is one of the parameters that mostly has caused divergences in the
 scientific community.
 And, after the introduction in the protocol since version 4~\cite{rfc4271},
@@ -98,7 +99,7 @@ any vertex $v\in \nodeset$ is defined as
 		\label{eq:dpcv}
 \end{equation}
 
-Is then possible to configure \ac{MRAI} accordingly with the centrality metric
+It is then possible to configure \ac{MRAI} accordingly with the centrality metric
 described, as has been done in~\cite{milani2020improving}.
 I assume that the information in the \ac{ADV} messages propagates in the network
 in three phases, identifying three propagation graphs:
@@ -186,7 +187,7 @@ The results are presented in \Cref{fig:clique_evolution}
         \label{fig:clique_evolution}
 \end{figure}
 
-Is possible to notice in \Cref{fig:clique_evolution} both the effect of \ac{MRAI}
+It is possible to notice in \Cref{fig:clique_evolution} both the effect of \ac{MRAI}
 and \ac{IW}.
 Those plots represent the network performances in terms of convergence time and
 number of messages transmitted to reach the convergence after the transmission
@@ -660,9 +661,9 @@ everything, because of the side effect on the convergence time.
 \section{Position dependence}
 \label{sec:position_dependance}
 
-The last factor of influence for \ac{MRAI} that I would like to study is how much
+The last factor of influence for \ac{MRAI} studied is how much
 the position of the signal source can influence the convergence.
-The main hypothesis is that a node closer to the central clique, that generates
+The main hypothesis is that a node closer to the central clique that generates
 a signal would provoke a message storm bigger in respect of a node on the perimeter
 of the network.
 Because of the possibility from the nodes to catch the signal and compress it
