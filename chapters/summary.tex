@@ -11,27 +11,28 @@
 %		\item Interaction between the mechanisms
 %\end{itemize}
 
-\rlc{Il sommario può anche essere più lungo di 1 pagina, io aggiungerei un paragrafo sui ``goal'' della tesi prima di ``For this reason \ldots'' \\ 
-Rivedi ancora l'inglese, la punteggiatura è approssimativa, non si inizia mai una frase con That o But (meglio However, ma ci sono anche altre forme)}
+%\rlc{Il sommario può anche essere più lungo di 1 pagina, io aggiungerei un paragrafo sui ``goal'' della tesi prima di ``For this reason \ldots'' \\
+%Rivedi ancora l'inglese, la punteggiatura è approssimativa, non si inizia mai una frase con That o But (meglio However, ma ci sono anche altre forme)}
+\rlc{Rived la punteggiatura e la grammatica, ed il paragrafo sui goal della tesi}
 
 %Presentation of BGP and the problems
 \ac{BGP} is the protocol daily used on the Internet to propagate changes in the
 reachability of the publicly available networks.
-Like all the other network protocols, \ac{BGP} uses control messages to distribute
-information to all the other nodes of the network.
+Like the majority of the network protocols, \ac{BGP} uses control messages to
+distribute information to all the nodes of the network.
 The tune of multiple parameters can influence the general performances of the
 network.
-But, it has been proven in~\cite{fabrikant2011there} that an uncontrolled configuration
+However, it has been proven in~\cite{fabrikant2011there} that an uncontrolled configuration
 of those parameters could provoke an exponential explosion in the number of messages
-and by consequence also increase the general convergence time.
-This problem is called \textit{Path Exploration} and it arises when a node shares
+and, by consequence, also increase the general convergence time.
+This problem is called \textit{Path Exploration}, it arises when a node shares
 a sequence of non-optimal choices before actually distribute the best possible
 decision that eventually occurs.
 
-\ac{BGP} is also a protocol that emphasizes this particular behaviour because of
-its tendency to act as an echo-chamber for every new information.
+\ac{BGP} is also a protocol that emphasizes this particular behaviour because
+it tends to act as an echo-chamber for every new information.
 A \ac{BGP} node shares its decision with all the neighbours that respect
-its set of policies, provoking a cascade effect.
+its policies, provoking a cascade effect.
 This is the first cause of \q{noise} in \ac{BGP}, the inherent noise, the second
 source is external and could be represented by a \ac{BGP} node that frequently
 changes its decisions because of a faulty interface or wrong configurations.
@@ -39,39 +40,48 @@ changes its decisions because of a faulty interface or wrong configurations.
 %Hypothesis
 \ac{BGP} implements two different mechanisms to reduce the effects of the
 noise that otherwise would make the protocol unusable.
-The first one is \ac{MRAI} and recent studies on it show that the correct
+The first one is \ac{MRAI} and recent studies show that the correct
 configuration of it can lead to more efficient use of the
 resources~\cite{griffin2001experimental,fabrikant2011there,deshpande2004impact,milani2020improving}.
-The second type of noise is mitigated by \ac{BGP} using the \ac{RFD} mechanisms.
-That uses the incoming messages in order to evaluate if an incoming route has
+The second type of noise is mitigated by \ac{BGP} using the \ac{RFD} mechanism.
+It uses the incoming messages to evaluate if an incoming route has
 to be suppressed because too noisy.
 Multiple studies on it show how it can be tuned to have better performances in
 the case of small variations on the network, but still, be effective on heavily
 flapping routes~\cite{mao2002route,gray2020bgp,rfc7196}.
+Those two mechanisms use the same triggering event to take any action,
+a message that contains new information.
 
-Those two mechanisms use the same triggering event to take any action, the reception
-of a message with new information.
-The main hypothesis behind this thesis is that there is actually an interaction
+The main hypothesis behind this thesis is that: there is an interaction
 between \ac{MRAI} and \ac{RFD}.
-The goal of this thesis is to study the factors that influence \ac{MRAI} and
-\ac{RFD} separately and then verify that an interaction actually exists between
-them.
+A common factor in all those studies is that they do not take the other
+mechanism sufficiently into account.
+This lack of consideration can lead to a distancing of the results from
+reality.
+The goal of this thesis is to study what can influence \ac{MRAI} and \ac{RFD}
+and by consequence the network performances, proving that an interaction
+exists between them.
+One of the objectives is also to show the influence of these mechanisms from
+the point of view of a single node to the macroscopic performance of the
+entire network.
+This study is also meant to be a warning to other researchers in this field, it
+is not possible to make a proper assessment without considering a complete picture.
 
 %Studies in the thesis
 For this reason, I developed a software tool chain that permits to simulate and
 study the evolution of \ac{BGP} synthetic graphs using a \ac{DES}.
-Thanks to the high adaptability of the environment has been possible to tune
+Thanks to the high adaptability of the environment, it has been possible to tune
 the parameters with different strategies and compare them.
 Not all the nodes react in the same way to different changes, thanks to this
 platform it has been also possible to study the evolution of single nodes
 with respect to the average performances of the network.
 
-Thanks to the results of all the simulations it was possible to confirm
+Thanks to the results of all the simulations it has been possible to confirm
 the intuition at the basis of this thesis.
 Multiple factors can influence the performances of \ac{MRAI} and \ac{RFD} with
 various different outcomes in the evolution of the network.
 Also, I have been able to confirm the hypothesis presented in~\cite{griffinFSM,fabrikant2011there}
-on the effects of the \textit{Path Exploration} problem are correct.
+on the effects of the \textit{Path Exploration} problem.
 
 %My contribution to the thesis
 My contribution to this thesis can be summed up in the following points:

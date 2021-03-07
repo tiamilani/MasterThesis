@@ -9,13 +9,17 @@
 %\fxfatal{Expand the concepts}
 
 With the name \q{The Internet} we define a network composed of more than \num{60000}
-entities that share their knowledge in order to permit us to reach every website
-whenever we want.
+entities that share their knowledge in order to permit us to reach every website,
+identified by a unique prefix, whenever we want.
+A prefix is the translation from the textual form to the \ac{IP} addresses
+standard representation used on the Internet.
+It is composed by two parts, the address and a suffix that permits to identify the
+prefix set, respecting the \ac{CIDR} notation \cite{fuller1993classless}.
 We are used to thinking about the Internet as something far away from us, something
 that we do not have to care about, leaving all the complexity
 out.
-But, from a more physical point of view, what is the Internet? It is nothing
-more than a big network where interconnected entities keep the prefixes \rlc{non hai definito cos'è un prefisso} reachable.
+However, from a more physical point of view, what is the Internet? It is nothing
+more than a big network where interconnected entities keep the prefixes reachable.
 Those entities are in reality called \acp{AS} and their function is to hold and
 control some \ac{IP} prefixes used by one or more operators.
 
@@ -38,7 +42,7 @@ These policies must be implementable in the Internet routing protocol that has
 to discern on which path, among all the known alternatives, is the best one
 considering the \ac{AS} convenience.
 
-The protocol that has been created \rlc{designed / devised} to handle these situations is  \ac{BGP}.
+The protocol that has been designed to handle these situations is  \ac{BGP}.
 It has been released in \num{1989} and is in use on the Internet since \num{1994}.
 It reached its last version, the fourth one, in \num{2006} \cite{rfc4271}.
 Is easy to imagine that in almost \num{30} year \ac{BGP} is changed a lot from
@@ -62,9 +66,9 @@ For this reason, the research is still active to find new technologies and
 a trade-off, between convergence time and messages transmitted, that could
 be sustainable by the current hardware.
 
-\rlc{Non passare in prima persona qui e ricorda che in uno scritto formale non si usano le abbreviazioni tipo I'm we're e così via}
-In this thesis, more precisely in \Cref{cha:bgp_art}, I'm going to introduce
-two of those important \ac{BGP} mechanisms, \ac{MRAI} and \ac{RFD}.
+%\rlc{Non passare in prima persona qui e ricorda che in uno scritto formale non si usano le abbreviazioni tipo I'm we're e così via}
+In this thesis, more precisely in \Cref{cha:bgp_art}, two of those important
+mechanisms will be introduced, \ac{MRAI} and \ac{RFD}.
 The first one is used to compress multiple input messages into one
 output packet in order to reduce the network load provoked by a change.
 The second one, \ac{RFD}, is used to penalize unstable paths, suppressing
@@ -93,8 +97,8 @@ The data collected by \ac{APNIC} from \num{2007} concern the knowledge
 of the \ac{AS} 131072 that has two links with other \acp{AS}, one in Japan and
 the other one in Australia\footnote{\href{https://blog.apnic.net/2021/01/05/bgp-in-2020-the-bgp-table/}{source APNIC data}}.
 Prefixes of smaller and smaller sizes are continuously shared, the number of
-\rlc{Non hai definito la notazione CIDR quindi $/24$  non ha senso se non per gli iniziati. Introducila prima quando spieghi cos'è un prefisso \ldots così poi puoi usare una terminologia più tecnica senza ambiguità}
-$/24$ networks distributed in the last year has been growing constantly,
+%\rlc{Non hai definito la notazione CIDR quindi $/24$  non ha senso se non per gli iniziati. Introducila prima quando spieghi cos'è un prefisso \ldots così poi puoi usare una terminologia più tecnica senza ambiguità}
+networks with a $/24$ netmask distributed in the last year has been growing constantly,
 fomenting the problem described above.
 
 This redundancy of the \ac{BGP} nodes provokes the \textit{Path Exploration}

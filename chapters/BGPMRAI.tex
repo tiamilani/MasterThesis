@@ -1,49 +1,49 @@
 \chapter{BGP MRAI dependency}
 \label{cha:bgp_mrai_experiments}
 
-\rlc{In questo capitolo ci sono ancora molti errori di forma, soggetti mancanti, frasi convolute e così via}
+%\rlc{In questo capitolo ci sono ancora molti errori di forma, soggetti mancanti, frasi convolute e così via}
 
 \ac{MRAI} is one of the parameters that mostly has caused divergences in the
 scientific community.
-And, after the introduction in the protocol in version 4~\cite{rfc4271},
-is one of the parameter more studied for its multiple effects, the correct setting
-can improve the protocol performances.
+And, after the introduction of it in the protocol in version 4~\cite{rfc4271},
+it is one of the parameters more studied for its multiple effects, the correct setting
+of it can improve the protocol performances.
 While, an incorrect one can generate exponential convergence behaviours even
-in small network~\cite{fabrikant2011there,griffin2001experimental}.
+in small networks~\cite{fabrikant2011there,griffin2001experimental}.
 
-The protocol strictly depends on this parameter, because, as showed in \Cref{cha:bgp_fsm},
+The protocol strictly depends on this parameter, because, as shown in \Cref{cha:bgp_fsm},
 the incorrect use of it can lead to tremendous consequences, even worst of not
 having it at all.
-In other cases, with a particular setting of it is possible to improve the network
+In other cases, with a particular configuration is possible to improve the network
 performances.
 Recent studies about centrality metrics on routing protocols introduce, through
-the distributed computation of the metric, a
-timer trade-off improvement~\cite{MaLo18_ToN,GhiMa18_infocom}.
-This kind of approach has been also applied on \ac{BGP} with positive results on
+the distributed computation of it, a timer trade-off
+improvement~\cite{MaLo18_ToN,GhiMa18_infocom}.
+This kind of approach has also been applied to \ac{BGP} with positive results on
 network failures~\cite{milani2019BGP,milani2020improving}.
 
-All those studies points out how we can set \ac{MRAI} to improve network
+All those studies point out how we can set \ac{MRAI} to improve network
 performances, but what about how \ac{MRAI} reacts to different problems?
 Is it possible that \ac{MRAI} reacts differently based on where the signal
 occurs?
-In fact, our hypothesis is that is not enough just look to the \ac{MRAI} setting,
+In fact, our hypothesis is that: is not enough to just look to the \ac{MRAI} setting,
 because, other factors can be relevant too.
 For example, a change near the central clique of $T$ nodes could provoke a large
 storm of messages because \ac{MRAI} doesn't affect in time the spreading of information.
-While, a change in the periphery could be cushioned without it reaching the centre
+While a change in the periphery could be cushioned without it reaching the centre
 of the network multiple times.
 
 \section{Different MRAI strategies}
 \label{sec:bgp_mrai_strategies}
 
-An \ac{MRAI} strategy define a particular way to set all the timers accordingly
+An \ac{MRAI} strategy defines a particular way to set all the timers accordingly
 to a set of rules or properties.
 For example, the default strategy of \ac{MRAI}, defined in~\cite{rfc4271}, is
 to set all the timers to \SI{30}{\second}.
 In \cref{sec:bgp_fsm_experiments} I used \num{4} different \ac{MRAI} strategies
-to show that an incorrect setting of it can lead to dangerous consequences.
+to show that an incorrect setting can lead to dangerous consequences.
 Another strategy that can be used during some experiments is the complete avoidance
-of it, this is the \emph{NoMRAI} technique.
+of it, which is the \emph{NoMRAI} technique.
 
 The hypothesis behind all the different strategies is that is possible to
 adjust the trade-off between the network performances adapting this timer.
@@ -146,7 +146,7 @@ multiplying each element of \(M\) by \(k\).
 \label{sec:bgp_mrai_clique}
 
 The clique topology is one of the worst-case scenarios as specified in Labovitz et al.~\cite{labovitz2000delayed}.
-For this reason I decided to start my study from it.
+For this reason, I decided to start my study from it.
 I used two approaches in this Environment, the first one keeps the \ac{IW} active
 the second one doesn't use this mechanism.
 To emphasize the effects of this mechanism with the influence also of different
@@ -195,14 +195,13 @@ Those plots represent the network performances in terms of convergence time and
 number of messages transmitted to reach the convergence after the transmission
 of the signal \q{AW}.
 Each point in the plots is the average of the \num{10} runs executed with the
-\textit{Fixed} \ac{MRAI} value on the $x$ axis.
-The left $y$ axis should be used with the convergence time, the green line, while
-the second $y$ axis represents the number of messages transmitted, the red line.
-The convergence time represent the average convergence time of the entire network,
-a node is considered converged when its \ac{RIB} doesn't change anymore.
+\textit{Fixed} \ac{MRAI} value on the $x$-axis.
+The left $y$-axis should be used with the convergence time, the green line, while
+the second $y$-axis represents the number of messages transmitted, the red line.
+The convergence time represents the average convergence time of the entire network,
+a node is considered converged when its \ac{RIB} doesn't change any more.
 
-The effects of \ac{MRAI} are present in both the plots but in two different
-moments.
+The effects of \ac{MRAI} are present in both plots but in two different moments.
 In \Cref{fig:clique_evolution_IW} \ac{MRAI} affects both the convergence time and
 the number of messages around \SI{10}{\second} up to \SI{20}{\second}.
 After the threshold of \SI{20}{\second}, the effects of \ac{MRAI} are counterproductive,
@@ -235,8 +234,8 @@ Using these graphs I will look for a possible interaction between \ac{MRAI} and 
 factors that can influence the network convergence.
 First of all, \ac{MRAI} has a dependence on how it is set, I'm going to compare
 different \ac{MRAI} strategies that can be used on an Internet-like graph.
-Another influencing factor could be the signal used as an input or even the position
-of the node that provoke the change.
+The signal used could be another influencing factor, or even the position of
+the node that provoke the change.
 
 \section{Strategy dependence}
 \label{sec:bgp_mrai_strategy_dependance}
@@ -248,7 +247,7 @@ In order to do that, the first investigation that I would like to present is the
 that takes in consideration how the standard protocol evolves on an Internet environment
 with different possible \ac{MRAI} strategies.
 
-The property of the environment chosen are described in \Cref{tbl:internet_like_properties}
+The properties for the chosen environment are described in \Cref{tbl:internet_like_properties}.
 
 \begin{table}[h]
 	\input{tables/internet_like_properties}
@@ -258,29 +257,29 @@ The property of the environment chosen are described in \Cref{tbl:internet_like_
 	\label{tbl:internet_like_properties}
 \end{table}
 
-The graph is an \textit{Internet-like} graph with \num{1000} nodes.
-The node that will execute the signal has been chosen randomly between
+The graph is an \textit{Internet-like} with \num{1000} nodes.
+The node that will transmit the signal has been chosen randomly between
 all the nodes of type \q{C}.
 This graph will be the same for all the experiments in this section.
 
-For each \ac{MRAI} strategy, that I'm going to present, has been executed \num{61}
+For each \ac{MRAI} strategy, that I am going to present, has been executed \num{61}
 experiments, one for each possible value of \ac{MRAI}.
 For each experiment, thanks to the environment variables, has been executed \num{10} runs.
-In total for each \ac{MRAI} strategy has been executed \num{610} different runs.
+In total, \num{610} different runs have been accomplished for each \ac{MRAI} strategy.
 
 As \ac{MRAI} strategies I decided to use the following two:
 \begin{itemize}
 	\item \textbf{\textit{Fixed}:} Every link will have the same
 		\ac{MRAI} value;
 	\item \textbf{\textit{DPC}:} This strategy assign a different
-		\ac{MRAI} value to each link depending on the centrality of the node~\cite{milani2020improving}
+		\ac{MRAI} value to each link depending on the centrality of the node~\cite{milani2020improving},
 		like described in \Cref{subsec:bgp_mrai_dpc}.
 \end{itemize}
 
-Thanks to the fact that has been already demonstrated that is possible to calculate
-the \ac{DPC} strategy in a distributed way~\cite{milani2019BGP} I
-assume that is calculated in advance and that every node knows it's own centrality to
-set the timers.
+I assume that every node knows in advance its own centrality value and that it
+assign the timer on each link accordingly.
+This assumption is based on the fact that the calculation of \ac{DPC} has
+already been demonstrated to be possible in a distributed way~\cite{milani2019BGP}.
 
 To permit a comparison between those two different strategies I used the
 constraint introduced in \cref{subsec:bgp_mrai_strategy_comparison}.
@@ -321,9 +320,9 @@ As is possible to see in \Cref{fig:internet_like_1000_constant_evolution_evoluti
 without \ac{MRAI} the convergence time would be low, dictated mostly by
 network delays and processing time. With, on the other hand, an enormous amount
 of messages.
-Slightly increasing the \ac{MRAI} value, the number of messages fell down
+Slightly increasing the \ac{MRAI} value, the number of messages fell
 reaching a constant value around \num{8000}, while the convergence time
-continuously grows linearly, as it happened for the clique graph in \Cref{fig:clique_evolution}.
+continuously grows linearly, as happened for the clique graph in \Cref{fig:clique_evolution}.
 This continuous linear grow is dictated by the fact that nodes keep meaningful
 information for more time before sharing them with their neighbourhood.
 
@@ -372,10 +371,10 @@ helps to reduce the number of messages and the convergence time without impactin
 the network performances trend.
 
 The second strategy, the one dependant on the \ac{DPC}, produce the results
-in \Cref{fig:internet_like_1000_dpc_evolution}
+in \Cref{fig:internet_like_1000_dpc_evolution}.
 As mentioned before, all the timers are adjusted to respect the same mean as in
 the \textit{fixed} \ac{MRAI} experiments.
-For this reason points with the same \ac{MRAI} value are comparable one another.
+For this reason, points with the same \ac{MRAI} value are comparable to one another.
 
 \begin{figure}[h]
      \centering
@@ -425,12 +424,10 @@ For example, with an $MRAI_{mean}$ of \SI{30}{\second} the node \num{1} (that is
 one of the central clique nodes) has an \ac{MRAI} value of \SI{79.35}{\second} for all its
 neighbours.
 
-
-I compared those strategies performances using a box-plot, \Cref{fig:boxplot_internet_like_1000},
-in a special case, the standard value of \ac{MRAI} is \SI{30}{\second} as described
-in~\cite{rfc4271}, so I used it as \(MRAI_{mean}\).
+I compared those strategies performances using a box-plot, \Cref{fig:boxplot_internet_like_1000}.
 I decided to execute \num{100} different runs for each strategy with the $MRAI_{mean}$
 fixed to \SI{30}{\second}.
+The value of \SI{30}{\second} has been chosen because it is the one suggested by the standard.
 
 \begin{figure}[h]
      \centering
@@ -459,11 +456,11 @@ fixed to \SI{30}{\second}.
 mentioned.
 The first plot, \Cref{fig:boxplot_internet_like_1000_messages}, represent
 the number of messages transmitted by the \num{100} runs.
-The two strategies, with the use of \ac{IW}, are really close one another on average,
-with a difference of few thousands messages.
-While, considering the time required to convergence, \Cref{fig:boxplot_internet_like_1000_time},
-there are some huge difference between the two strategies.
-The fact that the \ac{DPC} strategy requires almost the double of the
+The two strategies, with the use of \ac{IW}, are close to one another on average,
+with a difference of a few hundred messages.
+While, considering the time required to converge, in \Cref{fig:boxplot_internet_like_1000_time}
+there is a huge difference between the two strategies.
+The fact that the \ac{DPC} strategy requires almost double time in respect of the
 \textit{Fixed} one is not negligible.
 In conclusion, I can confirm that the \ac{MRAI} strategy is one of the factors that
 can influence the Network performances.
@@ -476,7 +473,7 @@ of the available alternatives.
 For this reason, I would like to explore the set of possibilities looking
 for \ac{MRAI} configurations randomly generated.
 
-I'm going to study the space of possibilities that are generated through the
+I am going to study the space of possibilities generated through the
 Pareto efficiency plot and compare the results with the Pareto efficiency
 graphs already presented in \Cref{sec:bgp_mrai_strategy_dependance}.
 To permit this comparison I would set \ac{MRAI} randomly but, like for
@@ -491,15 +488,15 @@ The environment used for those experiments is shown in \Cref{tbl:random_env}
 \end{table}
 
 The graph chosen is the same used in \Cref{sec:bgp_mrai_strategy_dependance},
-an Internet-like of \num{1000} nodes, in order to make the experiments comparable.
-Thanks to this environment I'm going to run in total more than \num{600} complete
+an Internet-like of \num{1000} nodes, to make the experiments comparable.
+Thanks to this environment, I am going to run a total of more than \num{600} complete
 experiments.
-For each \(MRAI_{mean}\) value, I will generate \num{10} different graphs with a random
+For each \(MRAI_{mean}\) value, the script generates \num{10} different graphs with a random
 \ac{MRAI} value assigned to each link.
-I will then execute \num{10} different runs for each random graph that will produce
+I will then execute \num{10} different runs for each random graph to produce
 the average result of \num{1} experiment.
-A single point is defined by the average convergence time and number of messages
-of \num{10} runs.
+A single point represents the average convergence time and the number of messages
+of the \num{10} runs.
 
 In \Cref{fig:random_pareto_front} is possible to see all the \num{610} points
 generated.
@@ -515,7 +512,7 @@ generated.
 \end{figure}
 
 The trend in \Cref{fig:random_pareto_front} is similar to the one
-that we saw for the same signal in \Cref{sec:bgp_mrai_strategy_dependance}.
+generated from the same signal in \Cref{sec:bgp_mrai_strategy_dependance}.
 For the majority of configurations, the number of messages transmitted is never
 over \num{10000} but the time required to converge can grow over \SI{600}{\second}.
 
@@ -587,35 +584,37 @@ The evolution for the signal \q{AWA} is described in \Cref{fig:internt_like_1000
         \label{fig:internt_like_1000_evolution_AWA}
 \end{figure}
 
-In \Cref{fig:internt_like_1000_evolution_AWA} is possible to notice a big difference
-compared to the plots in \Cref{fig:internet_like_1000_constant_evolution,fig:internet_like_1000_dpc_evolution}.
-The \ac{DPC} strategy was able to outcome the standard \textit{fixed} strategy
+\Cref{fig:internt_like_1000_evolution_AWA}, compared to the plots in
+\Cref{fig:internet_like_1000_constant_evolution,fig:internet_like_1000_dpc_evolution},
+presents a big difference in terms of performances.
+The \ac{DPC} strategy was able to outcome the standard \textit{fixed} approach
 over multiple prospective.
 Analyzing \Cref{fig:internet_like_1000_dpc_AWA} is possible to see that
 the red curve, the one that refers to the number of messages transmitted, has
 a very fast fell.
 With an average \ac{MRAI} timer of \textit{\SI{30}{\second}},
-the number of messages is less than \(\frac{1}{4}\) in respect of an \(MRAI_{mean}\)
+the number of messages is less than \(\frac{1}{4}\) compared to an \(MRAI_{mean}\)
 of \SI{0}{\second}.
 
 The convergence time curve has a completely different trend in respect of the
 previous experiments.
-There are three steps in the trend, caused by the fact that
-now the timer is able to effectively compress the signal.
-\ac{MRAI} doesn't affect the first message, in this case the first \q{A} , but
+In the trend are present three steps, caused by the fact that
+now the timer can effectively compress the signal.
+\ac{MRAI} doesn't affect the first message, the first \q{A}, but
 it can affect the next two messages.
-In fact, some nodes are able to cache both the \q{WA} part of the signal and
-completely avoid sending anything at all, because they have already transmitted
+Some nodes can cache both the \q{WA} part of the signal and
+completely avoid sending anything at all because they have already transmitted
 the first \q{A}.
 The complete compression of the signal \q{AWA} is \q{A}.
-Those valley are provoked by the gain in performances that the compression gave
+Those valleys are provoked by the gain in performances that the compression gave
 to the nodes, it overcomes the downside of having to make the neighbours wait longer.
-The evolutions for the \q{AWAW} and \q{AWAWA} signals, are showed in
+The evolutions of the \q{AWAW} and \q{AWAWA} signals are shown in
 \Cref{fig:internt_like_1000_evolution_AWAW,fig:internt_like_1000_evolution_AWAWA}.
 
-Like before, comparing the standard case with a \textit{fixed} \ac{MRAI} of, I
-executed \num{100} different runs for each strategy and each different signal,
-the results are presented in \Cref{fig:boxplot_internet_like_1000_allSignals}.
+Like before, I executed \num{100} different runs for each strategy and each
+different signal.
+The results are presented in \Cref{fig:boxplot_internet_like_1000_allSignals}
+gives the possibility to compare the different strategies.
 
 \begin{figure}[h]
      \centering
@@ -645,20 +644,20 @@ In \Cref{fig:boxplot_internet_like_1000_allSignals} is possible to notice that
 both the strategies have different performances in respect of the signal
 produced by the single source node.
 In particular, performances are better when the signal ends up with an \q{A}.
-That's because, after the first \q{A}, giving a \ac{MRAI} timer long enough,
-a node is able to compress a sequence that ends with another \q{A} to the
+That's because, after the first \q{A}, giving an \ac{MRAI} timer long enough,
+a node can compress a sequence that ends with another \q{A} to the
 empty set and don't send anything more.
-While if the sequence ends up with a \q{W} it has to, at least, send another
+While, if the sequence ends up with a \q{W} it has to, at least, send another
 message to notify the withdraw.
 
-Other than that, is possible to notice that the \ac{DPC} techniques have better
+In addition to that it is possible to observe that the \ac{DPC} techniques have better
 results in terms of messages transmitted, while it could have a higher
 convergence time.
-This is caused, like before, by the high \ac{MRAI} values used by the most
+This is caused, like before, by the high \ac{MRAI} values used from the most
 central nodes.
 
-In conclusion, there is an interaction between \ac{MRAI} and the sequence of messages
-transmitted by the source node.
+In conclusion, \ac{MRAI} can be influenced by the sequence of messages transmitted
+by the source node.
 In particular, more the timer is able to compress the sequence more the performances
 can be improved.
 The \ac{MRAI} timer cannot be increased indefinitely in order to catch
@@ -669,13 +668,13 @@ everything, because of the side effect on the convergence time.
 
 The last factor of influence for \ac{MRAI} that I would like to study is how much
 the position of the signal source can influence the convergence.
-The main hypothesis is that: a node closer to the central clique, that generates
-a signal, would provoke a message storm bigger in respect of a node on the perimeter
+The main hypothesis is that: a node, closer to the central clique, that generates
+the signal, would provoke a bigger message storm in respect of a node on the perimeter
 of the network.
 Because of the possibility from the nodes to catch the signal and compress it
-before reaching the central clique.
+before reaching the top level.
 While, a node near the central clique would provoke a case of \textit{Path exploration}
-directly on the central clique.
+directly on the tier one mesh.
 This hypothesis could be true only if \ac{MRAI} is large enough to block the
 storm near the source of the change, compressing the signal and exporting only
 the correct information at the end of it.
@@ -683,18 +682,18 @@ the correct information at the end of it.
 \subsection{Different signal sources}
 \label{subsec:different_destinations}
 
-As first try, I have decided to analyze \num{10} different destinations, \num{10}
-different nodes that shares a prefix, randomly chosen on the same graph, an
-Internet like topology with \num{1000} nodes.
-I have then used the same environment with all the different destinations.
+Firstly, I have decided to analyze multiple destinations, \num{10}
+different nodes that share a prefix, randomly chosen on the same Internet like
+topology with \num{1000} nodes.
+I have then used the same environment with all the distinct destinations.
 I also decided to compare different \ac{MRAI} strategies, repeating all the experiments for
 every strategy.
-With these results is possible to analyze how different signal sources provoke
-different network performances and also study how different \ac{MRAI} strategies
-adapt to different nodes that provoke messages storms.
+These results permit to study how the network performances variate in
+function of the origin of the signal.
+Also, how multiple \ac{MRAI} strategies adapt to distinct nodes that provoke
+messages storms.
 
-The environment used by those experiments is the one described in
-\Cref{tbl:source_properties}.
+Those experiments use the environment described in \Cref{tbl:source_properties}.
 
 \begin{table}[h]
 	\input{tables/different_destinations_properties}
@@ -702,17 +701,17 @@ The environment used by those experiments is the one described in
 	\label{tbl:source_properties}
 \end{table}
 
-Like mentioned in \Cref{tbl:source_properties}, I decided to use another
+As mentioned in \Cref{tbl:source_properties}, I decided to use another
 \ac{MRAI} strategy and look forward to its performances.
 That strategy is the reverse of the one base on the \ac{DPC} described in
 \Cref{subsec:bgp_mrai_dpc}.
-The first and the last cases of \Cref{eq:dpc} are inverted, having as result a
+The first and the last cases of \Cref{eq:dpc} are swapped, obtaining, as result, a
 higher \ac{MRAI} in the ascendant phase and a lower \ac{MRAI} in the descending
 one.
 
-In total, I have executed \num{700} runs for each \ac{MRAI} strategy with the
+In total, for each \ac{MRAI} strategy has been executed \num{700} runs, with
 \num{10} different signal sources.
-The resulting network evolution with different \ac{MRAI} values is shown in
+The resulting network evolution, with growing \ac{MRAI} values, is shown in
 \Cref{fig:different_destinations}.
 Each point of \Cref{fig:different_destinations_all} represents the average
 of the \num{10} runs executed for the specific destination with that \ac{MRAI}
@@ -748,32 +747,31 @@ strategy.
 \end{figure}
 
 \Cref{fig:different_destinations} shows how, changing the source of the signal,
-also the network performances change and evolve with different \ac{MRAI} values.
+the network performances change and evolve with different \ac{MRAI} values.
 Notice that the second y-axis, the one that represents the number of packets
 transmitted, is in log scale.
 The plot in \Cref{fig:different_destinations_all} can be used to see the
 differences between one destination and the others, while, \Cref{fig:different_destinations_mean}
 expose the differences between the strategies.
-In \Cref{fig:different_destinations_all} is possible to see that all the \num{10} destinations
-cause a similar behaviour with the fixed strategy and the reverse \ac{DPC}, both
-in terms of messages transmitted and also convergence time.
+In \Cref{fig:different_destinations_all} is possible to see that all the destinations
+that use the \textit{fixed} and reverse \ac{DPC} strategies have similar behaviour,
+both in terms of messages transmitted and also convergence time.
 In both techniques, the difference between the \num{10} destinations in terms of
 convergence time is a few tens of seconds, with linear growth.
 Thanks to \Cref{fig:different_destinations_mean} is possible to see that the
-number of messages reaches a convergence value between \num{5000} and
-\num{6000}.
+number of messages transmitted converges between \num{5000} and \num{6000}.
 The \ac{DPC} strategy seems to bee more volatile with the growth of \ac{MRAI},
 both in terms of messages and also convergence time.
-In \Cref{fig:different_destinations_all}, from the multiple green spikes is possible to see
-that the position of the source is highly affective using this strategy.
-In terms of messages transmitted the \ac{DPC} strategy always goes better than
+The \ac{MRAI} strategy based on the \ac{DPC} is highly affected by the position
+of the source node, deductible from the high spikes in \Cref{fig:different_destinations_all}.
+In terms of messages transmitted it always goes better than
 the other two strategies, respecting the trend in \Cref{sec:bgp_mrai_signal_dependance}.
 
 In conclusion, the position of the source can influence the behaviour
 of \ac{MRAI}, it is more influent when the strategy used relies on topological
-information, like the \ac{DPC} strategy.
-But, the choice of the strategy is more influent, the number of messages transmitted
-by the \ac{DPC} strategy are always less than the one transmitted by the other
+information, like the \ac{DPC}.
+However, the choice of the strategy is more influent, the number of messages transmitted
+by the \ac{DPC} strategy is always less than the one detected with the other
 two strategies, for every destination.
 
 \subsection{Hierarchical influence}
@@ -803,12 +801,12 @@ The properties of this environment are summarized in \Cref{tbl:hierarchical_prop
 	\label{tbl:hierarchical_properties}
 \end{table}
 
-Given that, I am evaluating the impact of nodes by their distance from
+Given that I am evaluating the impact of nodes by their distance from
 the center of the network, it is a good way also to test strategies
-which goal is to enforce those points.
-For this reason, I chose those two strategies that relies on the centrality of the nodes.
+whose goal is to enforce those points.
+For this reason, I chose those two strategies that rely on the centrality of the nodes.
 
-The results in \Cref{fig:different_levels} shows the different evolution of
+The results, in \Cref{fig:different_levels}, shows the different evolution of
 the \num{3} random sources for each different level, from the first to the fourth.
 
 \begin{figure}[h]
@@ -852,50 +850,50 @@ the \num{3} random sources for each different level, from the first to the fourt
 \end{figure}
 
 In \Cref{fig:different_levels} is possible to see the evolution of the network
-with different source nodes from multiple levels and how \ac{MRAI} influence
+with different source nodes from multiple levels, and how \ac{MRAI} influence
 the network performances.
 Starting from the first level in \Cref{fig:different_levels_1}, where the source
 nodes are directly connected with a node of the central clique, multiple
 important things can be noticed.
 First of all, the variance between the three different sources is very small,
 both in terms of messages transmitted and also convergence time.
-Both the techniques, \ac{DPC} and the reverse of it, in terms of messages
-transmitted starts from a value around \num{25000} with \ac{MRAI} equal to
-\SI{0}{\second} and both reaches a value under \num{10000} units.
+Both the techniques, \ac{DPC} and the reverse of it, with an \ac{MRAI} value
+equal to \SI{0}{\second}, transmit around \num{25000} messages, while the
+convergence value is under \num{10000} units.
 In terms of convergence time, the reverse strategy grows linearly, as expected,
-while, the \ac{DPC} technique is able to gain a strong reduction thanks to
+while, the \ac{DPC} technique can gain a strong reduction thanks to
 the efficient messages compression.
 
-Going to the second and third level, respectively in
+Considering instead the second and third level, respectively in
 \Cref{fig:different_levels_2,fig:different_levels_3}, is possible to notice that there
 is an increase of the variance between the single source trends, both in terms
 of messages and also convergence time.
-Even the number of messages transmitted slowly increases, at the beginning the
+Even the number of messages transmitted slowly increases, at the beginning, the
 number of messages reaches \num{60000} units converging around \num{10000}.
 
 \Cref{fig:different_levels_4} is the worst-case scenario, not in
 terms of variance between the sources, but in this case is possible to observe
-the worst performances
+the worst performances.
 The convergence time grows even over \SI{1000}{\second} for the \ac{DPC} strategy.
 While the number of messages transmitted with \ac{MRAI} equal to \SI{0}{\second}
 touches \num{60000} reaching a convergence value slightly over \num{10000}.
 
-The influence that the position of the source nodes has to
-a hierarchical graph like the Internet is clear.
+The position of the source nodes has a big influence on a hierarchical graph
+such as the Internet.
 The performances with \ac{MRAI} at \SI{0}{\second} are only attributable to the
 strategic position of the source nodes.
-But, while \ac{MRAI} grows, the position plays a central role on the performances.
+But, while \ac{MRAI} grows, the position plays a central role in the performances.
 Nodes closer to the central clique have less space to provoke fluctuations
 in terms of possible paths, causing a less active effect of the \textit{Path exploration}
 problem.
 Our initial hypothesis is proven to be wrong, nodes that are farthest are more incline
-to provoke a more intense path fluctuation and by consequence there are inferior
+to provoke a more intense path fluctuation and by consequence, there are inferior
 performances.
 
 Another hypothesis is that there is a difference in the single nodes based
-on the position in the topology.
-Nodes that are more central, if the signal comes from closer nodes, could
-react with a more explosive \textit{Path exploration} behaviour.
+on their topological position.
+More central nodes could react with a more explosive \textit{Path exploration}
+behaviour if the signal comes from closer nodes.
 If the signal comes from the periphery of the network, the other side of
 it could require more time to converge in respect of a signal that starts
 near the centre.
@@ -909,7 +907,7 @@ I have then grouped nodes that are at the same distance from the source, to
 calculate the distance I used the distance in terms of hops in the \textit{Best
 Path}.
 I then calculated the average performances of each group.
-The results are showed in \Cref{fig:different_levels_comparison}.
+The results are shown in \Cref{fig:different_levels_comparison}.
 
 \begin{figure}[h]
      \centering
@@ -950,21 +948,21 @@ The results are showed in \Cref{fig:different_levels_comparison}.
 
 In \Cref{fig:different_levels_comparison} is possible to see an analysis of the
 average nodes performances grouped by the distance from the source of the signal.
-On the left side, in
+On the left side,
 \Cref{fig:different_levels_comparison_dpc_msg,fig:different_levels_comparison_dpc_time}
-are showed the performances of the nodes that use the \ac{DPC} strategy.
-While, on the other side, \Cref{fig:different_levels_comparison_reverse_dpc_msg,fig:different_levels_comparison_reverse_dpc_time},
-expose the performances in case of the reverse \ac{DPC} strategy.
+are shown the performances of the nodes that use the \ac{DPC} strategy.
+While, on the other side, \Cref{fig:different_levels_comparison_reverse_dpc_msg,fig:different_levels_comparison_reverse_dpc_time}
+expose the performances in the case of the reverse \ac{DPC} strategy.
 
 In all the plots in \Cref{fig:different_levels_comparison} the blue line
 represents the average normalized centrality of the different nodes groups at different
 levels.
-Is possible to see that in the case that the nodes are in the first or the
-second level the nodes with the highest average centrality are the nearest ones.
-While if the node is far away from the central clique the nodes with the
+In the first and second level, the nodes with the highest centrality are the
+nearest ones, it is deductible from the spikes in the first group.
+While if the source node is far away from the central clique the nodes with the
 higher average centrality are in the second or third group.
-The values for those groups are low because of the high number of nodes
-in those groups, most of them having a small centrality value.
+The values for those groups are low because of the larger population,
+most of the nodes have a small centrality value.
 The centrality refers to the first y-axis on the left.
 
 The two plots in \Cref{fig:different_levels_comparison_dpc_msg,fig:different_levels_comparison_reverse_dpc_msg},
@@ -977,9 +975,9 @@ In the \ac{DPC} case, the value remains stable around \num{10} messages, while,
 with the reverse strategy, this number explodes up to \num{40} messages because
 of the \textit{Path exploration} problem provoked by the ascending part of the graph.
 
-Is possible to notice that some of the lines end up at the $6^{th}$ hop instead
+In those plots is possible to notice that some of the lines end up at the $6^{th}$ hop instead
 of the $7^{th}$, that's because for the level \num{1} and \num{2} there are
-no best paths to the destination that goes over the \num{6} hops.
+no best paths to the destination that goes over \num{6} hops.
 
 The convergence time is presented in
 \Cref{fig:different_levels_comparison_dpc_time,fig:different_levels_comparison_reverse_dpc_time}.
@@ -990,14 +988,14 @@ The convergence time slowly increases in farthest nodes, thanks to the particula
 \ac{MRAI} strategy that permits to wait for enough time to receive all the information
 necessary.
 This is also the reason for the small variance in terms of messages transmitted.
-With the reverse \ac{DPC} strategy, on the other hand, is possible to have a
+On the other hand, with the reverse \ac{DPC} strategy is possible to have a
 more stable trend in the convergence time that linearly grows.
 This linear trend is caused by the fact that nodes could end up to send more
-\ac{ADV} in order to correct a non best route.
+\ac{ADV} to correct a non best route.
 This is one of the consequences of the \textit{Path Exploration} problem in
 the central nodes.
 
-Is then possible to conclude that the position of the node can highly impact
+To conclude is then possible to say that the position of the node can highly impact
 the \ac{MRAI} behaviour, signals from the periphery of the network can more
 easily cause \ac{ADV} storms if \ac{MRAI} is not large enough to catch them.
 Other than that, the position can influence the performances by itself, but
