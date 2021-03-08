@@ -118,7 +118,7 @@ on the right.
 
 In \cref{fig:clique_evolution_rfd} is possible to see that small changes to \ac{MRAI}
 don't really affect the number of suppressions.
-But, on the other hand, the number of messages decreases rapidly and reaches a constant
+On the other hand, the number of messages decreases rapidly and reaches a constant
 value around \num{1000}, as expected by the passage from an \ac{MRAI} of \SI{0}{\second}
 to a few seconds.
 The difference in the messages, even with the same amount of suppression is caused
@@ -133,7 +133,7 @@ gap between the environment with \ac{RFD} and without it.
 \ac{MRAI} affects both the message trends, with a low value of the timer
 is possible to notice a huge difference, almost one magnitude order with \ac{MRAI}
 equal \SI{0}{\second}.
-But, thanks to the growth of it the gap becomes smaller and smaller up to
+Though, thanks to the growth of it the gap becomes smaller and smaller up to
 the point where the difference is just of few tens of messages.
 The difference in the convergence time is caused by, some
 nodes, with \ac{RFD}, that block the best path, it takes a lot of time to
@@ -224,9 +224,10 @@ available again for node \num{5} that communicates the change to $x$.
 The evolution of the figure of merit of the best path of node \num{5} is different
 from the one of node $x$.
 In fact, it is not influenced by \ac{MRAI}, as showed in \Cref{fig:clique_node5}.
-That's because the node \num{5} is directly connected to the node \num{0} that every
-\SI{300}{\second} forward the message of $d$. The delay of \SI{300}{\second} is large
-enough to not be affected by the compression effect of \ac{MRAI}.
+This is because the node \num{5} is directly connected to the node \num{0}, which
+forwards the message from $d$ every \SI{300}{\second}.
+The delay of \SI{300}{\second} is large enough to not be affected by the
+compression effect of \ac{MRAI}.
 Around \SI{2000}{\second} node \num{5} suppresses the route (as any other node in the
 clique) and stops to forward it to node $x$, until \SI{3000}{\second} when it becomes
 available again.
@@ -854,14 +855,14 @@ with the elephant environment and multiple \ac{MRAI} values.
 
 The trends in the elephant case are completely different in respect to the
 mice environment.
-Starting from the standard strategy in \Cref{fig:1000_2439RFD_multiMRAI_mice},
+Starting from the standard strategy in \Cref{fig:1000_2439RFD_multiMRAI_elephants},
 The number of suppression decreases of a few hundred units
 thanks to a higher \ac{MRAI}.
 Also, the number of messages decrease from around \num{14500} reaching a stable
 state around \num{11000}.
 While, the convergence time benefits from the suppression rate decrease, reaching
 a valley around \SI{5400}{\second}.
-But, after that point, the effect of avoiding the next suppression set is not enough to keep
+After that point, the effect of avoiding the next suppression set is not enough to keep
 a descending trend, and \ac{MRAI} acquire a more predominant position making
 the convergence time slightly increasing.
 
@@ -888,7 +889,7 @@ of suppression could be saw as an error, but it is not.
 In fact, the suppressions with an \ac{MRAI} of \SI{0}{\second} happens
 few seconds after the beginning of the experiment and the majority of the nodes
 will suppress the route.
-But, the CISCO configuration of \ac{RFD} requires that after \SI{3600}{\second} a route
+However, the CISCO configuration of \ac{RFD} requires that after \SI{3600}{\second} a route
 can't be suppressed anymore.
 For this reason after that time, there will be just a last update storm to propagate
 the reintroduction of the route.

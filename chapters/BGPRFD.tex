@@ -117,11 +117,11 @@ the side effects of it.
 In \Cref{fig:RFD_2439_clique_MRAI30_messages} is possible to see the advantages
 of \ac{RFD} while the counter effects are presented in \Cref{fig:RFD_2439_clique_MRAI30_convTime}.
 The number of messages transmitted with \ac{RFD} active are half of the \textit{NoRFD}
-case, while, on the other hand, the averge convergence time of the entire network
+case, while, on the other hand, the average convergence time of the entire network
 is more than the double.
 In \Cref{fig:RFD_2439_clique_MRAI30_suppressions} is possible to see the total
 number of suppression executed on the entire network.
-The \ac{RFD} mechanism keeps track of a different figure of merit for each neighbour,
+The \ac{RFD} mechanism keeps track of a different figure of merit for each route,
 because of that is possible that a node activate multiple suppression.
 The total number of suppression activated by this environment is constant around
 \num{82}.
@@ -175,7 +175,7 @@ last flap from \num{5} after that there is only one more point of variation
 around \SI{3000}{\second}.
 This last point correspond to the instant where the best route becomes available
 again for \num{5}, at this point node $x$ receives the last \ac{ADV}.
-But $x$ will need another \SI{1000}{\second} to makes the route available again.
+$x$ will need another \SI{1000}{\second} to makes the route available again.
 
 Those two figure of merit evolutions show how one depends on the other.
 The evolution of $x$ strictly depend on the one from \num{5}.

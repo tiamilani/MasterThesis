@@ -321,13 +321,13 @@ change in the \textit{ADJ-RIB\_out} of a neighbour caused by the
 
 The second passage permits the route selection process to be executed multiple
 times before the actual transmission of the decision.
-That because \ac{MRAI} limits only the transmission and not the decision process.
+This is because \ac{MRAI} only limits the transmission and not the decision-making process.
 The condition to the last passage is due to the fact that the compression some
 times could lead to the not necessity to actually send a message.
 
 The default value defined in the \ac{RFC} \num{4271} for \ac{MRAI} is equal to
 \SI{30}{\second}.
-But, \ac{MRAI} is a really controversial parameter, it has received multiple
+However, \ac{MRAI} is a really controversial parameter, it has received multiple
 revisions and studies.
 
 In \num{2008}, thanks to different studies that take into consideration the
@@ -336,7 +336,7 @@ the proposal to reset its default value to \SI{5}{\second}~\cite{jakma2008revise
 In \num{2010}, a proposal \ac{RFC} of the \ac{IETF}~\cite{jakma2010revisions}
 says that the default value would be left to the arbitrary choice of the operators and
 that withdraw message could completely ignore it.
-But, this freedom would damage the convergence and the number of messages distributed
+Though, this freedom would damage the convergence and the number of messages distributed
 as showed by Fabrikant et al.~\cite{fabrikant2011there}.
 
 Is clear that \ac{MRAI} affect the network performances, but what affects \ac{MRAI}
@@ -344,7 +344,7 @@ and, by consequences, the performances?
 Obviously, the choice itself of a different \ac{MRAI} strategy can have a huge
 impact, as showed for example in~\cite{milani2019BGP}, where the centrality
 has been used to obtain better results in the case of network faults.
-But, giving the fact that, the main function of \ac{MRAI} is to compress the
+However, giving the fact that, the main function of \ac{MRAI} is to compress the
 input messages, also the sequence of messages receipt could be meaningful.
 Giving that \ac{MRAI} is a link-based parameter also the number of links that
 a node has could influence it and by consequences the position in the topology.

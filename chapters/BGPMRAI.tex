@@ -403,7 +403,7 @@ This second strategy leads to the performances showed in \Cref{fig:internet_like
 where is possible to notice that the number of messages transmitted fell down
 very quickly and it reaches the convergence value with an \ac{MRAI} value of
 \num{10}.
-But, it is also noticeable that there are a lot more spikes in this trend, that
+However, It is also noticeable that there are a lot more spikes in this trend, that
 deviate more from the constant value around \num{9000} messages.
 And by consequence, the convergence time is affected by this behaviour.
 
@@ -644,9 +644,9 @@ In \Cref{fig:boxplot_internet_like_1000_allSignals} is possible to notice that
 both the strategies have different performances in respect of the signal
 produced by the single source node.
 In particular, performances are better when the signal ends up with an \q{A}.
-That's because, after the first \q{A}, giving an \ac{MRAI} timer long enough,
-a node can compress a sequence that ends with another \q{A} to the
-empty set and don't send anything more.
+This is because, after the first \q{A}, by giving a long enough \ac{MRAI} timer,
+a node can compress a sequence ending with another \q{A} to the
+empty set and send nothing more.
 While, if the sequence ends up with a \q{W} it has to, at least, send another
 message to notify the withdraw.
 
@@ -703,9 +703,9 @@ Those experiments use the environment described in \Cref{tbl:source_properties}.
 
 As mentioned in \Cref{tbl:source_properties}, I decided to use another
 \ac{MRAI} strategy and look forward to its performances.
-That strategy is the reverse of the one base on the \ac{DPC} described in
+This strategy is the reverse of the one base on the \ac{DPC} described in
 \Cref{subsec:bgp_mrai_dpc}.
-The first and the last cases of \Cref{eq:dpc} are swapped, obtaining, as result, a
+The first and the last cases of \Cref{eq:dpc} are swapped, resulting in a
 higher \ac{MRAI} in the ascendant phase and a lower \ac{MRAI} in the descending
 one.
 
@@ -882,7 +882,7 @@ The position of the source nodes has a big influence on a hierarchical graph
 such as the Internet.
 The performances with \ac{MRAI} at \SI{0}{\second} are only attributable to the
 strategic position of the source nodes.
-But, while \ac{MRAI} grows, the position plays a central role in the performances.
+Although, while \ac{MRAI} grows, the position plays a central role in the performances.
 Nodes closer to the central clique have less space to provoke fluctuations
 in terms of possible paths, causing a less active effect of the \textit{Path exploration}
 problem.
